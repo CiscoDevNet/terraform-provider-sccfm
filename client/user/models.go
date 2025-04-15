@@ -1,11 +1,13 @@
 package user
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
 )
 
 type CreateUserInput struct {
 	Username    string
+	FirstName   *string
+	LastName    *string
 	UserRoles   string
 	ApiOnlyUser bool
 }
@@ -42,7 +44,8 @@ type Association struct {
 }
 
 type ReadByUsernameInput struct {
-	Name string `json:"name"`
+	Name        string `json:"name"`
+	ApiOnlyUser bool   `json:"apiOnlyUser"`
 }
 
 type GenerateApiTokenInput struct {
@@ -50,7 +53,8 @@ type GenerateApiTokenInput struct {
 }
 
 type RevokeApiTokenInput struct {
-	Name string `json:"name"`
+	Name        string `json:"name"`
+	ApiOnlyUser bool   `json:"apiOnlyUser"`
 }
 
 type RevokeOAuthTokenInput struct {
@@ -62,20 +66,23 @@ type ReadByUidInput struct {
 }
 
 type ApiTokenResponse struct {
-	ApiToken string `json:"access_token"`
+	ApiToken string `json:"apiToken"`
 }
 
-func NewCreateUserInput(username string, userRoles string, apiOnlyUser bool) *CreateUserInput {
+func NewCreateUserInput(username string, userRoles string, apiOnlyUser bool, firstName *string, lastName *string) *CreateUserInput {
 	return &CreateUserInput{
 		Username:    username,
 		UserRoles:   userRoles,
 		ApiOnlyUser: apiOnlyUser,
+		FirstName:   firstName,
+		LastName:    lastName,
 	}
 }
 
-func NewReadByUsernameInput(name string) *ReadByUsernameInput {
+func NewReadByUsernameInput(name string, apiOnlyUser bool) *ReadByUsernameInput {
 	return &ReadByUsernameInput{
-		Name: name,
+		Name:        name,
+		ApiOnlyUser: apiOnlyUser,
 	}
 }
 

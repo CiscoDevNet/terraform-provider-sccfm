@@ -2,7 +2,7 @@ package msp_tenant_users_test
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"strings"
 	"testing"
@@ -36,7 +36,7 @@ func join(slice []string) string {
 }
 
 const testMspManagedTenantUsersTemplate = `
-resource "cdo_msp_managed_tenant_users" "test" {
+resource "sccfwmgr_msp_managed_tenant_users" "test" {
 	tenant_uid = "{{.TenantUid}}"
 	users = [
 		{

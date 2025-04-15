@@ -4,7 +4,7 @@ package url
 import (
 	"fmt"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
 )
 
 func ReadDevice(baseUrl string, uid string) string {
@@ -106,31 +106,35 @@ func UpdateFmcDeviceLicenses(baseUrl string, objectId string) string {
 	return fmt.Sprintf("%s/fmc/api/fmc_platform/v1/license/devicelicenses/%s", baseUrl, objectId)
 }
 
-func CreateUser(baseUrl string, username string) string {
-	return fmt.Sprintf("%s/anubis/rest/v1/users/%s", baseUrl, username)
+func CreateUser(baseUrl string) string {
+	return fmt.Sprintf("%s/api/rest/v1/users", baseUrl)
 }
 
 func ReadUserByUsername(baseUrl string) string {
-	return fmt.Sprintf("%s/anubis/rest/v1/users", baseUrl)
+	return fmt.Sprintf("%s/api/rest/v1/users", baseUrl)
 }
 
-func ReadOrUpdateUserByUid(baseUrl string, uid string) string {
-	return fmt.Sprintf("%s/anubis/rest/v1/users/%s", baseUrl, uid)
+func ReadApiOnlyUserByUsername(baseUrl string) string {
+	return fmt.Sprintf("%s/api/rest/v1/users/api-only", baseUrl)
 }
 
-func GenerateApiToken(baseUrl string, username string) string {
-	return fmt.Sprintf("%s/anubis/rest/v1/oauth/token/%s", baseUrl, username)
+func ReadUserByUid(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/users/%s", baseUrl, uid)
 }
 
-func RevokeApiToken(baseUrl string, tokenId string) string {
-	return fmt.Sprintf("%s/anubis/rest/v1/oauth/revoke/%s", baseUrl, tokenId)
+func GenerateApiToken(baseUrl string, userUid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/users/%s/apiToken/generate", baseUrl, userUid)
+}
+
+func RevokeApiTokenForUser(baseUrl string, userUid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/users/%s/apiToken/revoke", baseUrl, userUid)
 }
 
 func RevokeApiTokenUsingPublicApi(baseUrl string) string {
 	return fmt.Sprintf("%s/api/rest/v1/token/revoke", baseUrl)
 }
 
-func ReadTokenInfo(baseUrl string) string {
+func ReadAnubisTokenInfo(baseUrl string) string {
 	return fmt.Sprintf("%s/anubis/rest/v1/oauth/check_token", baseUrl)
 }
 
@@ -232,6 +236,10 @@ func CreateUsersInMspManagedTenant(baseUrl string, tenantUid string) string {
 
 func GetUsersInMspManagedTenant(baseUrl string, tenantUid string, limit int, offset int) string {
 	return fmt.Sprintf("%s/api/rest/v1/msp/tenants/%s/users?limit=%d&offset=%d", baseUrl, tenantUid, limit, offset)
+}
+
+func GetApiOnlyUsersInMspManagedTenant(baseUrl string, tenantUid string, limit int, offset int) string {
+	return fmt.Sprintf("%s/api/rest/v1/msp/tenants/%s/users/api-only?limit=%d&offset=%d", baseUrl, tenantUid, limit, offset)
 }
 
 func DeleteUsersInMspManagedTenant(baseUrl string, tenantUid string) string {

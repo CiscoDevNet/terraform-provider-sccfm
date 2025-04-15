@@ -1,6 +1,6 @@
 package device
 
-import "github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/statemachine/state"
+import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
 
 type ReadSpecificOutputBuilder struct {
 	readSpecificOutput *ReadSpecificOutput

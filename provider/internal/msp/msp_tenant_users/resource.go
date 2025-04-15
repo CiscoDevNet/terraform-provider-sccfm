@@ -3,8 +3,8 @@ package msp_tenant_users
 import (
 	"context"
 	"fmt"
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/msp/users"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/users"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -21,7 +21,7 @@ import (
 func NewMspManagedTenantUsersResource() resource.Resource { return &MspManagedTenantUsersResource{} }
 
 type MspManagedTenantUsersResource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 func sortUsersToOrderInPlanData(users []User, planData *MspManagedTenantUsersResourceModel) *[]User {
@@ -54,7 +54,11 @@ func (resource *MspManagedTenantUsersResource) Schema(ctx context.Context, reque
 						},
 						"username": schema.StringAttribute{
 							Required:            true,
-							MarkdownDescription: "The name of the user in CDO. This must be a valid e-mail address if the user is not an API-only user.",
+							MarkdownDescription: "The username. This must be a valid e-mail address if the user is not an API-only user.",
+						},
+						"username_in_scc_firewall_manager": schema.StringAttribute{
+							Computed:            true,
+							MarkdownDescription: "The name of the user in CDO. This will be the same the username for non-API-only users; when API-only users are created, the username has the tenant name appended to it.",
 						},
 						"roles": schema.ListAttribute{
 							Required:            true,
@@ -150,12 +154,12 @@ func (resource *MspManagedTenantUsersResource) Configure(ctx context.Context, re
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		res.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -167,7 +171,7 @@ func (resource *MspManagedTenantUsersResource) Configure(ctx context.Context, re
 func (resource *MspManagedTenantUsersResource) deleteAllUsersInState(ctx context.Context, stateData *MspManagedTenantUsersResourceModel) (interface{}, error) {
 	var usernames []string
 	for _, user := range stateData.Users {
-		usernames = append(usernames, user.Username.ValueString())
+		usernames = append(usernames, user.UsernameInSccFirewallManager.ValueString())
 	}
 	deleteInput := users.MspDeleteUsersInput{
 		TenantUid: stateData.TenantUid.ValueString(),
@@ -203,7 +207,7 @@ func (resource *MspManagedTenantUsersResource) buildMspUsersInput(planData *MspM
 	}
 }
 
-func (resource *MspManagedTenantUsersResource) transformApiResponseToPlan(createdUserDetails *[]users.UserDetails) *[]User {
+func (resource *MspManagedTenantUsersResource) transformApiResponseToPlan(createdUserDetails *[]users.ComputedUserDetails) *[]User {
 	var users []User
 	for _, userDetails := range *createdUserDetails {
 		var roles []attr.Value
@@ -211,10 +215,11 @@ func (resource *MspManagedTenantUsersResource) transformApiResponseToPlan(create
 			roles = append(roles, types.StringValue(role))
 		}
 		users = append(users, User{
-			Id:          types.StringValue(userDetails.Uid),
-			Username:    types.StringValue(userDetails.Username),
-			ApiOnlyUser: types.BoolValue(userDetails.ApiOnlyUser),
-			Roles:       types.ListValueMust(types.StringType, roles),
+			Id:                           types.StringValue(userDetails.Uid),
+			Username:                     types.StringValue(userDetails.Username),
+			UsernameInSccFirewallManager: types.StringValue(userDetails.UsernameInSccFirewallManager),
+			ApiOnlyUser:                  types.BoolValue(userDetails.ApiOnlyUser),
+			Roles:                        types.ListValueMust(types.StringType, roles),
 		})
 	}
 

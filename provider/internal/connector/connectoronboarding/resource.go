@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -22,7 +22,7 @@ func NewResource() resource.Resource {
 }
 
 type Resource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type ResourceModel struct {
@@ -36,7 +36,7 @@ func (r *Resource) Metadata(ctx context.Context, req resource.MetadataRequest, r
 
 func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Use this resource to wait for an SDC to finish onboarding. When an SDC is onboarded, either manually or using the CDO Terraform Modules for [AWS](https://github.com/CiscoDevNet/terraform-aws-cdo-sdc) and [vSphere](https://github.com/CiscoDevNet/terraform-vsphere-cdo-sdc), it can take a few minutes before the SDC is active and capable of proxying communications between CDO and the device. This resource allows you to wait until this is done.",
+		MarkdownDescription: "Use this resource to wait for an SDC to finish onboarding. When an SDC is onboarded, either manually or using the SCC Firewall Manager Terraform Modules for [AWS](https://github.com/CiscoDevNet/terraform-aws-cdo-sdc) and [vSphere](https://github.com/CiscoDevNet/terraform-vsphere-cdo-sdc), it can take a few minutes before the SDC is active and capable of proxying communications between SCC Firewall Manager and the device. This resource allows you to wait until this is done.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -59,12 +59,12 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

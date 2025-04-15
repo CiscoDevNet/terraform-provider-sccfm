@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/user"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -23,7 +23,7 @@ func NewResource() resource.Resource {
 }
 
 type Resource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type ApiTokenResourceModel struct {
@@ -36,12 +36,12 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -115,9 +115,10 @@ func (r *Resource) Delete(ctx context.Context, req resource.DeleteRequest, res *
 
 	// 2. delete the resource
 	deleteUserInput := user.RevokeApiTokenInput{
-		Name: stateData.Username.ValueString(),
+		Name:        stateData.Username.ValueString(),
+		ApiOnlyUser: true,
 	}
-	_, err := r.client.RevokeApiToken(ctx, deleteUserInput)
+	err := r.client.RevokeApiToken(ctx, deleteUserInput)
 	if err != nil {
 		res.Diagnostics.AddError("failed to delete User resource", err.Error())
 	}

@@ -2,8 +2,8 @@ package planmodifiers
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )

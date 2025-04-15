@@ -3,7 +3,7 @@ data "aws_route53_zone" "selected" {
 }
 
 # Create SEC. This creates an SEC entry in CDO, and does not bootstrap the SEC. This SEC is configured to be created in AWS; disable this by setting `var.create_resources_in_aws` to false.
-resource "cdo_sec" "example" {
+resource "sccfwmgr_sec" "example" {
 }
 
 # Create SDC instance in the private subnet of the AWS VPC. Disable this by setting `var.create_resources_in_aws` to false.
@@ -24,6 +24,6 @@ module "sec-instance-in-aws-example" {
   env                        = "example"
 }
 
-resource "cdo_sec_onboarding" "example" {
+resource "sccfwmgr_sec_onboarding" "example" {
   name = cdo_sec.example.name
 }

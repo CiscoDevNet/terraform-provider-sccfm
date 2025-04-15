@@ -3,12 +3,12 @@ package users
 import (
 	"context"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/publicapi"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
 )
 
-func Create(ctx context.Context, client http.Client, createInp MspUsersInput) (*[]UserDetails, *CreateError) {
+func Create(ctx context.Context, client http.Client, createInp MspUsersInput) (*[]ComputedUserDetails, *CreateError) {
 	client.Logger.Printf("Creating %d users in %s\n", len(createInp.Users), createInp.TenantUid)
 	createUrl := url.CreateUsersInMspManagedTenant(client.BaseUrl(), createInp.TenantUid)
 	var userDetailsPublicApiInput []UserDetailsPublicApiInput

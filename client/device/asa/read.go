@@ -2,13 +2,13 @@ package asa
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/device/tags"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/devicetype"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/statemachine"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/statemachine/state"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
 )
 
 type ReadInput = device.ReadByUidInput

@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -28,7 +28,7 @@ type ResourceType struct {
 }
 
 const ResourceTemplate = `
-resource "cdo_ftd_device" "test" {
+resource "sccfwmgr_ftd_device" "test" {
 	name = "{{.Name}}"
 	access_policy_name = "{{.AccessPolicyName}}"
 	performance_tier = "{{.PerformanceTier}}"

@@ -3,21 +3,21 @@ package asa_test
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/asa"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/asa/asaconfig"
-	internalhttp "github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/publicapi/transaction"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa/asaconfig"
+	internalhttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi/transaction"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"reflect"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device"
-	internalTesting "github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/testing"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
+	internalTesting "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/testing"
 	"github.com/jarcoal/httpmock"
 )
 
@@ -260,7 +260,7 @@ func configureConnectorReadToRespondWithError(connectorUid string) {
 func configureReadApiTokenInfoSuccessfully(tokenInfo user.GetTokenInfoOutput) {
 	httpmock.RegisterResponder(
 		http.MethodGet,
-		url.ReadTokenInfo(baseUrl),
+		url.ReadAnubisTokenInfo(baseUrl),
 		httpmock.NewJsonResponderOrPanic(http.StatusOK, tokenInfo),
 	)
 }
@@ -268,7 +268,7 @@ func configureReadApiTokenInfoSuccessfully(tokenInfo user.GetTokenInfoOutput) {
 func configureReadApiTokenInfoFailed() {
 	httpmock.RegisterResponder(
 		http.MethodGet,
-		url.ReadTokenInfo(baseUrl),
+		url.ReadAnubisTokenInfo(baseUrl),
 		httpmock.NewJsonResponderOrPanic(http.StatusInternalServerError, "internal server error"),
 	)
 }

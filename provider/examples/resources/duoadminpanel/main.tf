@@ -1,7 +1,7 @@
-resource "cdo_duo_admin_panel" "panel" {
-  name            = "<FILL_ME>"
-  host            = "<FILL_ME>"
-  integration_key = "<FILL_ME>"
-  secret_key      = "<FILL_ME>"
-  labels          = []
+resource "sccfm_duo_admin_panel" "panel" {
+  name            = var.duo_admin_panel_name
+  host            = var.duo_admin_panel_host
+  integration_key = var.duo_admin_panel_integration_key
+  secret_key      = var.duo_admin_panel_secret_key
+  labels          = var.duo_admin_panel_labels
 }

@@ -4,20 +4,19 @@ import (
 	"context"
 	"errors"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
 )
 
 func ReadByUsername(ctx context.Context, client http.Client, readInp ReadByUsernameInput) (*ReadUserOutput, error) {
 
-	readReq := NewReadByUsernameRequest(ctx, client, readInp.Name)
-	var userDetails []model.UserDetails
-	if readErr := readReq.Send(&userDetails); readErr != nil {
+	readReq := NewReadByUsernameRequest(ctx, client, readInp.Name, readInp.ApiOnlyUser)
+	var userPage model.UserPage
+	if readErr := readReq.Send(&userPage); readErr != nil {
 		return nil, readErr
 	}
-	if len(userDetails) != 1 {
+	if userPage.Count != 1 {
 		return nil, errors.New("user not found")
 	}
-
-	return &userDetails[0], nil
+	return &userPage.Items[0], nil
 }

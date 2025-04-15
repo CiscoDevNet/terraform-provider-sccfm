@@ -2,12 +2,12 @@ package ios_test
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
 	"net/http"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device"
-	internalTesting "github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/testing"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
+	internalTesting "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/testing"
 	"github.com/jarcoal/httpmock"
 )
 

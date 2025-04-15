@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -22,7 +22,7 @@ func NewResource() resource.Resource {
 }
 
 type Resource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type ResourceModel struct {
@@ -37,7 +37,7 @@ func (r *Resource) Metadata(ctx context.Context, req resource.MetadataRequest, r
 
 func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Provides an SDC connector resource. This allows SDC to be onboarded, updated, and deleted on CDO. **Note**: If you receive errors that read \"public key not found\", it is likely because you attempted to utilize the cdo_sdc resource before it has finished configuring itself, which is an asynchronous processor. To fix this, use the cdo_sdc_onboarding resource before utilizing the cdo_sdc to onboard any devices.",
+		MarkdownDescription: "Provides an SDC connector resource. This allows SDC to be onboarded, updated, and deleted on SCC Firewall Manager. **Note**: If you receive errors that read \"public key not found\", it is likely because you attempted to utilize the cdo_sdc resource before it has finished configuring itself, which is an asynchronous processor. To fix this, use the cdo_sdc_onboarding resource before utilizing the cdo_sdc to onboard any devices.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -65,12 +65,12 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

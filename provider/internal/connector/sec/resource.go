@@ -3,7 +3,7 @@ package sec
 import (
 	"context"
 	"fmt"
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -19,7 +19,7 @@ func NewResource() resource.Resource {
 }
 
 type Resource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type ResourceModel struct {
@@ -36,7 +36,7 @@ func (r *Resource) Metadata(ctx context.Context, req resource.MetadataRequest, r
 func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
-		MarkdownDescription: "Provides an SEC connector resource. This allows SEC to be onboarded, updated, and deleted on CDO.",
+		MarkdownDescription: "Provides an SEC connector resource. This allows SEC to be onboarded, updated, and deleted on SCC Firewall Manager.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -54,7 +54,7 @@ func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 				},
 			},
 			"cdo_bootstrap_data": schema.StringAttribute{
-				MarkdownDescription: "CDO bootstrap data. This should be passed as input to the SEC terraform module to bootstrap the connector with CDO.",
+				MarkdownDescription: "SCC Firewall Manager bootstrap data. This should be passed as input to the SEC terraform module to bootstrap the connector with SCC Firewall Manager.",
 				Computed:            true,
 				Sensitive:           true, // bootstrap data contains user api token
 				PlanModifiers: []planmodifier.String{
@@ -62,7 +62,7 @@ func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 				},
 			},
 			"sec_bootstrap_data": schema.StringAttribute{
-				MarkdownDescription: "SEC bootstrap data. This should be passed as input to the SEC terraform module to bootstrap the connector with CDO.",
+				MarkdownDescription: "SEC bootstrap data. This should be passed as input to the SEC terraform module to bootstrap the connector with SCC Firewall Manager.",
 				Computed:            true,
 				Sensitive:           true, // bootstrap data contains user api token
 				PlanModifiers: []planmodifier.String{
@@ -79,12 +79,12 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

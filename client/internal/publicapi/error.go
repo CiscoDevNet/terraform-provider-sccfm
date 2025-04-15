@@ -2,7 +2,7 @@ package publicapi
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/publicapi/transaction"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi/transaction"
 )
 
 type ErrorType interface {

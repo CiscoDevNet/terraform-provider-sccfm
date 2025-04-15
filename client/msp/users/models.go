@@ -29,6 +29,16 @@ type UserDetails struct {
 	ApiOnlyUser bool     `json:"apiOnlyUser"`
 }
 
+// this contains an additional field called UsernameInSccFirewallManager, that is only applicable for API-only users
+// this is because the username test is represented as test@tenantName in CDO
+type ComputedUserDetails struct {
+	Uid                          string
+	Username                     string
+	UsernameInSccFirewallManager string
+	Roles                        []string
+	ApiOnlyUser                  bool
+}
+
 type UserPage struct {
 	Count  int           `json:"count"`
 	Offset int           `json:"offset"`

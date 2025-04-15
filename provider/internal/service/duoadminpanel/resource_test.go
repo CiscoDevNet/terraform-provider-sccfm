@@ -4,10 +4,10 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -31,7 +31,7 @@ var resourceModel = struct {
 }
 
 const resourceTemplate = `
-resource "cdo_duo_admin_panel" "test" {
+resource "sccfwmgr_duo_admin_panel" "test" {
 	name = "{{.Name}}"
 	host = "{{.Host}}"
 	integration_key = "{{.IntegrationKey}}"

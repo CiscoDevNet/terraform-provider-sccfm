@@ -1,7 +1,7 @@
 package util_test
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
 	"testing"
 )
 

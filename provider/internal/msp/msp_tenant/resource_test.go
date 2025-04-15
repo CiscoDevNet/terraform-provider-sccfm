@@ -1,7 +1,7 @@
 package msp_tenant_test
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"strings"
 	"testing"
@@ -22,7 +22,7 @@ var testMspTenantResource = struct {
 }
 
 const testMspTenantResourceTemplate = `
-resource "cdo_msp_managed_tenant" "test" {
+resource "sccfwmgr_msp_managed_tenant" "test" {
 	api_token = "{{.ApiToken}}"
 }`
 

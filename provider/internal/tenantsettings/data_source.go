@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )
@@ -14,7 +14,7 @@ func NewTenantSettingsDataSource() datasource.DataSource {
 }
 
 type TenantSettingsDataSource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 func (*TenantSettingsDataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, res *datasource.MetadataResponse) {
@@ -67,7 +67,7 @@ func (*TenantSettingsDataSource) Schema(ctx context.Context, req datasource.Sche
 			},
 
 			"conflict_detection_interval": schema.StringAttribute{
-				MarkdownDescription: "The interval used by CDO to detect conflicts on devices",
+				MarkdownDescription: "The interval used by SCC Firewall Manager to detect conflicts on devices",
 				Computed:            true,
 			},
 		},
@@ -79,12 +79,12 @@ func (ds *TenantSettingsDataSource) Configure(ctx context.Context, req datasourc
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		res.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

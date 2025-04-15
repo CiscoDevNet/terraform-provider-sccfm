@@ -3,12 +3,12 @@ package tenantsettings_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/settings"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/settings"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-const testTenantSettingsResourceConfigTemplate = `resource "cdo_tenant_settings" "test" {
+const testTenantSettingsResourceConfigTemplate = `resource "sccfwmgr_tenant_settings" "test" {
 	change_request_support_enabled              = {{.ChangeRequestSupportEnabled}}
 	auto_accept_device_changes_enabled          = {{.AutoAcceptDeviceChangesEnabled}}
 	web_analytics_enabled                       = {{.WebAnalyticsEnabled}}

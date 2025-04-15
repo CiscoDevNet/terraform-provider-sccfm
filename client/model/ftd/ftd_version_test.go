@@ -2,7 +2,7 @@ package ftd_test
 
 import (
 	"errors"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/ftd"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

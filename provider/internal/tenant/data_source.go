@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -23,7 +23,7 @@ func NewDataSource() datasource.DataSource {
 }
 
 type DataSource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 func (d *DataSource) Metadata(ctx context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
@@ -43,11 +43,11 @@ func (d *DataSource) Schema(ctx context.Context, req datasource.SchemaRequest, r
 				Computed:            true,
 			},
 			"human_readable_name": schema.StringAttribute{
-				MarkdownDescription: "Human-readable name of the tenant as displayed on the CDO UI (if different from the tenant name).",
+				MarkdownDescription: "Human-readable name of the tenant as displayed on the SCC Firewall Manager UI (if different from the tenant name).",
 				Computed:            true,
 			},
 			"subscription_type": schema.StringAttribute{
-				MarkdownDescription: "The type of CDO subscription used on this tenant.",
+				MarkdownDescription: "The type of SCC Firewall Manager subscription used on this tenant.",
 				Computed:            true,
 			},
 		},
@@ -59,12 +59,12 @@ func (d *DataSource) Configure(ctx context.Context, req datasource.ConfigureRequ
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

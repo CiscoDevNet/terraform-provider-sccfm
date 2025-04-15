@@ -4,10 +4,10 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -30,7 +30,7 @@ type testIosResourceType struct {
 }
 
 const testIosResourceTemplate = `
-resource "cdo_ios_device" "test" {
+resource "sccfwmgr_ios_device" "test" {
 	name = "{{.Name}}"
 	socket_address = "{{.SocketAddress}}"
 	username = "{{.Username}}"

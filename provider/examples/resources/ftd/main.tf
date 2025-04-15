@@ -1,23 +1,20 @@
-variable "ftd_name" {}
-
-module "vpc" {
-  source = "github.com/CiscoDevNet/cdo-automation//modules/aws_vpc"
+resource "sccfm_ftd_device" "my_ftd" {
+  name               = var.device_name
+  licenses           = var.licenses
+  virtual            = var.is_virtual
+  access_policy_name = var.access_policy_name
+  performance_tier   = var.performance_tier
 }
 
-module "bastion" {
-  source    = "github.com/CiscoDevNet/cdo-automation//modules/bastion"
-  vpc_id    = module.vpc.vpc_id
-  subnet_id = module.vpc.public_subnet_id
+resource "null_resource" "ssh_into_ftds" {
+  provisioner "local-exec" {
+    command = <<EOT
+      sshpass -p ${var.ftd_ssh_password} ssh -o StrictHostKeyChecking=no -p ${var.ftd_ssh_port} admin@${var.ftd_ssh_host} "${sccfm_ftd_device.my_ftd.generated_command}"
+    EOT
+  }
 }
 
-module "ftdv_in_cdo" {
-  source              = "github.com/CiscoDevNet/cdo-automation//modules/cdo/ftd"
-  bastion_ip          = module.bastion.bastion_ip
-  bastion_private_key = module.bastion.bastion_private_key
-  bastion_sg          = module.bastion.bastion_sg
-  vpc_id              = module.vpc.vpc_id
-  public_subnet_id    = module.vpc.public_subnet_id
-  private_subnet_id   = module.vpc.private_subnet_id
-  ftd_name            = var.ftd_name
-  cdo_api_token       = file("${path.module}/api_token.txt")
+resource "sccfm_ftd_device_onboarding" "my_ftd" {
+  depends_on = [null_resource.ssh_into_ftds]
+  ftd_uid = sccfm_ftd_device.my_ftd.id
 }

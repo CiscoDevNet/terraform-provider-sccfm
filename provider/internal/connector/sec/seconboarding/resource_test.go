@@ -5,14 +5,14 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 var resourceModel = struct{}{}
 
 const resourceTemplate = `
-resource "cdo_sec" "test" {
+resource "sccfwmgr_sec" "test" {
 }`
 
 var resourceConfig = acctest.MustParseTemplate(resourceTemplate, resourceModel)

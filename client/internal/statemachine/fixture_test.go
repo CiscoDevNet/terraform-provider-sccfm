@@ -1,6 +1,6 @@
 package statemachine_test
 
-import "github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/statemachine"
+import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/statemachine"
 
 const (
 	baseUrl   = "https://unit-test.cdo.cisco.com"

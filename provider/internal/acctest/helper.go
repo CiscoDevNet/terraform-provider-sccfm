@@ -7,7 +7,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 )
 
 // given a string template and an object,

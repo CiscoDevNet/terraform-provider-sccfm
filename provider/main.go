@@ -8,7 +8,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/provider"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/provider"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 )
 

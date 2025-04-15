@@ -1,7 +1,7 @@
 package ftdversion_test
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"testing"
 )
@@ -17,7 +17,7 @@ data "cdo_ftd_device" "test" {
 	name = "{{.Name}}"
 }
 
-resource "cdo_ftd_device_version" "test" {
+resource "sccfwmgr_ftd_device_version" "test" {
 	ftd_uid = data.cdo_ftd_device.test.id
 	software_version = "7.3.0"
 }

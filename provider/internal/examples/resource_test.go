@@ -3,7 +3,7 @@ package examples_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -14,7 +14,7 @@ var resourceModel = struct {
 }
 
 const resourceTemplate = `
-resource "cdo_example" "test" {
+resource "sccfwmgr_example" "test" {
 	name = "{{.Name}}"
 }`
 

@@ -2,9 +2,9 @@ package user
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/user/auth"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/user/auth"
 )
 
 type GetTokenInfoInput struct {
@@ -18,7 +18,7 @@ type GetTokenInfoOutput = auth.Info
 
 func GetTokenInfo(ctx context.Context, client http.Client, getTokenInfoInp GetTokenInfoInput) (*GetTokenInfoOutput, error) {
 
-	readUrl := url.ReadTokenInfo(client.BaseUrl())
+	readUrl := url.ReadAnubisTokenInfo(client.BaseUrl())
 
 	req := client.NewGet(ctx, readUrl)
 

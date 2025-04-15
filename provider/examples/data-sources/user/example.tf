@@ -1,28 +1,47 @@
 terraform {
   required_providers {
-    cdo = {
-      source = "hashicorp.com/CiscoDevnet/cdo"
+    sccfm = {
+      source = "CiscoDevnet/scc-firewall-manager"
     }
   }
 }
 
-provider "cdo" {
-  base_url  = "<https://www.defenseorchestrator.com|https://www.defenseorchestrator.eu|https://apj.cdo.cisco.com|https://aus.cdo.cisco.com|https://in.cdo.cisco.com>"
-  api_token = "<replace-with-api-token-generated-from-cdo>"
+provider "sccfm" {
+  base_url  = "<https://us.manage.security.cisco.com|https://eu.manage.security.cisco.com|https://apj.manage.security.cisco.com|https://aus.manage.security.cisco.com|https://in.manage.security.cisco.com>"
+  api_token = file("${path.module}/api_token.txt")
 }
 
-data "cdo_user" "example_user" {
-  name = "example-user@cisco.com"
+
+data "sccfm_user" "example_user" {
+  name = "<your-username@example.com>"
+  is_api_only_user = false
+}
+
+data "sccfm_user" "api_only_user" {
+  name = "<api-only-user>@<tenant-name>"
+  is_api_only_user = true
 }
 
 output "example_user_uid" {
-  value = data.cdo_user.example_user.id
+  value = data.sccfm_user.example_user.id
 }
 
 output "example_user_is_api_only_user" {
-  value = data.cdo_user.example_user.is_api_only_user
+  value = data.sccfm_user.example_user.is_api_only_user
 }
 
 output "example_user_role" {
-  value = data.cdo_user.example_user.role
+  value = data.sccfm_user.example_user.role
+}
+
+output "api_only_user_uid" {
+  value = data.sccfm_user.api_only_user.id
+}
+
+output "api_only_user_is_api_only_user" {
+  value = data.sccfm_user.api_only_user.is_api_only_user
+}
+
+output "api_only_user_role" {
+  value = data.sccfm_user.api_only_user.role
 }

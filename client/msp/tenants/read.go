@@ -2,8 +2,8 @@ package tenants
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
 )
 
 func ReadByUid(ctx context.Context, client http.Client, readInp ReadByUidInput) (*MspTenantOutput, error) {

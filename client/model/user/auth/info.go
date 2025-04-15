@@ -3,8 +3,8 @@ package auth
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/featureflag"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/user/auth/role"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/featureflag"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/user/auth/role"
 	"strings"
 )
 

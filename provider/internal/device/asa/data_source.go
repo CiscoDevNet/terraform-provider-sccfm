@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -30,7 +30,7 @@ func NewAsaDataSource() datasource.DataSource {
 
 // The data source object consumed by terraform.
 type AsaDataSource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 /////
@@ -68,15 +68,15 @@ func (d *AsaDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				Computed:            true,
 			},
 			"name": schema.StringAttribute{
-				MarkdownDescription: "The human-readable name of the device. This is the name displayed on the CDO Inventory page. Device names are unique across a CDO tenant.",
+				MarkdownDescription: "The human-readable name of the device. This is the name displayed on the Firewall Security Devices page on Security Cloud Control. Device names are unique across a SCC Firewall Manager tenant.",
 				Required:            true,
 			},
 			"sdc_name": schema.StringAttribute{
-				MarkdownDescription: "The name of the Secure Device Connector (SDC) that is used by CDO to communicate with the device. This value will be empty if the device was onboarded using a Cloud Connector (CDG).",
+				MarkdownDescription: "The name of the Secure Device Connector (SDC) that is used by SCC Firewall Manager to communicate with the device. This value will be empty if the device was onboarded using a Cloud Connector (CDG).",
 				Computed:            true,
 			},
 			"connector_type": schema.StringAttribute{
-				MarkdownDescription: "The type of the connector that is used to communicate with the device. CDO can communicate with your device using either a Cloud Connector (CDG) or a Secure Device Connector (SDC); see [the CDO documentation](https://docs.defenseorchestrator.com/c-connect-cisco-defense-orchestratortor-the-secure-device-connector.html) to learn more (Valid values: [CDG, SDC]).",
+				MarkdownDescription: "The type of the connector that is used to communicate with the device. SCC Firewall Manager can communicate with your device using either a Cloud Connector (CDG) or a Secure Device Connector (SDC); see [the SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/c-connect-cisco-defense-orchestratortor-the-secure-device-connector.html) to learn more (Valid values: [CDG, SDC]).",
 				Computed:            true,
 				Validators: []validator.String{
 					stringvalidator.OneOf("CDG", "SDC"),
@@ -101,7 +101,7 @@ func (d *AsaDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 			"labels": schema.ListAttribute{
 				ElementType:         types.StringType,
 				Computed:            true,
-				MarkdownDescription: "The labels applied to the device. Labels are used to group devices in CDO. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "The labels applied to the device. Labels are used to group devices in CDO. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
 				Validators: []validator.List{
 					listvalidator.UniqueValues(),
 				},
@@ -111,7 +111,7 @@ func (d *AsaDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 					ElemType: types.StringType,
 				},
 				Computed:            true,
-				MarkdownDescription: "The grouped labels applied to the device. Labels are used to group devices in CDO. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "The grouped labels applied to the device. Labels are used to group devices in CDO. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
 			},
 		},
 	}
@@ -125,12 +125,12 @@ func (d *AsaDataSource) Configure(ctx context.Context, req datasource.ConfigureR
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
