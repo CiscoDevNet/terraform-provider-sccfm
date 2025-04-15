@@ -21,19 +21,35 @@ import (
 )
 
 // Function to generate users
-func generateUsers(num int) []users.UserDetails {
+func generateHumanUsers(num int) []users.UserDetails {
 	var createdUsers []users.UserDetails
 	for i := 1; i <= num; i++ {
 		uid := "uid" + strconv.Itoa(i)       // Generate unique UID
 		username := "user" + strconv.Itoa(i) // Generate usernames like user1, user2, etc.
 		roles := []string{"ROLE_USER"}       // Assign a default role; you can modify this as needed
-		apiOnlyUser := i%2 == 0              // Example: alternate between true/false for ApiOnlyUser
 
 		createdUsers = append(createdUsers, users.UserDetails{
 			Uid:         uid,
 			Username:    username,
 			Roles:       roles,
-			ApiOnlyUser: apiOnlyUser,
+			ApiOnlyUser: false,
+		})
+	}
+	return createdUsers
+}
+
+func generateApiOnlyUsers(num int) []users.UserDetails {
+	var createdUsers []users.UserDetails
+	for i := 1; i <= num; i++ {
+		uid := "uid" + strconv.Itoa(i)       // Generate unique UID
+		username := "user" + strconv.Itoa(i) // Generate usernames like user1, user2, etc.
+		roles := []string{"ROLE_USER"}       // Assign a default role; you can modify this as needed
+
+		createdUsers = append(createdUsers, users.UserDetails{
+			Uid:         uid,
+			Username:    username,
+			Roles:       roles,
+			ApiOnlyUser: true,
 		})
 	}
 	return createdUsers
@@ -101,28 +117,53 @@ func TestCreate(t *testing.T) {
 	t.Run("successfully create users in MSP-managed tenant", func(t *testing.T) {
 		httpmock.Reset()
 		var managedTenantUid = uuid.New().String()
+		humanUserToCreate := users.UserDetails{Username: "apples@bananas.com", Roles: []string{string(role.SuperAdmin)}, ApiOnlyUser: false}
+		apiOnlyUserToCreate := users.UserDetails{Username: "api-only-user", Roles: []string{string(role.ReadOnly)}, ApiOnlyUser: true}
 		var createInp = users.MspUsersInput{
 			TenantUid: managedTenantUid,
 			Users: []users.UserDetails{
-				{Username: "apples@bananas.com", Roles: []string{string(role.SuperAdmin)}, ApiOnlyUser: false},
-				{Username: "api-only-user", Roles: []string{string(role.ReadOnly)}, ApiOnlyUser: true},
+				humanUserToCreate,
+				apiOnlyUserToCreate,
 			},
 		}
 
-		var usersInCdoTenant = generateUsers(250)
-		var usersWithIds []users.UserDetails
-		for _, user := range createInp.Users {
-			userWithId := users.UserDetails{
-				Uid:         uuid.New().String(),
-				Username:    user.Username,
-				Roles:       user.Roles,
-				ApiOnlyUser: user.ApiOnlyUser,
-			}
-			usersInCdoTenant = append(usersInCdoTenant, userWithId)
-			usersWithIds = append(usersWithIds, userWithId)
+		var humanUsersInCdoTenant = generateHumanUsers(250)
+		var apiOnlyUsersInCdoTenant = generateApiOnlyUsers(250)
+		humanUserWithId := users.UserDetails{
+			Uid:         uuid.New().String(),
+			Username:    humanUserToCreate.Username,
+			Roles:       humanUserToCreate.Roles,
+			ApiOnlyUser: humanUserToCreate.ApiOnlyUser,
 		}
-		firstUserPage := users.UserPage{Items: usersInCdoTenant[:200], Count: len(usersInCdoTenant), Limit: 200, Offset: 0}
-		secondUserPage := users.UserPage{Items: usersInCdoTenant[200:], Count: len(usersInCdoTenant), Limit: 200, Offset: 200}
+		humanUserComputed := users.ComputedUserDetails{
+			Uid:                          humanUserWithId.Uid,
+			Username:                     humanUserWithId.Username,
+			UsernameInSccFirewallManager: humanUserWithId.Username,
+			Roles:                        humanUserWithId.Roles,
+			ApiOnlyUser:                  humanUserWithId.ApiOnlyUser,
+		}
+		apiOnlyUserWithId := users.UserDetails{
+			Uid:         uuid.New().String(),
+			Username:    apiOnlyUserToCreate.Username,
+			Roles:       apiOnlyUserToCreate.Roles,
+			ApiOnlyUser: apiOnlyUserToCreate.ApiOnlyUser,
+		}
+		apiOnlyUserComputed := users.ComputedUserDetails{
+			Uid:                          apiOnlyUserWithId.Uid,
+			Username:                     apiOnlyUserWithId.Username,
+			UsernameInSccFirewallManager: apiOnlyUserWithId.Username,
+			Roles:                        apiOnlyUserWithId.Roles,
+			ApiOnlyUser:                  apiOnlyUserWithId.ApiOnlyUser,
+		}
+		var usersWithIds []users.ComputedUserDetails
+		usersWithIds = append(usersWithIds, humanUserComputed)
+		humanUsersInCdoTenant = append(humanUsersInCdoTenant, humanUserWithId)
+		apiOnlyUsersInCdoTenant = append(apiOnlyUsersInCdoTenant, apiOnlyUserWithId)
+		usersWithIds = append(usersWithIds, apiOnlyUserComputed)
+		firstHumanUserPage := users.UserPage{Items: humanUsersInCdoTenant[:200], Count: len(humanUsersInCdoTenant), Limit: 200, Offset: 0}
+		secondHumanUserPage := users.UserPage{Items: humanUsersInCdoTenant[200:], Count: len(humanUsersInCdoTenant), Limit: 200, Offset: 200}
+		firstApiOnlyUserPage := users.UserPage{Items: apiOnlyUsersInCdoTenant[:200], Count: len(apiOnlyUsersInCdoTenant), Limit: 200, Offset: 0}
+		secondApiOnlyUserPage := users.UserPage{Items: apiOnlyUsersInCdoTenant[200:], Count: len(apiOnlyUsersInCdoTenant), Limit: 200, Offset: 200}
 		var transactionUid = uuid.New().String()
 		var inProgressTransaction = transaction.Type{
 			TransactionUid:  transactionUid,
@@ -160,12 +201,22 @@ func TestCreate(t *testing.T) {
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
 			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users?limit=200&offset=0", managedTenantUid),
-			httpmock.NewJsonResponderOrPanic(200, firstUserPage),
+			httpmock.NewJsonResponderOrPanic(200, firstHumanUserPage),
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
 			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users?limit=200&offset=200", managedTenantUid),
-			httpmock.NewJsonResponderOrPanic(200, secondUserPage),
+			httpmock.NewJsonResponderOrPanic(200, secondHumanUserPage),
+		)
+		httpmock.RegisterResponder(
+			netHttp.MethodGet,
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/api-only?limit=200&offset=0", managedTenantUid),
+			httpmock.NewJsonResponderOrPanic(200, firstApiOnlyUserPage),
+		)
+		httpmock.RegisterResponder(
+			netHttp.MethodGet,
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/api-only?limit=200&offset=200", managedTenantUid),
+			httpmock.NewJsonResponderOrPanic(200, secondApiOnlyUserPage),
 		)
 
 		actual, err := users.Create(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), createInp)

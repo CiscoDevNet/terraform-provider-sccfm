@@ -2,7 +2,9 @@ package user_test
 
 import (
 	"context"
+	"fmt"
 	netHttp "net/http"
+	"net/url"
 	"testing"
 	"time"
 
@@ -17,28 +19,31 @@ func TestRevokeApiToken(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 	userDetails := model.UserDetails{
-		Name:        "barack@example.com",
+		Username:    "barack@example.com",
+		Uid:         "barack123",
 		ApiOnlyUser: false,
-		UserRoles:   []string{"ROLE_ADMIN"},
-		ApiTokenId:  "api-token-id",
+		Roles:       []string{"ROLE_ADMIN"},
+	}
+	userPage := model.UserPage{
+		Count: 1,
+		Items: []model.UserDetails{userDetails},
 	}
 
 	t.Run("Successfully revoke an API token", func(t *testing.T) {
 		httpmock.Reset()
-		httpmock.RegisterResponder(
-			netHttp.MethodGet,
-			"/anubis/rest/v1/users",
-			httpmock.NewJsonResponderOrPanic(200, []model.UserDetails{userDetails}),
-		)
 
 		httpmock.RegisterResponder(
+			netHttp.MethodGet,
+			"/api/rest/v1/users?limit=1&offset=0&q=name%3A"+url.QueryEscape(userDetails.Username),
+			httpmock.NewJsonResponderOrPanic(200, userPage),
+		)
+		httpmock.RegisterResponder(
 			netHttp.MethodPost,
-			"/anubis/rest/v1/oauth/revoke/"+userDetails.ApiTokenId,
+			fmt.Sprintf("/api/rest/v1/users/%s/apiToken/revoke", userDetails.Uid),
 			httpmock.NewJsonResponderOrPanic(200, nil),
 		)
 
-		actual, err := user.RevokeApiToken(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewRevokeApiTokenInput(userDetails.Name))
-		assert.NotNil(t, actual, "Revocation response should not be nil")
+		err := user.RevokeApiToken(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewRevokeApiTokenInput(userDetails.Username))
 		assert.Nil(t, err, "Error cannot be non-nil")
 	})
 
@@ -46,18 +51,16 @@ func TestRevokeApiToken(t *testing.T) {
 		httpmock.Reset()
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			"/anubis/rest/v1/users",
-			httpmock.NewJsonResponderOrPanic(200, []model.UserDetails{userDetails}),
+			"/api/rest/v1/users?q=name:"+userDetails.Username,
+			httpmock.NewJsonResponderOrPanic(200, userPage),
 		)
-
 		httpmock.RegisterResponder(
 			netHttp.MethodPost,
-			"/anubis/rest/v1/oauth/revoke/"+userDetails.ApiTokenId,
+			fmt.Sprintf("/api/rest/v1/users/%s/apiToken/revoke", userDetails.Uid),
 			httpmock.NewJsonResponderOrPanic(400, nil),
 		)
 
-		actual, err := user.RevokeApiToken(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewRevokeApiTokenInput(userDetails.Name))
-		assert.Nil(t, actual, "Revocation response should be nil")
+		err := user.RevokeApiToken(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewRevokeApiTokenInput(userDetails.Username))
 		assert.NotNil(t, err, "Error should be nil")
 	})
 
@@ -65,12 +68,11 @@ func TestRevokeApiToken(t *testing.T) {
 		httpmock.Reset()
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			"/anubis/rest/v1/users",
+			"/api/rest/v1/users?q=name:"+userDetails.Username,
 			httpmock.NewJsonResponderOrPanic(500, nil),
 		)
 
-		actual, err := user.RevokeApiToken(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewRevokeApiTokenInput(userDetails.Name))
-		assert.Nil(t, actual, "Revocation response should be nil")
+		err := user.RevokeApiToken(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewRevokeApiTokenInput(userDetails.Username))
 		assert.NotNil(t, err, "Error should be nil")
 	})
 }

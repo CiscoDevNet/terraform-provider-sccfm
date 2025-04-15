@@ -18,35 +18,24 @@ func TestCreate(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
-	validUserTenantAssociation := user.UserTenantAssociation{
-		Uid: "association-uuid",
-		Source: user.Association{
-			Uid:       "sample-uuid",
-			Namespace: "systemdb",
-			Type:      "users",
-		},
-	}
-
 	t.Run("successfully create user", func(t *testing.T) {
 		httpmock.Reset()
 		expected := model.UserDetails{
-			Name:        "george@example.com",
+			Username:    "george@example.com",
+			Uid:         "donald-duck",
 			ApiOnlyUser: false,
-			UserRoles:   []string{"ROLE_SUPER_ADMIN"},
+			Roles:       []string{"ROLE_SUPER_ADMIN"},
 		}
 
 		httpmock.RegisterResponder(
 			netHttp.MethodPost,
-			fmt.Sprintf("/anubis/rest/v1/users/%s", expected.Name),
-			httpmock.NewJsonResponderOrPanic(200, validUserTenantAssociation),
-		)
-		httpmock.RegisterResponder(
-			netHttp.MethodGet,
-			"/anubis/rest/v1/users/"+validUserTenantAssociation.Source.Uid,
+			fmt.Sprintf("/api/rest/v1/users"),
 			httpmock.NewJsonResponderOrPanic(200, expected),
 		)
 
-		actual, err := user.Create(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewCreateUserInput(expected.Name, expected.UserRoles[0], expected.ApiOnlyUser))
+		firstName := "George"
+		lastName := "Washington"
+		actual, err := user.Create(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewCreateUserInput(expected.Username, expected.Roles[0], expected.ApiOnlyUser, &firstName, &lastName))
 
 		assert.NotNil(t, actual, "User details returned must not be nil")
 		assert.Equal(t, expected, *actual, "Actual user details do not match expected")
@@ -54,36 +43,15 @@ func TestCreate(t *testing.T) {
 	})
 
 	t.Run("should error if failed to create user", func(t *testing.T) {
-		username := "bill@example.com"
-		apiOnlyUser := false
+		username := "bill_api"
 		userRoles := []string{"ROLE_READ_ONLY"}
 		httpmock.RegisterResponder(
 			netHttp.MethodPost,
-			fmt.Sprintf("/anubis/rest/v1/users/%s", username),
+			fmt.Sprintf("/api/rest/v1/users"),
 			httpmock.NewJsonResponderOrPanic(500, nil),
 		)
 
-		actual, err := user.Create(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewCreateUserInput(username, userRoles[0], apiOnlyUser))
-		assert.Nil(t, actual, "Expected actual user not to be created")
-		assert.NotNil(t, err, "Expected error")
-	})
-
-	t.Run("should error if failed to read user details after creation", func(t *testing.T) {
-		username := "bill@example.com"
-		apiOnlyUser := false
-		userRoles := []string{"ROLE_READ_ONLY"}
-		httpmock.RegisterResponder(
-			netHttp.MethodPost,
-			fmt.Sprintf("/anubis/rest/v1/users/%s", username),
-			httpmock.NewJsonResponderOrPanic(200, validUserTenantAssociation),
-		)
-		httpmock.RegisterResponder(
-			netHttp.MethodGet,
-			"/anubis/rest/v1/users/"+validUserTenantAssociation.Source.Uid,
-			httpmock.NewJsonResponderOrPanic(500, nil),
-		)
-
-		actual, err := user.Create(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewCreateUserInput(username, userRoles[0], apiOnlyUser))
+		actual, err := user.Create(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), *user.NewCreateUserInput(username, userRoles[0], true, nil, nil))
 		assert.Nil(t, actual, "Expected actual user not to be created")
 		assert.NotNil(t, err, "Expected error")
 	})
