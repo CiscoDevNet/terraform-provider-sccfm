@@ -14,7 +14,7 @@ type testUserResourceType struct {
 }
 
 const testResourceTemplate = `
-resource "sccfwmgr_user" "test" {
+resource "sccfm_user" "test" {
 	name = "{{.Name}}"
     is_api_only_user = "{{.ApiOnlyUser}}"
     role = "{{.UserRole}}"
@@ -40,14 +40,14 @@ func TestAccUserResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testUserResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_user.test", "name", testUserResource.Name),
+					resource.TestCheckResourceAttr("sccfm_user.test", "name", testUserResource.Name),
 				),
 			},
 			// Update and Read testing
 			{
 				Config: acctest.ProviderConfig() + testResourceConfig_NewName,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_user.test", "name", testResource_NewName.Name),
+					resource.TestCheckResourceAttr("sccfm_user.test", "name", testResource_NewName.Name),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

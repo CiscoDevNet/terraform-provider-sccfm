@@ -19,8 +19,9 @@ var testUser = struct {
 }
 
 const testUserTemplate = `
-data "cdo_user" "test" {
+data "sccfm_user" "test" {
 	name = "{{.Name}}"
+	is_api_only_user = false
 }`
 
 var testUserConfig = acctest.MustParseTemplate(testUserTemplate, testUser)
@@ -34,9 +35,9 @@ func TestAccUserDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testUserConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_user.test", "name", testUser.Name),
-					resource.TestCheckResourceAttr("data.cdo_user.test", "is_api_only_user", strconv.FormatBool(testUser.ApiOnlyUser)),
-					resource.TestCheckResourceAttr("data.cdo_user.test", "role", testUser.UserRole),
+					resource.TestCheckResourceAttr("data.sccfm_user.test", "name", testUser.Name),
+					resource.TestCheckResourceAttr("data.sccfm_user.test", "is_api_only_user", strconv.FormatBool(testUser.ApiOnlyUser)),
+					resource.TestCheckResourceAttr("data.sccfm_user.test", "role", testUser.UserRole),
 				),
 			},
 		},

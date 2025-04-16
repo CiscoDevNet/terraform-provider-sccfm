@@ -13,12 +13,12 @@ var dataSourceModel = struct {
 }
 
 var sameVersionTemplate = `
-data "cdo_ftd_device" "test" {
+data "sccfm_ftd_device" "test" {
 	name = "{{.Name}}"
 }
 
-resource "sccfwmgr_ftd_device_version" "test" {
-	ftd_uid = data.cdo_ftd_device.test.id
+resource "sccfm_ftd_device_version" "test" {
+	ftd_uid = data.sccfm_ftd_device.test.id
 	software_version = "7.3.0"
 }
 `
@@ -30,11 +30,11 @@ func TestAccFtdVersionResource(t *testing.T) {
 		PreCheck:                 acctest.PreCheckFunc(t),
 		ProtoV6ProviderFactories: acctest.ProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			// when the software_version specified in cdo_ftd_device_version is the same as the version on the FTD, then I should not fail
+			// when the software_version specified in sccfm_ftd_device_version is the same as the version on the FTD, then I should not fail
 			{
 				Config: acctest.ProviderConfig() + config,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ftd_device_version.test", "software_version_on_device", "7.3.0"),
+					resource.TestCheckResourceAttr("sccfm_ftd_device_version.test", "software_version_on_device", "7.3.0"),
 				),
 			},
 		},

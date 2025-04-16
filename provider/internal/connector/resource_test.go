@@ -12,7 +12,7 @@ type testSdcResourceType struct {
 }
 
 const testResourceTemplate = `
-resource "sccfwmgr_sdc" "test" {
+resource "sccfm_sdc" "test" {
 	name = "{{.Name}}"
 }`
 
@@ -35,7 +35,7 @@ func TestAccSdcResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testSdcResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_sdc.test", "name", testSdcResource.Name),
+					resource.TestCheckResourceAttr("sccfm_sdc.test", "name", testSdcResource.Name),
 				),
 			},
 			// Delete testing automatically occurs in TestCase
@@ -53,7 +53,7 @@ func TestAccUpdateSdcResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testSdcResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_sdc.test", "name", testSdcResource.Name),
+					resource.TestCheckResourceAttr("sccfm_sdc.test", "name", testSdcResource.Name),
 				),
 			},
 			// Update and Read testing
@@ -61,7 +61,7 @@ func TestAccUpdateSdcResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testResourceConfig_NewName,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_sdc.test", "name", testResource_NewName.Name),
+					resource.TestCheckResourceAttr("sccfm_sdc.test", "name", testResource_NewName.Name),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

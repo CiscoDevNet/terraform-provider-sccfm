@@ -32,7 +32,7 @@ type testAsaResourceType struct {
 }
 
 const asaResourceTemplate = `
-resource "sccfwmgr_asa_device" "test" {
+resource "sccfm_asa_device" "test" {
 	name = "{{.Name}}"
 	socket_address = "{{.SocketAddress}}"
 	connector_name = "{{.ConnectorName}}"
@@ -45,7 +45,7 @@ resource "sccfwmgr_asa_device" "test" {
 }`
 
 const asaResourceTemplateNoLabels = `
-resource "sccfwmgr_asa_device" "test" {
+resource "sccfm_asa_device" "test" {
 	name = "{{.Name}}"
 	socket_address = "{{.SocketAddress}}"
 	connector_name = "{{.ConnectorName}}"
@@ -114,30 +114,30 @@ func TestAccAsaDeviceResource_SDC(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "name", testAsaResource_SDC.Name),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "socket_address", testAsaResource_SDC.SocketAddress),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "host", testAsaResource_SDC.Host),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "port", strconv.FormatInt(testAsaResource_SDC.Port, 10)),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "connector_type", testAsaResource_SDC.ConnectorType),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "username", testAsaResource_SDC.Username),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "password", testAsaResource_SDC.Password),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "labels.#", strconv.Itoa(len(labels))),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "labels.*", labels[0]),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "labels.*", labels[1]),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "labels.*", labels[2]),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "grouped_labels.%", "1"),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "grouped_labels.acceptancetest.#", strconv.Itoa(len(groupedLabels["acceptancetest"]))),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][0]),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][1]),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][2]),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "name", testAsaResource_SDC.Name),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "socket_address", testAsaResource_SDC.SocketAddress),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "host", testAsaResource_SDC.Host),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "port", strconv.FormatInt(testAsaResource_SDC.Port, 10)),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "connector_type", testAsaResource_SDC.ConnectorType),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "username", testAsaResource_SDC.Username),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "password", testAsaResource_SDC.Password),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "labels.#", strconv.Itoa(len(labels))),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "labels.*", labels[0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "labels.*", labels[1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "labels.*", labels[2]),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "grouped_labels.%", "1"),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "grouped_labels.acceptancetest.#", strconv.Itoa(len(groupedLabels["acceptancetest"]))),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][2]),
 				),
 			},
 			// bad credential tests
 			{
 				Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC_NewCreds,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "name", testAsaResource_SDC_BadCreds.Name),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "password", testAsaResource_SDC_BadCreds.Password),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "name", testAsaResource_SDC_BadCreds.Name),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "password", testAsaResource_SDC_BadCreds.Password),
 				),
 				ExpectError: regexp.MustCompile(`.*Bad Credentials.*`),
 			},
@@ -145,8 +145,8 @@ func TestAccAsaDeviceResource_SDC(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "name", testAsaResource_SDC.Name),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "password", testAsaResource_SDC.Password),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "name", testAsaResource_SDC.Name),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "password", testAsaResource_SDC.Password),
 				),
 			},
 			// Update order of label testing
@@ -158,18 +158,18 @@ func TestAccAsaDeviceResource_SDC(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC_NewName,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "name", testAsaResource_SDC_NewName.Name),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "name", testAsaResource_SDC_NewName.Name),
 				),
 			},
 			// Replace grouped labels
 			{
 				Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC_ReplaceGroupedLabels,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "grouped_labels.%", "1"),
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "grouped_labels.my-cool-new-label-group.#", strconv.Itoa(len(renamedGroupedLabels["my-cool-new-label-group"]))),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][0]),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][1]),
-					resource.TestCheckTypeSetElemAttr("cdo_asa_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][2]),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "grouped_labels.%", "1"),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "grouped_labels.my-cool-new-label-group.#", strconv.Itoa(len(renamedGroupedLabels["my-cool-new-label-group"]))),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_asa_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][2]),
 				),
 			},
 
@@ -177,7 +177,7 @@ func TestAccAsaDeviceResource_SDC(t *testing.T) {
 			// {
 			// 	Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC_NewLocation,
 			// 	Check: resource.ComposeAggregateTestCheckFunc(
-			// 		resource.TestCheckResourceAttr("cdo_asa_device.test", "socket_address", testAsaResource_SDC_NewLocation.SocketAddress),
+			// 		resource.TestCheckResourceAttr("sccfm_asa_device.test", "socket_address", testAsaResource_SDC_NewLocation.SocketAddress),
 			// 	),
 			// },
 			// Delete testing automatically occurs in TestCase
@@ -194,7 +194,7 @@ func TestAccAsaDeviceResource_SDC_NoLabels(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testAsaResourceConfig_SDC_NoLabels,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_asa_device.test", "labels.#", strconv.Itoa(0)),
+					resource.TestCheckResourceAttr("sccfm_asa_device.test", "labels.#", strconv.Itoa(0)),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

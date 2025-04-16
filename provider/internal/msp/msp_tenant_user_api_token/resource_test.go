@@ -35,7 +35,7 @@ func join(slice []string) string {
 }
 
 const testMspManagedTenantUsersAndApiTokenTemplate = `
-resource "sccfwmgr_msp_managed_tenant_users" "test" {
+resource "sccfm_msp_managed_tenant_users" "test" {
 	tenant_uid = "{{.TenantUid}}"
 	users = [
 		{
@@ -46,9 +46,9 @@ resource "sccfwmgr_msp_managed_tenant_users" "test" {
 	]
 }
 
-resource "sccfwmgr_msp_managed_tenant_user_api_token" "test" {
+resource "sccfm_msp_managed_tenant_user_api_token" "test" {
 	tenant_uid = "{{.TenantUid}}"
-	user_uid = cdo_msp_managed_tenant_users.test.users[0].id
+	user_uid = sccfm_msp_managed_tenant_users.test.users[0].id
 }
 `
 
@@ -65,7 +65,7 @@ func TestAccMspManagedTenantUserApiTokenResource(t *testing.T) {
 			{
 				Config: acctest.MspProviderConfig() + testMspManagedTenantUsersAndApiTokenResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttrSet("cdo_msp_managed_tenant_user_api_token.test", "api_token"),
+					resource.TestCheckResourceAttrSet("sccfm_msp_managed_tenant_user_api_token.test", "api_token"),
 				),
 			},
 		},

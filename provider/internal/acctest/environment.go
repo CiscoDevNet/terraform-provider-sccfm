@@ -280,7 +280,7 @@ func (e *env) ConnectorResourceNewName() string {
 	return e.mustGetString("CONNECTOR_RESOURCE_NEW_NAME")
 }
 
-func (e *env) CloudFmcDataSourceHostname() string {
+func (e *env) CdFmcDataSourceHostname() string {
 	return e.mustGetString("CLOUD_FMC_DATA_SOURCE_HOSTNAME")
 }
 

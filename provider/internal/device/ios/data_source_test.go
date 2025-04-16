@@ -23,7 +23,7 @@ var testIosDataSource = struct {
 }
 
 var testIosDataSourceTemplate = `
-data "cdo_ios_device" "test" {
+data "sccfm_ios_device" "test" {
 	name = "{{.Name}}"
 }`
 var testIosDataSourceConfig = acctest.MustParseTemplate(testIosDataSourceTemplate, testIosDataSource)
@@ -37,12 +37,12 @@ func TestAccIosDeviceDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testIosDataSourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_ios_device.test", "name", testIosDataSource.Name),
-					resource.TestCheckResourceAttr("data.cdo_ios_device.test", "ignore_certificate", testIosDataSource.IgnoreCertificate),
-					resource.TestCheckResourceAttr("data.cdo_ios_device.test", "labels.#", strconv.Itoa(len(asaDataSourceTags))),
-					resource.TestCheckResourceAttrWith("data.cdo_ios_device.test", "labels.0", testutil.CheckEqual(asaDataSourceTags[0])),
-					resource.TestCheckResourceAttrWith("data.cdo_ios_device.test", "labels.1", testutil.CheckEqual(asaDataSourceTags[1])),
-					resource.TestCheckResourceAttrWith("data.cdo_ios_device.test", "labels.2", testutil.CheckEqual(asaDataSourceTags[2])),
+					resource.TestCheckResourceAttr("data.sccfm_ios_device.test", "name", testIosDataSource.Name),
+					resource.TestCheckResourceAttr("data.sccfm_ios_device.test", "ignore_certificate", testIosDataSource.IgnoreCertificate),
+					resource.TestCheckResourceAttr("data.sccfm_ios_device.test", "labels.#", strconv.Itoa(len(asaDataSourceTags))),
+					resource.TestCheckResourceAttrWith("data.sccfm_ios_device.test", "labels.0", testutil.CheckEqual(asaDataSourceTags[0])),
+					resource.TestCheckResourceAttrWith("data.sccfm_ios_device.test", "labels.1", testutil.CheckEqual(asaDataSourceTags[1])),
+					resource.TestCheckResourceAttrWith("data.sccfm_ios_device.test", "labels.2", testutil.CheckEqual(asaDataSourceTags[2])),
 				),
 			},
 		},

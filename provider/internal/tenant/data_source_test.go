@@ -18,7 +18,7 @@ var testTenant = struct {
 }
 
 const testTenantTemplate = `
-data "cdo_tenant" "test" {}`
+data "sccfm_tenant" "test" {}`
 
 var testTenantConfig = acctest.MustParseTemplate(testTenantTemplate, testTenant)
 
@@ -31,9 +31,9 @@ func TestAccTenantDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testTenantConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_tenant.test", "name", testTenant.Name),
-					resource.TestCheckResourceAttr("data.cdo_tenant.test", "human_readable_name", testTenant.HumanReadableName),
-					resource.TestCheckResourceAttr("data.cdo_tenant.test", "subscription_type", testTenant.SubscriptionType),
+					resource.TestCheckResourceAttr("data.sccfm_tenant.test", "name", testTenant.Name),
+					resource.TestCheckResourceAttr("data.sccfm_tenant.test", "human_readable_name", testTenant.HumanReadableName),
+					resource.TestCheckResourceAttr("data.sccfm_tenant.test", "subscription_type", testTenant.SubscriptionType),
 				),
 			},
 		},

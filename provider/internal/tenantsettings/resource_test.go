@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-const testTenantSettingsResourceConfigTemplate = `resource "sccfwmgr_tenant_settings" "test" {
+const testTenantSettingsResourceConfigTemplate = `resource "sccfm_tenant_settings" "test" {
 	change_request_support_enabled              = {{.ChangeRequestSupportEnabled}}
 	auto_accept_device_changes_enabled          = {{.AutoAcceptDeviceChangesEnabled}}
 	web_analytics_enabled                       = {{.WebAnalyticsEnabled}}
@@ -50,15 +50,15 @@ func TestAccTenantSettingsResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + createTenantSettingsResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "id", acctest.Env.TenantSettingsTenantUid()),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "change_request_support_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "auto_accept_device_changes_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "web_analytics_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "scheduled_deployments_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "deny_cisco_support_access_to_tenant_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "multi_cloud_defense_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "auto_discover_on_prem_fmcs_enabled", "true"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "conflict_detection_interval", string(settings.ConflictDetectionIntervalEvery6Hours)),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "id", acctest.Env.TenantSettingsTenantUid()),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "change_request_support_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "auto_accept_device_changes_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "web_analytics_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "scheduled_deployments_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "deny_cisco_support_access_to_tenant_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "multi_cloud_defense_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "auto_discover_on_prem_fmcs_enabled", "true"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "conflict_detection_interval", string(settings.ConflictDetectionIntervalEvery6Hours)),
 				),
 			},
 
@@ -66,15 +66,15 @@ func TestAccTenantSettingsResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + updateTenantSettingsResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "id", acctest.Env.TenantSettingsTenantUid()),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "change_request_support_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "auto_accept_device_changes_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "web_analytics_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "scheduled_deployments_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "deny_cisco_support_access_to_tenant_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "multi_cloud_defense_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "auto_discover_on_prem_fmcs_enabled", "false"),
-					resource.TestCheckResourceAttr("cdo_tenant_settings.test", "conflict_detection_interval", string(settings.ConflictDetectionIntervalEvery24Hours)),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "id", acctest.Env.TenantSettingsTenantUid()),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "change_request_support_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "auto_accept_device_changes_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "web_analytics_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "scheduled_deployments_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "deny_cisco_support_access_to_tenant_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "multi_cloud_defense_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "auto_discover_on_prem_fmcs_enabled", "false"),
+					resource.TestCheckResourceAttr("sccfm_tenant_settings.test", "conflict_detection_interval", string(settings.ConflictDetectionIntervalEvery24Hours)),
 				),
 			},
 		},
