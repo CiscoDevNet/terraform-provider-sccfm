@@ -135,7 +135,7 @@ jobs:
 #        timeout-minutes: 10
   tag-release-version:
      name: "Tag Release Version"
-     needs: [acceptance-test, unit-test]
+     needs: [unit-test]
      if: github.ref == 'refs/heads/main'
      runs-on: ubuntu-latest
      steps:
