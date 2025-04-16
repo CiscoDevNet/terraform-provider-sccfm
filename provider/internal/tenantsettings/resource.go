@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/validators"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -18,7 +18,7 @@ func NewTenantSettingsResource() resource.Resource {
 }
 
 type TenantSettingsResource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 func (*TenantSettingsResource) Metadata(ctx context.Context, req resource.MetadataRequest, res *resource.MetadataResponse) {
@@ -78,7 +78,7 @@ func (*TenantSettingsResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 
 			"conflict_detection_interval": schema.StringAttribute{
-				MarkdownDescription: "The interval used by CDO to detect conflicts on devices",
+				MarkdownDescription: "The interval used by SCC Firewall Manager to detect conflicts on devices",
 				Optional:            true,
 				Computed:            true,
 				Validators: []validator.String{
@@ -94,12 +94,12 @@ func (resource *TenantSettingsResource) Configure(ctx context.Context, req resou
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		res.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -130,7 +130,7 @@ func (*TenantSettingsResource) Delete(ctx context.Context, req resource.DeleteRe
 	res.State.RemoveResource(ctx)
 }
 
-func handleUpdate(ctx context.Context, diagnostics *diag.Diagnostics, plan *tfsdk.Plan, state *tfsdk.State, client *cdoClient.Client) {
+func handleUpdate(ctx context.Context, diagnostics *diag.Diagnostics, plan *tfsdk.Plan, state *tfsdk.State, client *sccFwMgrClient.Client) {
 	var dataModel tenantSettingsDataModel
 
 	diagnostics.Append(plan.Get(ctx, &dataModel)...)

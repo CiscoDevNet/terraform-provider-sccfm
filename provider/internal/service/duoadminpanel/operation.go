@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/duoadminpanel"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/device/publicapilabels"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/device/tags"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/duoadminpanel"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/publicapilabels"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 

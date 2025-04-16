@@ -1,1 +1,1 @@
-add API token here
+Paste your API token here

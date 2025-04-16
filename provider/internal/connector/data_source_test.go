@@ -3,7 +3,7 @@ package connector_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -14,7 +14,7 @@ var testSdc = struct {
 }
 
 const testSdcTemplate = `
-data "cdo_sdc" "test" {
+data "sccfm_sdc" "test" {
 	name = "{{.Name}}"
 }`
 
@@ -29,7 +29,7 @@ func TestAccSdcDeviceDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testSdcConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_sdc.test", "name", testSdc.Name),
+					resource.TestCheckResourceAttr("data.sccfm_sdc.test", "name", testSdc.Name),
 				),
 			},
 		},

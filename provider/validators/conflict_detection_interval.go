@@ -3,7 +3,7 @@ package validators
 import (
 	"context"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/settings"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/settings"
 	"github.com/hashicorp/terraform-plugin-framework-validators/helpers/validatordiag"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 )

@@ -1,34 +1,34 @@
 terraform {
   required_providers {
-    cdo = {
-      source = "hashicorp.com/CiscoDevnet/cdo"
+    sccfm = {
+      source = "CiscoDevnet/scc-firewall-manager"
     }
   }
 }
 
-provider "cdo" {
-  base_url  = "<https://www.defenseorchestrator.com|https://www.defenseorchestrator.eu|https://apj.cdo.cisco.com|https://aus.cdo.cisco.com|https://in.cdo.cisco.com>"
-  api_token = "<replace-with-api-token-generated-from-cdo>"
+provider "sccfm" {
+  base_url  = "<https://us.manage.security.cisco.com|https://eu.manage.security.cisco.com|https://apj.manage.security.cisco.com|https://aus.manage.security.cisco.com|https://in.manage.security.cisco.com>"
+  api_token = file("${path.module}/api_token.txt")
 }
 
-data "cdo_ios_device" "my_ios" {
+data "sccfm_ios_device" "my_ios" {
   name = "<name-of-device>"
 }
 output "ios_sdc_name" {
-  value = data.cdo_ios_device.my_ios.sdc_name
+  value = data.sccfm_ios_device.my_ios.connector_name
 }
 output "ios_name" {
-  value = data.cdo_ios_device.my_ios.name
+  value = data.sccfm_ios_device.my_ios.name
 }
 output "ios_socket_address" {
-  value = data.cdo_ios_device.my_ios.socket_address
+  value = data.sccfm_ios_device.my_ios.socket_address
 }
 output "ios_host" {
-  value = data.cdo_ios_device.my_ios.host
+  value = data.sccfm_ios_device.my_ios.host
 }
 output "ios_port" {
-  value = data.cdo_ios_device.my_ios.port
+  value = data.sccfm_ios_device.my_ios.port
 }
 output "ios_ignore_certificate" {
-  value = data.cdo_ios_device.my_ios.ignore_certificate
+  value = data.sccfm_ios_device.my_ios.ignore_certificate
 }

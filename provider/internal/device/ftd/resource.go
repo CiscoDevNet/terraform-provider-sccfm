@@ -4,11 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/ftd/license"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/ftd/tier"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
-	"github.com/CiscoDevnet/terraform-provider-cdo/validators"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/license"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/tier"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/setvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -35,7 +35,7 @@ func NewResource() resource.Resource {
 }
 
 type Resource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type ResourceModel struct {
@@ -61,9 +61,9 @@ func (r *Resource) Metadata(ctx context.Context, req resource.MetadataRequest, r
 
 func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "Provides a Firewall Threat Defense device resource. Use this to onboard, update, and delete FTDs from CDO. This resource does not complete the onboarding of an FTD into CDO and cdFMC. " +
-			"It creates a FTD device entry in the CDO Inventory, and generates a registration command (see the `generated_command` attribute) that needs to be pasted into the FTD CLI (see **step 10** [here](https://docs.defenseorchestrator.com/c_onboard-an-ftd.html#!t-onboard-an-ftd-device-with-regkey.html)). " +
-			"To finish adding the FTD device to CDO and cdFMC, use the `cdo_ftd_device_onboarding` resource after you have applied this resource.",
+		MarkdownDescription: "Provides a Firewall Threat Defense device resource. Use this to onboard, update, and delete FTDs on SCC Firewall Manager. This resource does not complete the onboarding of an FTD into SCC Firewall Manager and cdFMC. " +
+			"It creates a FTD device entry in the SCC Firewall Security Devices inventory, and generates a registration command (see the `generated_command` attribute) that needs to be pasted into the FTD CLI (see **step 10** [here](https://docs.manage.security.cisco.com/c_onboard-an-ftd.html#!t-onboard-an-ftd-device-with-regkey.html)). " +
+			"To finish adding the FTD device to SCC Firewall Manager and cdFMC, use the `cdo_ftd_device_onboarding` resource after you have applied this resource.",
 
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
@@ -113,14 +113,14 @@ func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 				},
 			},
 			"labels": schema.SetAttribute{
-				MarkdownDescription: "Specify a set of labels to identify the device as part of a group. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "Specify a set of labels to identify the device as part of a group. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in SCC Firewall Manager.",
 				Optional:            true,
 				ElementType:         types.StringType,
 				Computed:            true,
 				Default:             setdefault.StaticValue(types.SetValueMust(types.StringType, []attr.Value{})), // default to empty set
 			},
 			"grouped_labels": schema.MapAttribute{
-				MarkdownDescription: "Specify a map of grouped labels to identify the device as part of a group. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "Specify a map of grouped labels to identify the device as part of a group. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in SCC Firewall Manager.",
 				Optional:            true,
 				ElementType: types.SetType{
 					ElemType: types.StringType,
@@ -172,12 +172,12 @@ func (r *Resource) Configure(ctx context.Context, req resource.ConfigureRequest,
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

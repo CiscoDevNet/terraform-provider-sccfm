@@ -3,7 +3,7 @@ package ftd_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -21,7 +21,7 @@ var dataSourceModel = struct {
 	Licenses:         acctest.Env.FtdDataSourceLicenses(),
 }
 var dataSourceTemplate = `
-data "cdo_ftd_device" "test" {
+data "sccfm_ftd_device" "test" {
 	name = "{{.Name}}"
 }`
 var dataSourceConfig = acctest.MustParseTemplate(dataSourceTemplate, dataSourceModel)
@@ -35,11 +35,11 @@ func TestAccFtdDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + dataSourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_ftd_device.test", "name", dataSourceModel.Name),
-					resource.TestCheckResourceAttr("data.cdo_ftd_device.test", "access_policy_name", dataSourceModel.AccessPolicyName),
-					resource.TestCheckResourceAttr("data.cdo_ftd_device.test", "performance_tier", dataSourceModel.PerformanceTier),
-					resource.TestCheckResourceAttr("data.cdo_ftd_device.test", "virtual", dataSourceModel.Virtual),
-					resource.TestCheckResourceAttr("data.cdo_ftd_device.test", "licenses.#", "1"), // number of licenses = 1
+					resource.TestCheckResourceAttr("data.sccfm_ftd_device.test", "name", dataSourceModel.Name),
+					resource.TestCheckResourceAttr("data.sccfm_ftd_device.test", "access_policy_name", dataSourceModel.AccessPolicyName),
+					resource.TestCheckResourceAttr("data.sccfm_ftd_device.test", "performance_tier", dataSourceModel.PerformanceTier),
+					resource.TestCheckResourceAttr("data.sccfm_ftd_device.test", "virtual", dataSourceModel.Virtual),
+					resource.TestCheckResourceAttr("data.sccfm_ftd_device.test", "licenses.#", "1"), // number of licenses = 1
 				),
 			},
 		},

@@ -2,7 +2,7 @@ package msp_tenant_users_test
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"strings"
 	"testing"
@@ -36,7 +36,7 @@ func join(slice []string) string {
 }
 
 const testMspManagedTenantUsersTemplate = `
-resource "cdo_msp_managed_tenant_users" "test" {
+resource "sccfm_msp_managed_tenant_users" "test" {
 	tenant_uid = "{{.TenantUid}}"
 	users = [
 		{
@@ -65,21 +65,21 @@ func TestAccMspManagedTenantUsersResource(t *testing.T) {
 			{
 				Config: acctest.MspProviderConfig() + testMspManagedTenantUsersResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant_users.test", "tenant_uid", testMspManagedTenantUsersResource.TenantUid),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant_users.test", "users.0.username", testMspManagedTenantUsersResource.Users[0].Username),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant_users.test", "tenant_uid", testMspManagedTenantUsersResource.TenantUid),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant_users.test", "users.0.username", testMspManagedTenantUsersResource.Users[0].Username),
 					resource.TestCheckResourceAttr(
-						"cdo_msp_managed_tenant_users.test",
+						"sccfm_msp_managed_tenant_users.test",
 						"users.0.roles.0",
 						testMspManagedTenantUsersResource.Users[0].Roles[0],
 					),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant_users.test", "users.0.api_only_user", fmt.Sprintf("%t", testMspManagedTenantUsersResource.Users[0].ApiOnlyUser)),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant_users.test", "users.1.username", testMspManagedTenantUsersResource.Users[1].Username),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant_users.test", "users.0.api_only_user", fmt.Sprintf("%t", testMspManagedTenantUsersResource.Users[0].ApiOnlyUser)),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant_users.test", "users.1.username", testMspManagedTenantUsersResource.Users[1].Username),
 					resource.TestCheckResourceAttr(
-						"cdo_msp_managed_tenant_users.test",
+						"sccfm_msp_managed_tenant_users.test",
 						"users.1.roles.0",
 						testMspManagedTenantUsersResource.Users[1].Roles[0],
 					),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant_users.test", "users.1.api_only_user", fmt.Sprintf("%t", testMspManagedTenantUsersResource.Users[1].ApiOnlyUser)),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant_users.test", "users.1.api_only_user", fmt.Sprintf("%t", testMspManagedTenantUsersResource.Users[1].ApiOnlyUser)),
 				),
 			},
 		},

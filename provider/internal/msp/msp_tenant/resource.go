@@ -3,10 +3,10 @@ package msp_tenant
 import (
 	"context"
 	"fmt"
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/msp/tenants"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
-	"github.com/CiscoDevnet/terraform-provider-cdo/validators"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/tenants"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -18,7 +18,7 @@ import (
 func NewTenantResource() resource.Resource { return &TenantResource{} }
 
 type TenantResource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 func (*TenantResource) Metadata(ctx context.Context, request resource.MetadataRequest, response *resource.MetadataResponse) {
@@ -57,7 +57,7 @@ func (*TenantResource) Schema(ctx context.Context, request resource.SchemaReques
 				Computed:            true,
 			},
 			"region": schema.StringAttribute{
-				MarkdownDescription: "CDO region in which the tenant is created. This is the same region as the region of the MSP portal.",
+				MarkdownDescription: "SCC Firewall region in which the tenant is created. This is the same region as the region of the MSP portal.",
 				Computed:            true,
 			},
 			"api_token": schema.StringAttribute{
@@ -77,12 +77,12 @@ func (t *TenantResource) Configure(ctx context.Context, req resource.ConfigureRe
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		res.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return
@@ -92,7 +92,7 @@ func (t *TenantResource) Configure(ctx context.Context, req resource.ConfigureRe
 }
 
 func (t *TenantResource) Create(ctx context.Context, request resource.CreateRequest, response *resource.CreateResponse) {
-	tflog.Debug(ctx, "Creating a CDO tenant/Adding an existing tenant using API token to the MSP portal...")
+	tflog.Debug(ctx, "Creating a SCC Firewall tenant/Adding an existing tenant using API token to the MSP portal...")
 
 	// 1. Read plan data into planData
 	var planData TenantResourceModel
@@ -119,7 +119,7 @@ func (t *TenantResource) Create(ctx context.Context, request resource.CreateRequ
 	}
 
 	if err != nil || createOut == nil {
-		response.Diagnostics.AddError("failed to create CDO Tenant", err.Error())
+		response.Diagnostics.AddError("failed to create SCC Firewall Tenant", err.Error())
 		return
 	}
 
@@ -135,7 +135,7 @@ func (t *TenantResource) Create(ctx context.Context, request resource.CreateRequ
 }
 
 func (t *TenantResource) Read(ctx context.Context, request resource.ReadRequest, response *resource.ReadResponse) {
-	tflog.Debug(ctx, "Reading a CDO tenant")
+	tflog.Debug(ctx, "Reading a SCC Firewall tenant")
 	var stateData *TenantResourceModel
 
 	// Read Terraform plan data into the model
@@ -165,15 +165,15 @@ func (t *TenantResource) Read(ctx context.Context, request resource.ReadRequest,
 	stateData.DisplayName = types.StringValue(tenantReadOutp.DisplayName)
 	stateData.Region = types.StringValue(tenantReadOutp.Region)
 
-	tflog.Debug(ctx, "CDO tenant read")
+	tflog.Debug(ctx, "SCC Firewall tenant read")
 }
 
 func (t *TenantResource) Update(ctx context.Context, request resource.UpdateRequest, response *resource.UpdateResponse) {
-	response.Diagnostics.AddError("Cannot update a created tenant", "Please reach out to CDO TAC if you want to change the display name of your tenant.")
+	response.Diagnostics.AddError("Cannot update a created tenant", "Please reach out to SCC Firewall TAC if you want to change the display name of your tenant.")
 }
 
 func (t *TenantResource) Delete(ctx context.Context, request resource.DeleteRequest, response *resource.DeleteResponse) {
-	tflog.Debug(ctx, "'Deleting' a CDO tenant by removing it from the MSP portal...")
+	tflog.Debug(ctx, "'Deleting' a SCC Firewall tenant by removing it from the MSP portal...")
 	var stateData *TenantResourceModel
 	response.Diagnostics.Append(request.State.Get(ctx, &stateData)...)
 	if response.Diagnostics.HasError() {
@@ -202,6 +202,6 @@ func (p PreventUpdatePlanModifier) MarkdownDescription(ctx context.Context) stri
 func (p PreventUpdatePlanModifier) PlanModifyString(ctx context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse) {
 	if !req.StateValue.IsNull() && req.StateValue != req.PlanValue {
 		// If the value is changing, prevent it and return an error
-		resp.Diagnostics.AddError("Cannot update a created tenant", "Please reach out to CDO TAC if you want to change the display name of your tenant.")
+		resp.Diagnostics.AddError("Cannot update a created tenant", "Please reach out to SCC Firewall TAC if you want to change the display name of your tenant.")
 	}
 }

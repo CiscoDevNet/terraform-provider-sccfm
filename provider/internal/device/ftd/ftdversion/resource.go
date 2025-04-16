@@ -3,8 +3,8 @@ package ftdversion
 import (
 	"context"
 	"fmt"
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/cloudftd"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -20,7 +20,7 @@ func NewResource() resource.Resource {
 }
 
 type Resource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type ResourceModel struct {
@@ -36,7 +36,7 @@ func (r *Resource) Metadata(ctx context.Context, request resource.MetadataReques
 
 func (r *Resource) Schema(ctx context.Context, request resource.SchemaRequest, response *resource.SchemaResponse) {
 	response.Schema = schema.Schema{
-		MarkdownDescription: "Provides a resource to upgrade the software version of an FTD device." +
+		MarkdownDescription: "Provides a resource to upgrade the software version of a Cisco Secure Firewall Threat Defense (FTD) device." +
 			" Note: The FTD device has to already have been added to the Terraform state using a " +
 			"resource or a data source.",
 		Attributes: map[string]schema.Attribute{
@@ -69,12 +69,12 @@ func (r *Resource) Configure(ctx context.Context, request resource.ConfigureRequ
 		return
 	}
 
-	client, ok := request.ProviderData.(*cdoClient.Client)
+	client, ok := request.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		response.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", request.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", request.ProviderData),
 		)
 
 		return

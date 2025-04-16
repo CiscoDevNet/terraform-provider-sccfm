@@ -5,16 +5,16 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/asa/asaconfig"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/crypto"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa/asaconfig"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/crypto"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 	"time"
 
-	internalHttp "github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/jsonutil"
+	internalHttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/jsonutil"
 	"github.com/jarcoal/httpmock"
 )
 

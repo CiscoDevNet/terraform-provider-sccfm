@@ -2,7 +2,7 @@ package msp_tenant_user_api_token_test
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"strings"
 	"testing"
@@ -35,7 +35,7 @@ func join(slice []string) string {
 }
 
 const testMspManagedTenantUsersAndApiTokenTemplate = `
-resource "cdo_msp_managed_tenant_users" "test" {
+resource "sccfm_msp_managed_tenant_users" "test" {
 	tenant_uid = "{{.TenantUid}}"
 	users = [
 		{
@@ -46,9 +46,9 @@ resource "cdo_msp_managed_tenant_users" "test" {
 	]
 }
 
-resource "cdo_msp_managed_tenant_user_api_token" "test" {
+resource "sccfm_msp_managed_tenant_user_api_token" "test" {
 	tenant_uid = "{{.TenantUid}}"
-	user_uid = cdo_msp_managed_tenant_users.test.users[0].id
+	user_uid = sccfm_msp_managed_tenant_users.test.users[0].id
 }
 `
 
@@ -65,7 +65,7 @@ func TestAccMspManagedTenantUserApiTokenResource(t *testing.T) {
 			{
 				Config: acctest.MspProviderConfig() + testMspManagedTenantUsersAndApiTokenResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttrSet("cdo_msp_managed_tenant_user_api_token.test", "api_token"),
+					resource.TestCheckResourceAttrSet("sccfm_msp_managed_tenant_user_api_token.test", "api_token"),
 				),
 			},
 		},

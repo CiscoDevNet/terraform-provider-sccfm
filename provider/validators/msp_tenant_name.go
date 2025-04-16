@@ -2,6 +2,7 @@ package validators
 
 import (
 	"context"
+	"fmt"
 	"regexp"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -48,7 +49,7 @@ func (v mspManagedTenantNameValidator) ValidateString(ctx context.Context, reque
 	if !request.ConfigValue.IsNull() && !nameRegex.MatchString(request.ConfigValue.ValueString()) {
 		response.Diagnostics.AddError(
 			"Invalid Configuration",
-			"Name must match the regex `[a-zA-Z0-9-_]{1,50}`.",
+			fmt.Sprintf("Name %s must match the regex `[a-zA-Z0-9-_]{1,50}`.", request.ConfigValue.ValueString()),
 		)
 	}
 }

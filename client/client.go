@@ -4,32 +4,32 @@ package client
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/msp/tenants"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/msp/usergroups"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/msp/users"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/tenants"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/usergroups"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/users"
 	"net/http"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector/connectoronboarding"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector/sec"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector/sec/seconboarding"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/duoadminpanel"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/settings"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/settings/tenantsettings"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/connectoronboarding"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/sec"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/sec/seconboarding"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/duoadminpanel"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/settings"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/settings/tenantsettings"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/asa/asaconfig"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/cloudfmc"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/cloudftd"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/cloudftd/cloudftdonboarding"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/genericssh"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/tenant"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa/asaconfig"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd/cloudftdonboarding"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/genericssh"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/tenant"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/ios"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/ios"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device/asa"
-	internalhttp "github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa"
+	internalhttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
 )
 
 type Client struct {
@@ -173,15 +173,11 @@ func (c *Client) DeleteUser(ctx context.Context, inp user.DeleteUserInput) (*use
 	return user.Delete(ctx, c.Client, inp)
 }
 
-func (c *Client) UpdateUser(ctx context.Context, inp user.UpdateUserInput) (*user.UpdateUserOutput, error) {
-	return user.Update(ctx, c.Client, inp)
-}
-
 func (c *Client) GenerateApiToken(ctx context.Context, inp user.GenerateApiTokenInput) (*user.ApiTokenResponse, error) {
 	return user.GenerateApiToken(ctx, c.Client, inp)
 }
 
-func (c *Client) RevokeApiToken(ctx context.Context, inp user.RevokeApiTokenInput) (*user.RevokeApiTokenOutput, error) {
+func (c *Client) RevokeApiToken(ctx context.Context, inp user.RevokeApiTokenInput) error {
 	return user.RevokeApiToken(ctx, c.Client, inp)
 }
 
@@ -297,11 +293,11 @@ func (c *Client) FindMspManagedTenantByName(ctx context.Context, readByNameInput
 	return tenants.ReadByName(ctx, c.Client, readByNameInput)
 }
 
-func (c *Client) CreateUsersInMspManagedTenant(ctx context.Context, createInput users.MspUsersInput) (*[]users.UserDetails, *users.CreateError) {
+func (c *Client) CreateUsersInMspManagedTenant(ctx context.Context, createInput users.MspUsersInput) (*[]users.ComputedUserDetails, *users.CreateError) {
 	return users.Create(ctx, c.Client, createInput)
 }
 
-func (c *Client) ReadUsersInMspManagedTenant(ctx context.Context, readInput users.MspUsersInput) (*[]users.UserDetails, error) {
+func (c *Client) ReadUsersInMspManagedTenant(ctx context.Context, readInput users.MspUsersInput) (*[]users.ComputedUserDetails, error) {
 	return users.ReadCreatedUsersInTenant(ctx, c.Client, readInput)
 }
 

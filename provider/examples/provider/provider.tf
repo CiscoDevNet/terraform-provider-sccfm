@@ -1,4 +1,12 @@
-provider "cdo" {
-  endpoint  = "defenseorchestrator.com"
-  api_token = "1a2b3c4d5e6f"
+terraform {
+  required_providers {
+    sccfm = {
+      source = "CiscoDevnet/scc-firewall-manager"
+    }
+  }
+}
+
+provider "sccfm" {
+  base_url  = "<https://us.manage.security.cisco.com|https://eu.manage.security.cisco.com|https://apj.manage.security.cisco.com|https://aus.manage.security.cisco.com|https://in.manage.security.cisco.com>"
+  api_token = "1a2133"
 }

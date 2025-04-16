@@ -1,8 +1,8 @@
-resource "cdo_msp_managed_tenant" "tenant" {
-  name             = "test-tenant-name"
-  display_name = "Display name for tenant"
+resource "sccfm_msp_managed_tenant" "tenant" {
+  name         = var.tenant_name
+  display_name = var.tenant_display_name
 }
 
-resource "cdo_msp_managed_tenant" "existing_tenant" {
-  api_token = "existing-tenant-api-token"
+resource "sccfm_msp_managed_tenant" "existing_tenant" {
+  api_token = var.existing_tenant_api_token
 }

@@ -14,9 +14,9 @@ import (
 	netUrl "net/url"
 	"strings"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/cdo"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/jsonutil"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/retry"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/cdo"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/jsonutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/retry"
 )
 
 type Request struct {

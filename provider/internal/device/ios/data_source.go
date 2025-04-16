@@ -8,12 +8,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/device"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -29,7 +29,7 @@ func NewIosDataSource() datasource.DataSource {
 
 // The data source object consumed by terraform.
 type IosDataSource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 /////
@@ -90,7 +90,7 @@ func (d *IosDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				Computed:            true,
 			},
 			"labels": schema.ListAttribute{
-				MarkdownDescription: "The labels applied to the device. Labels are used to group devices in CDO. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "The labels applied to the device. Labels are used to group devices in CDO. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
 				Computed:            true,
 				ElementType:         types.StringType,
 				Validators: []validator.List{
@@ -98,7 +98,7 @@ func (d *IosDataSource) Schema(ctx context.Context, req datasource.SchemaRequest
 				},
 			},
 			"grouped_labels": schema.MapAttribute{
-				MarkdownDescription: "The grouped labels applied to the device. Labels are used to group devices in CDO. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "The grouped labels applied to the device. Labels are used to group devices in CDO. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
 				Computed:            true,
 				ElementType: types.SetType{
 					ElemType: types.StringType,
@@ -116,12 +116,12 @@ func (d *IosDataSource) Configure(ctx context.Context, req datasource.ConfigureR
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Data Source Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

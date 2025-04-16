@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/mapdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/setdefault"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/validators"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
-	cdoClient "github.com/CiscoDevnet/terraform-provider-cdo/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -33,7 +33,7 @@ func NewIosDeviceResource() resource.Resource {
 }
 
 type IosDeviceResource struct {
-	client *cdoClient.Client
+	client *sccFwMgrClient.Client
 }
 
 type IosDeviceResourceModel struct {
@@ -124,14 +124,14 @@ func (r *IosDeviceResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required:            true,
 			},
 			"labels": schema.SetAttribute{
-				MarkdownDescription: "Specify a set of labels to identify the device as part of a group. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "Specify a set of labels to identify the device as part of a group. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
 				Optional:            true,
 				ElementType:         types.StringType,
 				Computed:            true,
 				Default:             setdefault.StaticValue(types.SetValueMust(types.StringType, []attr.Value{})), // default to empty list
 			},
 			"grouped_labels": schema.MapAttribute{
-				MarkdownDescription: "Specify a set of grouped labels to identify the device as part of a group. Refer to the [CDO documentation](https://docs.defenseorchestrator.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
+				MarkdownDescription: "Specify a set of grouped labels to identify the device as part of a group. Refer to the [SCC Firewall Manager documentation](https://docs.manage.security.cisco.com/t-applying-labels-to-devices-and-objects.html#!c-labels-and-filtering.html) for details on how labels are used in CDO.",
 				Optional:            true,
 				ElementType: types.SetType{
 					ElemType: types.StringType,
@@ -149,12 +149,12 @@ func (r *IosDeviceResource) Configure(ctx context.Context, req resource.Configur
 		return
 	}
 
-	client, ok := req.ProviderData.(*cdoClient.Client)
+	client, ok := req.ProviderData.(*sccFwMgrClient.Client)
 
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unexpected Resource Configure Type",
-			fmt.Sprintf("Expected *cdoClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
+			fmt.Sprintf("Expected *sccFwMgrClient.Client, got: %T. Please report this issue to the provider developers.", req.ProviderData),
 		)
 
 		return

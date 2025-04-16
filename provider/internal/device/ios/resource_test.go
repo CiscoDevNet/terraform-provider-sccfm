@@ -4,10 +4,10 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -30,7 +30,7 @@ type testIosResourceType struct {
 }
 
 const testIosResourceTemplate = `
-resource "cdo_ios_device" "test" {
+resource "sccfm_ios_device" "test" {
 	name = "{{.Name}}"
 	socket_address = "{{.SocketAddress}}"
 	username = "{{.Username}}"
@@ -77,7 +77,6 @@ var testIosResource_ReplaceGroupTags = acctest.MustOverrideFields(testIosResourc
 var testIosResourceConfig_ReplaceGroupTags = acctest.MustParseTemplate(testIosResourceTemplate, testIosResource_ReplaceGroupTags)
 
 func TestAccIosDeviceResource_SDC(t *testing.T) {
-	t.Skip("Disabling this test because the vSphere SDC lab is down. Yay!")
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 acctest.PreCheckFunc(t),
 		ProtoV6ProviderFactories: acctest.ProtoV6ProviderFactories,
@@ -86,21 +85,21 @@ func TestAccIosDeviceResource_SDC(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testIosResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "name", testIosResource.Name),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "socket_address", testIosResource.SocketAddress),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "host", testIosResource.Host),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "port", strconv.FormatInt(testIosResource.Port, 10)),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "username", testIosResource.Username),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "password", testIosResource.Password),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "labels.#", strconv.Itoa(len(labels))),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "labels.*", labels[0]),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "labels.*", labels[1]),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "labels.*", labels[2]),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "grouped_labels.%", "1"),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "grouped_labels.acceptancetest.#", strconv.Itoa(len(groupedLabels["acceptancetest"]))),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][0]),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][1]),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][2]),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "name", testIosResource.Name),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "socket_address", testIosResource.SocketAddress),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "host", testIosResource.Host),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "port", strconv.FormatInt(testIosResource.Port, 10)),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "username", testIosResource.Username),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "password", testIosResource.Password),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "labels.#", strconv.Itoa(len(labels))),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "labels.*", labels[0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "labels.*", labels[1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "labels.*", labels[2]),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "grouped_labels.%", "1"),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "grouped_labels.acceptancetest.#", strconv.Itoa(len(groupedLabels["acceptancetest"]))),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][2]),
 				),
 			},
 			// Update order of label testing
@@ -112,7 +111,7 @@ func TestAccIosDeviceResource_SDC(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testIosResourceConfig_NewName,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "name", testIosResource_NewName.Name),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "name", testIosResource_NewName.Name),
 				),
 			},
 
@@ -120,11 +119,11 @@ func TestAccIosDeviceResource_SDC(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testIosResourceConfig_ReplaceGroupTags,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "grouped_labels.%", "1"),
-					resource.TestCheckResourceAttr("cdo_ios_device.test", "grouped_labels.my-cool-new-label-group.#", strconv.Itoa(len(renamedGroupedLabels["my-cool-new-label-group"]))),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][0]),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][1]),
-					resource.TestCheckTypeSetElemAttr("cdo_ios_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][2]),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "grouped_labels.%", "1"),
+					resource.TestCheckResourceAttr("sccfm_ios_device.test", "grouped_labels.my-cool-new-label-group.#", strconv.Itoa(len(renamedGroupedLabels["my-cool-new-label-group"]))),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ios_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][2]),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

@@ -8,8 +8,9 @@ type MspManagedTenantUsersResourceModel struct {
 }
 
 type User struct {
-	Id          types.String `tfsdk:"id"`
-	Username    types.String `tfsdk:"username"`
-	Roles       types.List   `tfsdk:"roles"`
-	ApiOnlyUser types.Bool   `tfsdk:"api_only_user"`
+	Id                           types.String `tfsdk:"id"`
+	Username                     types.String `tfsdk:"username"`
+	UsernameInSccFirewallManager types.String `tfsdk:"username_in_scc_firewall_manager"`
+	Roles                        types.List   `tfsdk:"roles"`
+	ApiOnlyUser                  types.Bool   `tfsdk:"api_only_user"`
 }

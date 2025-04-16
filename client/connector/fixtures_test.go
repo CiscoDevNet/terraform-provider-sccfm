@@ -1,7 +1,7 @@
 package connector_test
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
 )
 
 const (

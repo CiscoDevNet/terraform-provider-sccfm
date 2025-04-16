@@ -4,9 +4,9 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -29,7 +29,7 @@ var testAsaDataSource = struct {
 }
 
 const testAsaDataSourceTemplate = `
-data "cdo_asa_device" "test" {
+data "sccfm_asa_device" "test" {
 	name = "{{.Name}}"
 }`
 
@@ -44,14 +44,14 @@ func TestAccAsaDeviceDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testAsaDataSourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "connector_type", testAsaDataSource.ConnectorType),
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "name", testAsaDataSource.Name),
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "socket_address", testAsaDataSource.SocketAddress),
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "host", testAsaDataSource.Host),
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "port", strconv.FormatInt(testAsaDataSource.Port, 10)),
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "ignore_certificate", strconv.FormatBool(testAsaDataSource.IgnoreCertificate)),
-					resource.TestCheckResourceAttr("data.cdo_asa_device.test", "labels.#", strconv.Itoa(len(testAsaDataSource.Tags))),
-					resource.TestCheckResourceAttrWith("data.cdo_asa_device.test", "labels.0", testutil.CheckEqual(testAsaDataSource.Tags[0])),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "connector_type", testAsaDataSource.ConnectorType),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "name", testAsaDataSource.Name),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "socket_address", testAsaDataSource.SocketAddress),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "host", testAsaDataSource.Host),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "port", strconv.FormatInt(testAsaDataSource.Port, 10)),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "ignore_certificate", strconv.FormatBool(testAsaDataSource.IgnoreCertificate)),
+					resource.TestCheckResourceAttr("data.sccfm_asa_device.test", "labels.#", strconv.Itoa(len(testAsaDataSource.Tags))),
+					resource.TestCheckResourceAttrWith("data.sccfm_asa_device.test", "labels.0", testutil.CheckEqual(testAsaDataSource.Tags[0])),
 				),
 			},
 		},

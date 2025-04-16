@@ -11,7 +11,7 @@ provider "cdo" {
   api_token = "<replace-with-api-token-generated-from-cdo>"
 }
 
-resource "cdo_sdc" "example" {
+resource "sccfwmgr_sdc" "example" {
   name = "tf-sdc-1"
 }
 

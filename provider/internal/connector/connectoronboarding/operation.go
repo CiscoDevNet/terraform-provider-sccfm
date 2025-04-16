@@ -2,7 +2,7 @@ package connectoronboarding
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/connector/connectoronboarding"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/connectoronboarding"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 

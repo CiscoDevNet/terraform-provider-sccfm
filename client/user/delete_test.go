@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )
@@ -21,8 +21,8 @@ func TestDelete(t *testing.T) {
 		uid := "sample-user-uid"
 		httpmock.RegisterResponder(
 			netHttp.MethodDelete,
-			"/anubis/rest/v1/users/"+uid,
-			httpmock.NewJsonResponderOrPanic(200, nil),
+			"/api/rest/v1/users/"+uid,
+			httpmock.NewJsonResponderOrPanic(204, nil),
 		)
 		deleteOutput, err := user.Delete(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), user.DeleteUserInput{
 			Uid: uid,

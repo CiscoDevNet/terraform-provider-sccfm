@@ -1,7 +1,7 @@
 package util
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"

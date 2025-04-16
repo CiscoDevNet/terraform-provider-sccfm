@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )
@@ -21,13 +21,13 @@ func TestReadByUid(t *testing.T) {
 		httpmock.Reset()
 		uid := "sample-uid"
 		expected := model.UserDetails{
-			Name:        "dubya@example.com",
+			Username:    "dubya@example.com",
 			ApiOnlyUser: false,
-			UserRoles:   []string{"ROLE_SUPER_ADMIN"},
+			Roles:       []string{"ROLE_SUPER_ADMIN"},
 		}
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			"/anubis/rest/v1/users/"+uid,
+			"/api/rest/v1/users/"+uid,
 			httpmock.NewJsonResponderOrPanic(200, expected),
 		)
 		actual, err := user.ReadByUid(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), user.ReadByUidInput{

@@ -1,12 +1,16 @@
 terraform {
   required_providers {
-    cdo = {
-      source = "CiscoDevnet/cdo"
+    sccfm = {
+      source = "CiscoDevnet/scc-firewall-manager"
+    }
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0" # Use the latest compatible version
     }
   }
 }
 
-provider "cdo" {
-  base_url  = "<https://www.defenseorchestrator.com|https://www.defenseorchestrator.eu|https://apj.cdo.cisco.com|https://aus.cdo.cisco.com|https://in.cdo.cisco.com>"
+provider "sccfm" {
+  base_url  = "<https://us.manage.security.cisco.com|https://eu.manage.security.cisco.com|https://apj.manage.security.cisco.com|https://aus.manage.security.cisco.com|https://in.manage.security.cisco.com>"
   api_token = file("${path.module}/api_token.txt")
 }

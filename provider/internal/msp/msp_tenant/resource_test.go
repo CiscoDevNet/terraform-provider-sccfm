@@ -1,7 +1,7 @@
 package msp_tenant_test
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"strings"
 	"testing"
@@ -22,7 +22,7 @@ var testMspTenantResource = struct {
 }
 
 const testMspTenantResourceTemplate = `
-resource "cdo_msp_managed_tenant" "test" {
+resource "sccfm_msp_managed_tenant" "test" {
 	api_token = "{{.ApiToken}}"
 }`
 
@@ -37,10 +37,10 @@ func TestAccMspTenantResource(t *testing.T) {
 			{
 				Config: acctest.MspProviderConfig() + testMspTenantResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant.test", "name", testMspTenantResource.Name),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant.test", "display_name", testMspTenantResource.DisplayName),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant.test", "id", testMspTenantResource.Id),
-					resource.TestCheckResourceAttr("cdo_msp_managed_tenant.test", "region", testMspTenantResource.Region),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant.test", "name", testMspTenantResource.Name),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant.test", "display_name", testMspTenantResource.DisplayName),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant.test", "id", testMspTenantResource.Id),
+					resource.TestCheckResourceAttr("sccfm_msp_managed_tenant.test", "region", testMspTenantResource.Region),
 				),
 			},
 		},

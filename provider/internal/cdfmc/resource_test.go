@@ -3,7 +3,7 @@ package cdfmc_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -17,13 +17,13 @@ var resourceModel = struct {
 }
 
 const resourceTemplate = `
-resource "cdo_cdfmc" "test" {
+resource "sccfwmgr_cdfmc" "test" {
 }`
 
 var resourceConfig = acctest.MustParseTemplate(resourceTemplate, resourceModel)
 
 func TestAccCdFmcResource(t *testing.T) {
-	t.Skip("we cant delete a fmc so this test cannot be run, or we should find a way to spin up new environment, either seems uneasy, skipping for now.")
+	t.Skip("we cant delete a fmc so this test cannot be run, or we should find a way to spin up new environment, either seems difficult, skipping for now.")
 	resource.Test(t, resource.TestCase{
 		PreCheck:                 acctest.PreCheckFunc(t),
 		ProtoV6ProviderFactories: acctest.ProtoV6ProviderFactories,
@@ -32,8 +32,8 @@ func TestAccCdFmcResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + resourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_cdfmc.test", "name", resourceModel.Name),
-					resource.TestCheckResourceAttr("cdo_cdfmc.test", "hostname", resourceModel.Hostname),
+					resource.TestCheckResourceAttr("sccfm_cdfmc.test", "name", resourceModel.Name),
+					resource.TestCheckResourceAttr("sccfm_cdfmc.test", "hostname", resourceModel.Hostname),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/validators"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )

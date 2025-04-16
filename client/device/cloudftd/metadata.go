@@ -1,7 +1,7 @@
 package cloudftd
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model/ftd/tier"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/tier"
 )
 
 type Metadata struct {

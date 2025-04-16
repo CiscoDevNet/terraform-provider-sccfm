@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/sliceutil"
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/util/testutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/sliceutil"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/testutil"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
@@ -28,7 +28,7 @@ type ResourceType struct {
 }
 
 const ResourceTemplate = `
-resource "cdo_ftd_device" "test" {
+resource "sccfm_ftd_device" "test" {
 	name = "{{.Name}}"
 	access_policy_name = "{{.AccessPolicyName}}"
 	performance_tier = "{{.PerformanceTier}}"
@@ -83,23 +83,23 @@ func TestAccFtdResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testResourceConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "name", testResource.Name),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "access_policy_name", testResource.AccessPolicyName),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "performance_tier", testResource.PerformanceTier),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "virtual", testResource.Virtual),
-					resource.TestCheckResourceAttrSet("cdo_ftd_device.test", "licenses.0"),   // there is something at position 0 of licenses array
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "licenses.#", "1"), // number of licenses = 1
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "access_policy_name", testResource.AccessPolicyName),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "labels.#", strconv.Itoa(len(labels))),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "labels.*", labels[0]),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "labels.*", labels[1]),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "labels.*", labels[2]),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "grouped_labels.%", "1"),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "grouped_labels.acceptancetest.#", strconv.Itoa(len(groupedLabels["acceptancetest"]))),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][0]),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][1]),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][2]),
-					resource.TestCheckResourceAttrWith("cdo_ftd_device.test", "generated_command", func(value string) error {
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "name", testResource.Name),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "access_policy_name", testResource.AccessPolicyName),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "performance_tier", testResource.PerformanceTier),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "virtual", testResource.Virtual),
+					resource.TestCheckResourceAttrSet("sccfm_ftd_device.test", "licenses.0"),   // there is something at position 0 of licenses array
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "licenses.#", "1"), // number of licenses = 1
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "access_policy_name", testResource.AccessPolicyName),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "labels.#", strconv.Itoa(len(labels))),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "labels.*", labels[0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "labels.*", labels[1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "labels.*", labels[2]),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "grouped_labels.%", "1"),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "grouped_labels.acceptancetest.#", strconv.Itoa(len(groupedLabels["acceptancetest"]))),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "grouped_labels.acceptancetest.*", groupedLabels["acceptancetest"][2]),
+					resource.TestCheckResourceAttrWith("sccfm_ftd_device.test", "generated_command", func(value string) error {
 						ok := strings.HasPrefix(value, "configure manager add")
 						if !ok {
 							return fmt.Errorf("generated command should starts with \"configure manager add\", but it was \"%s\"", value)
@@ -117,18 +117,18 @@ func TestAccFtdResource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testResourceConfig_NewName,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "name", testResource_NewName.Name),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "name", testResource_NewName.Name),
 				),
 			},
 			// Replace Grouped Labels
 			{
 				Config: acctest.ProviderConfig() + testResourceConfig_ReplaceGroupedLabels,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "grouped_labels.%", "1"),
-					resource.TestCheckResourceAttr("cdo_ftd_device.test", "grouped_labels.my-cool-new-label-group.#", strconv.Itoa(len(renamedGroupedLabels["my-cool-new-label-group"]))),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][0]),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][1]),
-					resource.TestCheckTypeSetElemAttr("cdo_ftd_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][2]),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "grouped_labels.%", "1"),
+					resource.TestCheckResourceAttr("sccfm_ftd_device.test", "grouped_labels.my-cool-new-label-group.#", strconv.Itoa(len(renamedGroupedLabels["my-cool-new-label-group"]))),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][0]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][1]),
+					resource.TestCheckTypeSetElemAttr("sccfm_ftd_device.test", "grouped_labels.my-cool-new-label-group.*", renamedGroupedLabels["my-cool-new-label-group"][2]),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

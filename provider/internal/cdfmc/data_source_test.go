@@ -3,18 +3,18 @@ package cdfmc_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
 var testCdFmc = struct {
 	Hostname string
 }{
-	Hostname: acctest.Env.CloudFmcDataSourceHostname(),
+	Hostname: acctest.Env.CdFmcDataSourceHostname(),
 }
 
 const testCdFmcTemplate = `
-data "cdo_cdfmc" "test" {}`
+data "sccfm_cdfmc" "test" {}`
 
 var testCdfmcConfig = acctest.MustParseTemplate(testCdFmcTemplate, testCdFmc)
 
@@ -27,7 +27,7 @@ func TestAccCdFmcDataSource(t *testing.T) {
 			{
 				Config: acctest.ProviderConfig() + testCdfmcConfig,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					resource.TestCheckResourceAttr("data.cdo_cdfmc.test", "hostname", testCdFmc.Hostname),
+					resource.TestCheckResourceAttr("data.sccfm_cdfmc.test", "hostname", testCdFmc.Hostname),
 				),
 			},
 		},

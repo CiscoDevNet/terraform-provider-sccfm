@@ -3,12 +3,13 @@ package user_test
 import (
 	"context"
 	netHttp "net/http"
+	"net/url"
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-cdo/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )
@@ -20,17 +21,39 @@ func TestReadByUsername(t *testing.T) {
 	t.Run("Should read a user by username", func(t *testing.T) {
 		httpmock.Reset()
 		expected := model.UserDetails{
-			Name:        "barack@example.com",
+			Username:    "barack@example.com",
 			ApiOnlyUser: false,
-			UserRoles:   []string{"ROLE_ADMIN"},
+			Roles:       []string{"ROLE_ADMIN"},
 		}
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			"/anubis/rest/v1/users",
-			httpmock.NewJsonResponderOrPanic(200, []model.UserDetails{expected}),
+			"/api/rest/v1/users?limit=1&offset=0&q=name%3A"+url.QueryEscape(expected.Username),
+			httpmock.NewJsonResponderOrPanic(200, model.UserPage{Count: 1, Items: []model.UserDetails{expected}}),
 		)
 		actual, err := user.ReadByUsername(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), user.ReadByUsernameInput{
-			Name: expected.Name,
+			Name:        expected.Username,
+			ApiOnlyUser: expected.ApiOnlyUser,
+		})
+		assert.NotNil(t, actual, "Read output should not be nil")
+		assert.Equal(t, *actual, expected)
+		assert.Nil(t, err, "error should be nil")
+	})
+
+	t.Run("Should read an API-only user by username", func(t *testing.T) {
+		httpmock.Reset()
+		expected := model.UserDetails{
+			Username:    "joseph-r-api@tenant_name",
+			ApiOnlyUser: true,
+			Roles:       []string{"ROLE_ADMIN"},
+		}
+		httpmock.RegisterResponder(
+			netHttp.MethodGet,
+			"/api/rest/v1/users/api-only?limit=1&offset=0&q=name%3A"+url.QueryEscape(expected.Username),
+			httpmock.NewJsonResponderOrPanic(200, model.UserPage{Count: 1, Items: []model.UserDetails{expected}}),
+		)
+		actual, err := user.ReadByUsername(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), user.ReadByUsernameInput{
+			Name:        expected.Username,
+			ApiOnlyUser: expected.ApiOnlyUser,
 		})
 		assert.NotNil(t, actual, "Read output should not be nil")
 		assert.Equal(t, *actual, expected)
