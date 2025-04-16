@@ -90,13 +90,6 @@ func MspProviderConfig() string {
 	}
 
 	return fmt.Sprintf(`
-	terraform {
-	  required_providers {
-		sccfm = {
-		  source = "CiscoDevnet/scc-firewall-manager"
-		}
-	  }
-	}
 	provider "sccfm" {
 		api_token = "%s"
 		base_url = "https://ci.manage.security.cisco.com"
