@@ -2,6 +2,7 @@
   description = "Ignore ApiToken in tests"
   regex = '''(?i)ApiToken:\s?"fake-api-token"'''
   path = '''^.*_test\.go$'''
+  id = "fake-api-token-in-tests"
 
   [rules.allowlist]
     description = "Allow fake ApiToken in test files"

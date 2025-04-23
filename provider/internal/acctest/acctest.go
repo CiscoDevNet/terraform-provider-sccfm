@@ -68,13 +68,6 @@ func ProviderConfig() string {
 	}
 
 	return fmt.Sprintf(`
-	terraform {
-	  required_providers {
-		sccfm = {
-		  source = "CiscoDevnet/sccfm"
-		}
-	  }
-	}
 	provider "sccfm" {
 		api_token = "%s"
 		base_url = "https://ci.manage.security.cisco.com"
@@ -103,5 +96,5 @@ func MspProviderConfig() string {
 // CLI command executed to create a provider server to which the CLI can
 // reattach.
 var ProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
-	"cdo": providerserver.NewProtocol6WithError(provider.New("test")()),
+	"sccfm": providerserver.NewProtocol6WithError(provider.New("test")()),
 }
