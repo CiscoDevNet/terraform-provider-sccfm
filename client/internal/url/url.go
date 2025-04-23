@@ -4,7 +4,7 @@ package url
 import (
 	"fmt"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
 )
 
 func ReadDevice(baseUrl string, uid string) string {

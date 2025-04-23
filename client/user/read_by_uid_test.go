@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/user"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 )

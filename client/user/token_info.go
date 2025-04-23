@@ -2,9 +2,9 @@ package user
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/user/auth"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/user/auth"
 )
 
 type GetTokenInfoInput struct {

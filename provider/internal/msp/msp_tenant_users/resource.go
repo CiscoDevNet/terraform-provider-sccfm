@@ -3,8 +3,8 @@ package msp_tenant_users
 import (
 	"context"
 	"fmt"
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/users"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/users"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/attr"

@@ -3,8 +3,8 @@ package connector
 import (
 	"crypto/rand"
 	"crypto/rsa"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/crypto"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/crypto"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
 )
 
 type sdcReadOutputBuilder struct {

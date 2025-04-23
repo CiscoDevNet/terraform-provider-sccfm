@@ -2,10 +2,10 @@ package asaconfig
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/retry"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/statemachine"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/retry"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/statemachine"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
 )
 
 func UntilStateDone(ctx context.Context, client http.Client, specificUid string) retry.Func {

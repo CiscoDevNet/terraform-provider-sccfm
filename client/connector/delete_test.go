@@ -2,9 +2,9 @@ package connector_test
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
-	internalHttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
+	internalHttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"

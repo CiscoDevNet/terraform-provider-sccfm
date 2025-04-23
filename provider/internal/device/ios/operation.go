@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/publicapilabels"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/publicapilabels"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/util"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/ios"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/ios"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-log/tflog"
 )

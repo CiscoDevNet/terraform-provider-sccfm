@@ -2,9 +2,9 @@ package statemachine
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/cdo"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/cdo"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine"
 )
 
 type ErrorType interface {

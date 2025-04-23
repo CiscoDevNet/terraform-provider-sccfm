@@ -2,15 +2,15 @@ package fmcplatform_test
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc/fmcplatform"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/fmcdomain"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc/fmcplatform"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/fmcdomain"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
 	"time"
 
-	internalHttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	internalHttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/jarcoal/httpmock"
 )
 

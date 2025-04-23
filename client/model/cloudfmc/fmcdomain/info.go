@@ -1,7 +1,7 @@
 package fmcdomain
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/internal"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/internal"
 )
 
 type Info struct {

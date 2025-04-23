@@ -2,13 +2,13 @@ package ios_test
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/ios"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/ios"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/jarcoal/httpmock"
 )
 

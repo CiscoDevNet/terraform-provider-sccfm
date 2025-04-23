@@ -3,11 +3,11 @@ package cloudfmc
 import (
 	"context"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/cdo"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/cdo"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 )
 
 type ReadInput struct {

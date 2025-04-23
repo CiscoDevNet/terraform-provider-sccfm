@@ -1,9 +1,9 @@
-module github.com/CiscoDevnet/terraform-provider-scc-firewall-manager
+module github.com/CiscoDevnet/terraform-provider-sccfm
 
 go 1.20
 
 require (
-	github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client v0.0.0-00010101000000-000000000000
+	github.com/CiscoDevnet/terraform-provider-sccfm/go-client v0.0.0-00010101000000-000000000000
 	github.com/aws/aws-sdk-go-v2/service/secretsmanager v1.23.0
 	github.com/hashicorp/terraform-plugin-framework v1.4.2
 	github.com/hashicorp/terraform-plugin-framework-validators v0.12.0
@@ -104,4 +104,4 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 )
 
-replace github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client => ../client
+replace github.com/CiscoDevnet/terraform-provider-sccfm/go-client => ../client

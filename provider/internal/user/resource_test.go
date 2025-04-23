@@ -3,7 +3,7 @@ package user_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 

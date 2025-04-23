@@ -1,6 +1,6 @@
 package tags
 
-import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/maputil"
+import "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/maputil"
 
 const ungroupedLabelKeyName = "labels"
 

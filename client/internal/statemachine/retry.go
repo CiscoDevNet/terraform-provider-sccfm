@@ -3,9 +3,9 @@ package statemachine
 import (
 	"context"
 	"errors"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/retry"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/retry"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
 )
 
 // UntilStarted keeps polling until it finds the state machine with given identifier or error that is not a not found error

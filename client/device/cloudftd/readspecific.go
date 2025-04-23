@@ -1,6 +1,6 @@
 package cloudftd
 
-import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
+import "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
 
 var ReadSpecific = device.ReadSpecific
 

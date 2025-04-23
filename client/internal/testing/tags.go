@@ -1,7 +1,7 @@
 package testing
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/tags"
 )
 
 func NewTestingTags() tags.Type {

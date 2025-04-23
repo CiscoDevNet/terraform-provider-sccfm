@@ -2,7 +2,7 @@ package sec
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/sec"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/sec"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 

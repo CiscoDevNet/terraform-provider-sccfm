@@ -1,10 +1,10 @@
 package testing
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd/cloudftdonboarding"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/publicapilabels"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd/cloudftdonboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/publicapilabels"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/tags"
 )
 
 func (m Model) FtdOnboardingInput() cloudftdonboarding.CreateInput {

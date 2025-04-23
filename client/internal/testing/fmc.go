@@ -1,10 +1,10 @@
 package testing
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc/fmcplatform"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/accesspolicies"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/fmcdomain"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc/fmcplatform"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/accesspolicies"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/fmcdomain"
 )
 
 func (m Model) FmcReadOutput() cloudfmc.ReadOutput {

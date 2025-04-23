@@ -1,6 +1,6 @@
 package statemachine
 
-import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
+import "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
 
 // see also: https://github.com/cisco-lockhart/cdo-jvm-modules/blob/master/libs/lh-model/lh-model/src/main/java/com/cisco/lockhart/model/statemachine/model/StateMachineInstance.java
 type Instance struct {

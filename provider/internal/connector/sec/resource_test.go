@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 

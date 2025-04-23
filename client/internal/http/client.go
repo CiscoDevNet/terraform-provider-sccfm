@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/cdo"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/cdo"
 )
 
 type Client struct {

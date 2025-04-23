@@ -3,9 +3,9 @@ package cloudftd
 import (
 	"context"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/retry"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/retry"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
 )
 
 func UntilGeneratedCommandAvailable(ctx context.Context, client http.Client, uid string, metadata *Metadata) retry.Func {

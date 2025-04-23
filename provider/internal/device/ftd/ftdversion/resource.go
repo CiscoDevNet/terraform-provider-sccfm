@@ -3,8 +3,8 @@ package ftdversion
 import (
 	"context"
 	"fmt"
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"

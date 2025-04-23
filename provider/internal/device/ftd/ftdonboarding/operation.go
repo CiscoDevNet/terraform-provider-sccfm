@@ -2,7 +2,7 @@ package ftdonboarding
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd/cloudftdonboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd/cloudftdonboarding"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 

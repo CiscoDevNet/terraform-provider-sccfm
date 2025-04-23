@@ -3,8 +3,8 @@ package msp_tenant_user_api_token
 import (
 	"context"
 	"fmt"
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/users"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/users"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"

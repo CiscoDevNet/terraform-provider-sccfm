@@ -3,10 +3,10 @@ package user
 import (
 	"context"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 )
 
 type updateRequestBody struct {

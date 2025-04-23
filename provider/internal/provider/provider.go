@@ -6,32 +6,32 @@ package provider
 import (
 	"context"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/device/ftd/ftdversion"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/msp/msp_tenant"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/msp/msp_tenant_user_api_token"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/msp/msp_tenant_users"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/device/ftd/ftdversion"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant_user_api_token"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant_users"
 	"os"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/connector"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/connector/connectoronboarding"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/connector/sec"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/connector/sec/seconboarding"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/service/duoadminpanel"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/tenantsettings"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector/connectoronboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector/sec"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector/sec/seconboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/service/duoadminpanel"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/tenantsettings"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/cdfmc"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/device/ftd/ftdonboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/cdfmc"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/device/ftd/ftdonboarding"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/device/ftd"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/tenant"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/device/ftd"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/tenant"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/user"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/user_api_token"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/user"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/user_api_token"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/device/ios"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/device/ios"
 
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -41,7 +41,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/device/asa"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/device/asa"
 )
 
 var _ provider.Provider = &SccFirewallManagerProvider{}

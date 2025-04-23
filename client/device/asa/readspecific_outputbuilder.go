@@ -1,6 +1,6 @@
 package asa
 
-import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
+import "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
 
 type ReadSpecificOutputBuilder struct {
 	output ReadSpecificOutput

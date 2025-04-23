@@ -1,9 +1,9 @@
 package testing
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/status"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/status"
 )
 
 func (m Model) CdgReadOutput() connector.ReadOutput {

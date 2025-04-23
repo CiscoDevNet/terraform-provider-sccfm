@@ -3,8 +3,8 @@ package tenantsettings_test
 import (
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/settings"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/acctest"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/settings"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/acctest"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 

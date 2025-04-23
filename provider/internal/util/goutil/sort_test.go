@@ -2,7 +2,7 @@ package goutil_test
 
 import (
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util/goutil"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/util/goutil"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

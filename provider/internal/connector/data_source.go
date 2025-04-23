@@ -6,8 +6,8 @@ package connector
 import (
 	"context"
 	"fmt"
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"

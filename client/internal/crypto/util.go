@@ -6,8 +6,8 @@ import (
 	"crypto/x509"
 	"encoding/base64"
 	"encoding/pem"
-	internalRsa "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/crypto/internal/rsa"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
+	internalRsa "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/crypto/internal/rsa"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
 )
 
 func EncryptCredentials(key model.PublicKey, username, password string) (model.Credentials, error) {

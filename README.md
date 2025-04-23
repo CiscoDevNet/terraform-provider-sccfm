@@ -11,7 +11,7 @@ Eventually the client will be moved to its own repo, but in the interest of hitt
 
 ```
 .
-├── client        # Golang SCC Firewall Manager client - currently using the module name github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client
+├── client        # Golang SCC Firewall Manager client - currently using the module name github.com/CiscoDevnet/terraform-provider-sccfm/go-client
 ├── provider      # Terraform provider
 └── README.md
 ```
@@ -91,7 +91,7 @@ Examples are provided so that you can do the usual `plan`, `apply`, `destroy` et
       go install .
       ```
    3. Verify installation
-      The installation path that you figured out above should contain an executable called **terraform-provider-scc-firewall-manager**.
+      The installation path that you figured out above should contain an executable called **terraform-provider-sccfm**.
 2. Tell terraform to use your local build
    1. Modify local terraform configuration
       ```bash
@@ -102,7 +102,7 @@ Examples are provided so that you can do the usual `plan`, `apply`, `destroy` et
       provider_installation {
    
         dev_overrides {
-            "hashicorp.com/CiscoDevnet/scc-firewall-manager" = "<DIRECTORY_OF_YOUR_EXECUTABLE>"
+            "hashicorp.com/CiscoDevnet/sccfm" = "<DIRECTORY_OF_YOUR_EXECUTABLE>"
         }
   
         # For all other providers, install them directly from their origin provider
@@ -123,7 +123,7 @@ Examples are provided so that you can do the usual `plan`, `apply`, `destroy` et
     │ Warning: Provider development overrides are in effect
     │
     │ The following provider development overrides are set in the CLI configuration:
-    │  - hashicorp.com/CiscoDevnet/scc-firewall-manager in /Users/weilluo/go/bin
+    │  - hashicorp.com/CiscoDevnet/sccfm in /Users/weilluo/go/bin
     │
     │ The behavior may therefore not match any released version of the provider and applying changes may cause the state to become incompatible with published releases.
     |
@@ -134,7 +134,7 @@ Examples are provided so that you can do the usual `plan`, `apply`, `destroy` et
 
 If you make any changes to the resources and data sources provided by this provider, you will need to regenerate the docs, otherwise the Github actions triggered by this pull request will fail. To do this, run:
 ```
-go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name scc-firewall-manager --rendered-provider-name "SCC Firewall Manager Provider" --rendered-website-dir ../docs
+go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name sccfm --rendered-provider-name "SCC Firewall Manager Provider" --rendered-website-dir ../docs
 ```
 
 ## Releasing Manually
@@ -151,7 +151,7 @@ To release a new version of the Terraform SCC Firewall Manager Provider manually
 ## Troubleshooting
 - Error: Inconsistent dependency lock file
   ```
-  provider hashicorp/CiscoDevnet/scc-firewall-manager: required by this configuration but no version is selected
+  provider hashicorp/CiscoDevnet/sccfm: required by this configuration but no version is selected
   ```
   - This means you have not setup the dev override properly, make sure your `~/.terraformrc` has the right override for the provider in question.
 

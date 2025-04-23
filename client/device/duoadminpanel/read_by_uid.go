@@ -3,10 +3,10 @@ package duoadminpanel
 import (
 	"context"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
 )
 
 type ReadByUidInput struct {

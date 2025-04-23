@@ -2,7 +2,7 @@ package connector
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
 
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )

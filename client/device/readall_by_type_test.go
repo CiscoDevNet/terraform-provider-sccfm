@@ -2,10 +2,10 @@ package device_test
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
-	internalHttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
+	internalHttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"net/http"

@@ -4,8 +4,8 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/user"
 )
 
 func ComputeEventOnlyBootstrapData(accessToken, tenantName, baseUrl, host string) string {

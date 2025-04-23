@@ -1,7 +1,7 @@
 package cloudftd
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/publicapilabels"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/publicapilabels"
 )
 
 type CreateOutputBuilder struct {

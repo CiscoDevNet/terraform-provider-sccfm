@@ -7,17 +7,17 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc/fmcplatform"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/cdo"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/accesspolicies"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/publicapilabels"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/license"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/tier"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc/fmcplatform"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/cdo"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/accesspolicies"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/publicapilabels"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/license"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/tier"
 )
 
 type CreateInput struct {

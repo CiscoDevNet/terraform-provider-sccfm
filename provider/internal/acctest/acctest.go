@@ -6,7 +6,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/provider"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/provider"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 )
@@ -71,7 +71,7 @@ func ProviderConfig() string {
 	terraform {
 	  required_providers {
 		sccfm = {
-		  source = "CiscoDevnet/scc-firewall-manager"
+		  source = "CiscoDevnet/sccfm"
 		}
 	  }
 	}

@@ -1,19 +1,19 @@
 package cloudftdonboarding_test
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc/fmcconfig"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc/fmcplatform"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
-	fmcconfig2 "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/fmcconfig"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/fmcconfig/fmctaskstatus"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/fmcdomain"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/license"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/tier"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/statemachine/state"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/user/auth"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/user/auth/role"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc/fmcconfig"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc/fmcplatform"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd"
+	fmcconfig2 "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/fmcconfig"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/fmcconfig/fmctaskstatus"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/fmcdomain"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/license"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/tier"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/statemachine/state"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/user/auth"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/user/auth/role"
 )
 
 const (

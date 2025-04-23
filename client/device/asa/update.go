@@ -3,17 +3,17 @@ package asa
 import (
 	"context"
 	"fmt"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa/asaconfig"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/asa/asaconfig"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/tags"
 	"strings"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/retry"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/retry"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 )
 
 type UpdateInput struct {

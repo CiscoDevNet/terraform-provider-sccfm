@@ -2,10 +2,10 @@ package cloudftdonboarding
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 )
 
 type CreateInput struct {

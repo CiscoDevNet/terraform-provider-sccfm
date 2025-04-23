@@ -6,11 +6,11 @@ package retry
 import (
 	"context"
 	"errors"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/goutil"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/goutil"
 	"log"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/cdo"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/cdo"
 )
 
 // Options represents the configuration when retrying.

@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
 )

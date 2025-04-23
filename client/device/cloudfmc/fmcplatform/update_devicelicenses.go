@@ -2,10 +2,10 @@ package fmcplatform
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/devicelicense"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/license"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/devicelicense"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/license"
 )
 
 type UpdateDeviceLicensesInput struct {

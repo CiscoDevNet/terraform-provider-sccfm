@@ -4,32 +4,32 @@ package client
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/tenants"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/usergroups"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/msp/users"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/tenants"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/usergroups"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/users"
 	"net/http"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/connectoronboarding"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/sec"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/sec/seconboarding"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/duoadminpanel"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/settings"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/settings/tenantsettings"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/connectoronboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/sec"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/sec/seconboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/duoadminpanel"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/settings"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/settings/tenantsettings"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa/asaconfig"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudfmc"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/cloudftd/cloudftdonboarding"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/genericssh"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/tenant"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/user"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/asa/asaconfig"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd/cloudftdonboarding"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/genericssh"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/tenant"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/user"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/ios"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/ios"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/asa"
-	internalhttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/asa"
+	internalhttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 )
 
 type Client struct {

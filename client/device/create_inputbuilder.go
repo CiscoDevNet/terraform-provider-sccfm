@@ -1,9 +1,9 @@
 package device
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/goutil"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/tags"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/devicetype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/goutil"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/tags"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
 )
 
 // CreateInput builder pattern code

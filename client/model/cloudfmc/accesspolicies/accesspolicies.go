@@ -1,6 +1,6 @@
 package accesspolicies
 
-import "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/cloudfmc/internal"
+import "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/cloudfmc/internal"
 
 type AccessPolicies = internal.Response
 

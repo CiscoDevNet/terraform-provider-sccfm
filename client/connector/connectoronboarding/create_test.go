@@ -2,12 +2,12 @@ package connectoronboarding_test
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/connector/connectoronboarding"
-	internalHttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/device/status"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/connectoronboarding"
+	internalHttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/device/status"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 	"net/http"

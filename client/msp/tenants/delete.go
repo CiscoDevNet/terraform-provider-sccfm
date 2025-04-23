@@ -2,8 +2,8 @@ package tenants
 
 import (
 	"context"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 )
 
 func DeleteByUid(ctx context.Context, client http.Client, deleteInp DeleteByUidInput) (interface{}, error) {

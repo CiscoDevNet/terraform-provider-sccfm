@@ -8,11 +8,11 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/util"
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"

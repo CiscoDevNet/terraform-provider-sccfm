@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/internal/util"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/util"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/mapdefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/setdefault"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/validators"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/validators"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 
-	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client"
+	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"

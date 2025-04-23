@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/device/ios"
-	internalHttp "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/http"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi/transaction/transactiontype"
-	internalTesting "github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/testing"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/url"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/ios"
+	internalHttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction/transactiontype"
+	internalTesting "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/testing"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/jarcoal/httpmock"

@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     sccfm = {
-      source = "CiscoDevnet/scc-firewall-manager"
+      source = "CiscoDevnet/sccfm"
     }
     null = {
       source  = "hashicorp/null"

@@ -1,8 +1,8 @@
 package transaction
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi/transaction/transactionstatus"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/internal/publicapi/transaction/transactiontype"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction/transactionstatus"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction/transactiontype"
 )
 
 type Type struct {

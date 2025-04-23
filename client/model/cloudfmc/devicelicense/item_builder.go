@@ -1,8 +1,8 @@
 package devicelicense
 
 import (
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/license"
-	"github.com/CiscoDevnet/terraform-provider-scc-firewall-manager/go-client/model/ftd/tier"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/license"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/ftd/tier"
 )
 
 type ItemBuilder struct {
