@@ -118,7 +118,7 @@ func (p *SccFirewallManagerProvider) Configure(ctx context.Context, req provider
 		return
 	}
 
-	apiToken := os.Getenv("CISCO_SCC Firewall Manager_API_TOKEN")
+	apiToken := os.Getenv("CISCO_SCCFM_API_TOKEN")
 	if !data.ApiToken.IsNull() {
 		apiToken = data.ApiToken.ValueString()
 	}
@@ -128,12 +128,12 @@ func (p *SccFirewallManagerProvider) Configure(ctx context.Context, req provider
 			path.Root("api_token"),
 			"Missing Cisco SCC Firewall Manager Token",
 			"The provider cannot create the Cisco SCC Firewall Manager client as there is a missing or empty value for the Cisco SCC Firewall Manager token. "+
-				"Set the API token value in the configuration or use the CISCO_SCC Firewall Manager_API_TOKEN environment variable. "+
+				"Set the API token value in the configuration or use the CISCO_SCCFM_API_TOKEN environment variable. "+
 				"If either is already set, ensure the value is not empty.",
 		)
 	}
 
-	baseURL := os.Getenv("CISCO_SCC Firewall Manager_BASE_URL")
+	baseURL := os.Getenv("CISCO_SCCFM_BASE_URL")
 	if !data.BaseURL.IsNull() {
 		baseURL = data.BaseURL.ValueString()
 	}
@@ -142,7 +142,7 @@ func (p *SccFirewallManagerProvider) Configure(ctx context.Context, req provider
 			path.Root("base_url"),
 			"Missing Cisco SCC Firewall Manager Base URL",
 			"The provider cannot create the Cisco SCC Firewall Manager client as there is a missing or empty value for the Cisco SCC Firewall Manager base URL. "+
-				"Set the API token value in the configuration or use the CISCO_SCC Firewall Manager_BASE_URL environment variable. "+
+				"Set the API token value in the configuration or use the CISCO_SCCFM_BASE_URL environment variable. "+
 				"If either is already set, ensure the value is not empty.",
 		)
 	}
