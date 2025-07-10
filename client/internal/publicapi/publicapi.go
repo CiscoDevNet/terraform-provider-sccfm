@@ -18,7 +18,7 @@ func TriggerTransaction(ctx context.Context, client http.Client, url string, bod
 func WaitForTransactionToFinishWithDefaults(ctx context.Context, client http.Client, t transaction.Type, msg string) (transaction.Type, error) {
 	return WaitForTransactionToFinish(ctx, client, t, retry.NewOptionsBuilder().
 		Logger(client.Logger).
-		Timeout(5*time.Minute).
+		Timeout(10*time.Minute).
 		Retries(-1).
 		EarlyExitOnError(true).
 		Message(msg).
