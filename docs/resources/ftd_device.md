@@ -8,7 +8,7 @@ description: |-
 
 # sccfm_ftd_device (Resource)
 
-Provides a Firewall Threat Defense device resource. Use this to onboard, update, and delete FTDs on SCC Firewall Manager. This resource does not complete the onboarding of an FTD into SCC Firewall Manager and cdFMC. It creates a FTD device entry in the SCC Firewall Security Devices inventory, and generates a registration command (see the `generated_command` attribute) that needs to be pasted into the FTD CLI (see **step 10** [here](https://docs.manage.security.cisco.com/c_onboard-an-ftd.html#!t-onboard-an-ftd-device-with-regkey.html)). To finish adding the FTD device to SCC Firewall Manager and cdFMC, use the `cdo_ftd_device_onboarding` resource after you have applied this resource.
+Provides a Firewall Threat Defense device resource. Use this to onboard, update, and delete FTDs on SCC Firewall Manager. This resource does not complete the onboarding of an FTD into SCC Firewall Manager and cdFMC. It creates a FTD device entry in the SCC Firewall Security Devices inventory, and generates a registration command (see the `generated_command` attribute) that needs to be pasted into the FTD CLI (see **step 11** [here](https://docs.manage.security.cisco.com/c_onboard-an-ftd.html#!t-onboard-an-ftd-device-with-regkey.html)). To finish adding the FTD device to SCC Firewall Manager and cdFMC, use the `cdo_ftd_device_onboarding` resource after you have applied this resource.
 
 
 
