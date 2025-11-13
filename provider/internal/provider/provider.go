@@ -6,11 +6,12 @@ package provider
 import (
 	"context"
 	"fmt"
+	"os"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/device/ftd/ftdversion"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant_user_api_token"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant_users"
-	"os"
 
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector/connectoronboarding"
@@ -80,7 +81,7 @@ func (p *SccFirewallManagerProvider) Schema(ctx context.Context, req provider.Sc
 				MarkdownDescription: "The base SCC Firewall Manager URL. This is the URL you enter when logging into your SCC Firewall Manager account.",
 				Required:            true,
 				Validators: []validator.String{
-					stringvalidator.OneOf("https://www.defenseorchestrator.com", "https://us.manage.security.cisco.com", "https://www.defenseorchestrator.eu", "https://eu.manage.security.cisco.com", "https://apj.cdo.cisco.com", "https://apj.manage.security.cisco.com", "https://staging.dev.lockhart.io", "https://staging.manage.security.cisco.com", "https://ci.dev.lockhart.io", "https://ci.manage.security.cisco.com", "https://scale.dev.lockhart.io", "https://scale.manage.security.cisco.com", "http://localhost:9000", "https://aus.cdo.cisco.com", "https://aus.manage.security.cisco.com", "https://in.cdo.cisco.com", "https://aus.manage.security.cisco.com"),
+					stringvalidator.OneOf("https://www.defenseorchestrator.com", "https://us.manage.security.cisco.com", "https://www.defenseorchestrator.eu", "https://eu.manage.security.cisco.com", "https://apj.cdo.cisco.com", "https://apj.manage.security.cisco.com", "https://staging.dev.lockhart.io", "https://staging.manage.security.cisco.com", "https://ci.dev.lockhart.io", "https://ci.manage.security.cisco.com", "https://scale.dev.lockhart.io", "https://scale.manage.security.cisco.com", "http://localhost:9000", "https://aus.cdo.cisco.com", "https://aus.manage.security.cisco.com", "https://in.cdo.cisco.com", "https://in.manage.security.cisco.com", "https://uae.cdo.cisco.com", "https://uae.manage.security.cisco.com"),
 				},
 			},
 		},
