@@ -2,10 +2,11 @@ package users
 
 import (
 	"context"
+	"strings"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 	mapset "github.com/deckarep/golang-set/v2"
-	"strings"
 )
 
 func ReadCreatedUsersInTenant(ctx context.Context, client http.Client, readInput MspUsersInput) (*[]ComputedUserDetails, error) {
@@ -49,7 +50,7 @@ func mergeUserDetails(map1, map2 *map[string]ComputedUserDetails) *[]ComputedUse
 }
 
 func fetchUsersInTenant(ctx context.Context, client http.Client, readInput MspUsersInput, shouldFetchApiOnlyUsers bool) (*map[string]ComputedUserDetails, error) {
-	limit := 200
+	limit := 50
 	offset := 0
 	count := 1
 	var userPage UserPage

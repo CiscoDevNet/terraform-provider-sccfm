@@ -2,6 +2,7 @@ package usergroups
 
 import (
 	"context"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
 	mapset "github.com/deckarep/golang-set/v2"
@@ -22,7 +23,7 @@ func ReadCreatedUserGroupsInTenant(ctx context.Context, client http.Client, tena
 		}
 	}
 
-	limit := 200
+	limit := 50
 	offset := 0
 	count := 1
 	var readUrl string
