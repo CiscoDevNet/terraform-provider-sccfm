@@ -3,6 +3,12 @@ package usergroups_test
 import (
 	"context"
 	"fmt"
+	netHttp "net/http"
+	"sort"
+	"strconv"
+	"testing"
+	"time"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction"
@@ -12,11 +18,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
-	netHttp "net/http"
-	"sort"
-	"strconv"
-	"testing"
-	"time"
 )
 
 // Function to generate user groups
@@ -69,7 +70,7 @@ func TestCreate(t *testing.T) {
 				Role:            "ROLE_READ_ONLY",
 			},
 		}
-		var userGroupsInCdoTenant = generateUserGroups(250)
+		var userGroupsInCdoTenant = generateUserGroups(98)
 		var userGroupsWithIds []usergroups.MspManagedUserGroup
 		for _, userGroup := range createInp {
 			userGroupWithId := usergroups.MspManagedUserGroup{
@@ -83,8 +84,8 @@ func TestCreate(t *testing.T) {
 			userGroupsInCdoTenant = append(userGroupsInCdoTenant, userGroupWithId)
 			userGroupsWithIds = append(userGroupsWithIds, userGroupWithId)
 		}
-		firstUserGroupPage := usergroups.MspManagedUserGroupPage{Items: userGroupsInCdoTenant[:200], Count: len(userGroupsInCdoTenant), Limit: 200, Offset: 0}
-		secondUserGroupPage := usergroups.MspManagedUserGroupPage{Items: userGroupsInCdoTenant[200:], Count: len(userGroupsInCdoTenant), Limit: 200, Offset: 200}
+		firstUserGroupPage := usergroups.MspManagedUserGroupPage{Items: userGroupsInCdoTenant[:50], Count: len(userGroupsInCdoTenant), Limit: 50, Offset: 0}
+		secondUserGroupPage := usergroups.MspManagedUserGroupPage{Items: userGroupsInCdoTenant[50:], Count: len(userGroupsInCdoTenant), Limit: 50, Offset: 50}
 		var transactionUid = uuid.New().String()
 		var inProgressTransaction = transaction.Type{
 			TransactionUid:  transactionUid,
@@ -121,12 +122,12 @@ func TestCreate(t *testing.T) {
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/groups?limit=200&offset=0", managedTenantUid),
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/groups?limit=50&offset=0", managedTenantUid),
 			httpmock.NewJsonResponderOrPanic(200, firstUserGroupPage),
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/groups?limit=200&offset=200", managedTenantUid),
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/groups?limit=50&offset=50", managedTenantUid),
 			httpmock.NewJsonResponderOrPanic(200, secondUserGroupPage),
 		)
 

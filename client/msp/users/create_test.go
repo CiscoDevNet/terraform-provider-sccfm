@@ -3,6 +3,12 @@ package users_test
 import (
 	"context"
 	"fmt"
+	netHttp "net/http"
+	"sort"
+	"strconv"
+	"testing"
+	"time"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction"
@@ -13,11 +19,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
-	netHttp "net/http"
-	"sort"
-	"strconv"
-	"testing"
-	"time"
 )
 
 // Function to generate users
@@ -127,8 +128,8 @@ func TestCreate(t *testing.T) {
 			},
 		}
 
-		var humanUsersInCdoTenant = generateHumanUsers(250)
-		var apiOnlyUsersInCdoTenant = generateApiOnlyUsers(250)
+		var humanUsersInCdoTenant = generateHumanUsers(75)
+		var apiOnlyUsersInCdoTenant = generateApiOnlyUsers(75)
 		humanUserWithId := users.UserDetails{
 			Uid:         uuid.New().String(),
 			Username:    humanUserToCreate.Username,
@@ -160,10 +161,10 @@ func TestCreate(t *testing.T) {
 		humanUsersInCdoTenant = append(humanUsersInCdoTenant, humanUserWithId)
 		apiOnlyUsersInCdoTenant = append(apiOnlyUsersInCdoTenant, apiOnlyUserWithId)
 		usersWithIds = append(usersWithIds, apiOnlyUserComputed)
-		firstHumanUserPage := users.UserPage{Items: humanUsersInCdoTenant[:200], Count: len(humanUsersInCdoTenant), Limit: 200, Offset: 0}
-		secondHumanUserPage := users.UserPage{Items: humanUsersInCdoTenant[200:], Count: len(humanUsersInCdoTenant), Limit: 200, Offset: 200}
-		firstApiOnlyUserPage := users.UserPage{Items: apiOnlyUsersInCdoTenant[:200], Count: len(apiOnlyUsersInCdoTenant), Limit: 200, Offset: 0}
-		secondApiOnlyUserPage := users.UserPage{Items: apiOnlyUsersInCdoTenant[200:], Count: len(apiOnlyUsersInCdoTenant), Limit: 200, Offset: 200}
+		firstHumanUserPage := users.UserPage{Items: humanUsersInCdoTenant[:50], Count: len(humanUsersInCdoTenant), Limit: 50, Offset: 0}
+		secondHumanUserPage := users.UserPage{Items: humanUsersInCdoTenant[50:], Count: len(humanUsersInCdoTenant), Limit: 50, Offset: 50}
+		firstApiOnlyUserPage := users.UserPage{Items: apiOnlyUsersInCdoTenant[:50], Count: len(apiOnlyUsersInCdoTenant), Limit: 50, Offset: 0}
+		secondApiOnlyUserPage := users.UserPage{Items: apiOnlyUsersInCdoTenant[50:], Count: len(apiOnlyUsersInCdoTenant), Limit: 50, Offset: 50}
 		var transactionUid = uuid.New().String()
 		var inProgressTransaction = transaction.Type{
 			TransactionUid:  transactionUid,
@@ -200,22 +201,22 @@ func TestCreate(t *testing.T) {
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users?limit=200&offset=0", managedTenantUid),
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users?limit=50&offset=0", managedTenantUid),
 			httpmock.NewJsonResponderOrPanic(200, firstHumanUserPage),
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users?limit=200&offset=200", managedTenantUid),
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users?limit=50&offset=50", managedTenantUid),
 			httpmock.NewJsonResponderOrPanic(200, secondHumanUserPage),
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/api-only?limit=200&offset=0", managedTenantUid),
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/api-only?limit=50&offset=0", managedTenantUid),
 			httpmock.NewJsonResponderOrPanic(200, firstApiOnlyUserPage),
 		)
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/api-only?limit=200&offset=200", managedTenantUid),
+			fmt.Sprintf("/api/rest/v1/msp/tenants/%s/users/api-only?limit=50&offset=50", managedTenantUid),
 			httpmock.NewJsonResponderOrPanic(200, secondApiOnlyUserPage),
 		)
 
