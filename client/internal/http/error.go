@@ -27,6 +27,8 @@ var ServerError = fmt.Errorf("%w", Error)
 
 var NotFoundError = fmt.Errorf("%w%s", ClientError, http.StatusText(http.StatusNotFound))
 
+var TooManyRequestsError = fmt.Errorf("%w%s", ClientError, http.StatusText(http.StatusTooManyRequests))
+
 // errorFromStatusCode returns an error of the corresponding status code that we maybe interested in checking later using `errors.Is(err, http.XXXError)`
 func errorFromStatusCode(code int) ErrorType {
 	// TODO: use go generate to create errors for all http status and return them here, for now we just manually create them where needed

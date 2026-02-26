@@ -12,7 +12,9 @@ import (
 	"log"
 	"net/http"
 	netUrl "net/url"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/cdo"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/jsonutil"
@@ -107,6 +109,20 @@ func (r *Request) send(output any, token *string) error {
 	defer res.Body.Close()
 
 	// check status
+	if res.StatusCode == http.StatusTooManyRequests {
+		body, _ := io.ReadAll(res.Body)
+		retryAfter := 30 * time.Second
+		if ra := res.Header.Get("Retry-After"); ra != "" {
+			if seconds, err := strconv.Atoi(ra); err == nil {
+				retryAfter = time.Duration(seconds) * time.Second
+			}
+		}
+		r.logger.Printf("Rate limited (429), waiting %s before retrying... url=%s, body=%s", retryAfter, r.url, string(body))
+		time.Sleep(retryAfter)
+		r.Error = fmt.Errorf("http error: %w url=%s, code=%d, status=%s", TooManyRequestsError, r.url, res.StatusCode, res.Status)
+		return r.Error
+	}
+
 	if res.StatusCode >= 400 {
 		body, err := io.ReadAll(res.Body)
 		errInfo := fmt.Sprintf("url=%s, code=%d, status=%s, body=%s, readBodyErr=%s, method=%s, header=%s", r.url, res.StatusCode, res.Status, string(body), err, r.method, r.Header)
