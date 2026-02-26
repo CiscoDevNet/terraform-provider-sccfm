@@ -30,6 +30,10 @@ func (v mspManagedTenantNameValidator) ValidateString(ctx context.Context, reque
 
 	request.Config.GetAttribute(ctx, path.Root("api_token"), &apiTokenAttr)
 
+	if request.ConfigValue.IsUnknown() || apiTokenAttr.IsUnknown() {
+		return
+	}
+
 	if request.ConfigValue.IsNull() && apiTokenAttr.IsNull() {
 		response.Diagnostics.AddError(
 			"Invalid Configuration",
