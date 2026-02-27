@@ -3,6 +3,7 @@ package url
 
 import (
 	"fmt"
+	"net/url"
 
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
 )
@@ -12,7 +13,8 @@ func ReadDevice(baseUrl string, uid string) string {
 }
 
 func ReadDeviceByNameAndType(baseUrl string, deviceName string, deviceType devicetype.Type) string {
-	return fmt.Sprintf("%s/aegis/rest/v1/services/targets/devices?q=name:%s+AND+deviceType:%s", baseUrl, deviceName, deviceType)
+	query := fmt.Sprintf("name:\"%s\" AND deviceType:%s", deviceName, deviceType)
+	return fmt.Sprintf("%s/aegis/rest/v1/services/targets/devices?q=%s", baseUrl, url.QueryEscape(query))
 }
 func ReadAllDevicesByType(baseUrl string) string {
 	return fmt.Sprintf("%s/aegis/rest/v1/services/targets/devices", baseUrl)
@@ -227,7 +229,8 @@ func MspManagedTenantByUid(baseUrl string, tenantUid string) string {
 }
 
 func FindMspManagedTenantsByName(baseUrl string, tenantName string) string {
-	return fmt.Sprintf("%s/api/rest/v1/msp/tenants?q=name:%s", baseUrl, tenantName)
+	query := fmt.Sprintf("name:\"%s\"", tenantName)
+	return fmt.Sprintf("%s/api/rest/v1/msp/tenants?q=%s", baseUrl, url.QueryEscape(query))
 }
 
 func CreateUsersInMspManagedTenant(baseUrl string, tenantUid string) string {
