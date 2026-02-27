@@ -23,7 +23,9 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
 
 	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/asa"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/devicetype"
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -255,6 +257,55 @@ func (r *AsaDeviceResource) Create(ctx context.Context, req resource.CreateReque
 	var planData AsaDeviceResourceModel
 	res.Diagnostics.Append(req.Plan.Get(ctx, &planData)...)
 	if res.Diagnostics.HasError() {
+		return
+	}
+
+	// try to find an existing device with the same name and type
+	existingDevice, readErr := r.client.ReadDeviceByName(ctx, device.ReadByNameAndTypeInput{
+		Name:       planData.Name.ValueString(),
+		DeviceType: devicetype.Asa,
+	})
+	if readErr == nil && strings.EqualFold(existingDevice.SocketAddress, planData.SocketAddress.ValueString()) {
+		// device with same name and socket address already exists — adopt it
+		tflog.Info(ctx, fmt.Sprintf("ASA device %q at %s already exists, adopting into state", planData.Name.ValueString(), planData.SocketAddress.ValueString()))
+
+		asaReadOutp, err := r.client.ReadAsa(ctx, asa.ReadInput{Uid: existingDevice.Uid})
+		if err != nil {
+			res.Diagnostics.AddError("failed to read existing ASA device", err.Error())
+			return
+		}
+		asaSpecificOutp, err := r.client.ReadSpecificAsa(ctx, asa.ReadSpecificInput{Uid: existingDevice.Uid})
+		if err != nil {
+			res.Diagnostics.AddError("failed to read existing ASA specific device", err.Error())
+			return
+		}
+
+		port, err := strconv.ParseInt(asaReadOutp.Port, 10, 16)
+		if err != nil {
+			res.Diagnostics.AddError("unable to parse port", err.Error())
+			return
+		}
+
+		planData.ID = types.StringValue(asaReadOutp.Uid)
+		planData.ConnectorType = types.StringValue(asaReadOutp.ConnectorType)
+		planData.ConnectorName = getConnectorName(&planData)
+		planData.Name = types.StringValue(asaReadOutp.Name)
+		planData.Host = types.StringValue(asaReadOutp.Host)
+		planData.Port = types.Int64Value(port)
+		planData.IgnoreCertificate = types.BoolValue(asaReadOutp.IgnoreCertificate)
+		planData.Labels = util.GoStringSliceToTFStringSet(asaReadOutp.Tags.UngroupedTags())
+		planData.GroupedLabels = util.GoMapToStringSetTFMap(asaReadOutp.Tags.GroupedTags())
+		planData.SoftwareVersion = types.StringValue(asaReadOutp.SoftwareVersion)
+		planData.AsdmVersion = types.StringValue(asaSpecificOutp.Metadata.AsdmVersion)
+
+		res.Diagnostics.Append(res.State.Set(ctx, &planData)...)
+		return
+	}
+
+	// device not found or different socket address — proceed with creation
+	if readErr != nil && !util.Is404Error(readErr) {
+		// unexpected error during lookup
+		res.Diagnostics.AddError("failed to check for existing ASA device", readErr.Error())
 		return
 	}
 
