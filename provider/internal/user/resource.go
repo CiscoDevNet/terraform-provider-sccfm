@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"errors"
+
 	sccFwMgrClient "github.com/CiscoDevnet/terraform-provider-sccfm/go-client"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/user"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -134,11 +136,27 @@ func (r *Resource) Create(ctx context.Context, req resource.CreateRequest, res *
 	createInp := user.NewCreateUserInput(planData.Name.ValueString(), planData.UserRole.ValueString(), planData.ApiOnlyUser.ValueBool(), planData.FirstName.ValueStringPointer(), planData.LastName.ValueStringPointer())
 	createUserOutp, err := r.client.CreateUser(ctx, *createInp)
 	if err != nil {
-		res.Diagnostics.AddError("failed to create user resource", err.Error())
-		return
+		// if user already exists (409 Conflict), adopt the existing user into state
+		if errors.Is(err, sccFwMgrClient.ConflictError) {
+			tflog.Info(ctx, fmt.Sprintf("User %s already exists, adopting into state", planData.Name.ValueString()))
+			readInp := user.NewReadByUsernameInput(planData.Name.ValueString(), planData.ApiOnlyUser.ValueBool())
+			existingUser, readErr := r.client.ReadUserByUsername(ctx, *readInp)
+			if readErr != nil {
+				res.Diagnostics.AddError("failed to read existing user after 409 Conflict", readErr.Error())
+				return
+			}
+			planData.ID = types.StringValue(existingUser.Uid)
+			planData.GeneratedUsername = types.StringValue(existingUser.Username)
+			planData.UserRole = types.StringValue(existingUser.Roles[0])
+			planData.ApiOnlyUser = types.BoolValue(existingUser.ApiOnlyUser)
+		} else {
+			res.Diagnostics.AddError("failed to create user resource", err.Error())
+			return
+		}
+	} else {
+		planData.ID = types.StringValue(createUserOutp.Uid)
+		planData.GeneratedUsername = types.StringValue(createUserOutp.Username)
 	}
-	planData.ID = types.StringValue(createUserOutp.Uid)
-	planData.GeneratedUsername = types.StringValue(createUserOutp.Username)
 
 	// 3. fill terraform state using model data
 	res.Diagnostics.Append(res.State.Set(ctx, &planData)...)

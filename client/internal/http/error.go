@@ -29,12 +29,16 @@ var NotFoundError = fmt.Errorf("%w%s", ClientError, http.StatusText(http.StatusN
 
 var TooManyRequestsError = fmt.Errorf("%w%s", ClientError, http.StatusText(http.StatusTooManyRequests))
 
+var ConflictError = fmt.Errorf("%w%s", ClientError, http.StatusText(http.StatusConflict))
+
 // errorFromStatusCode returns an error of the corresponding status code that we maybe interested in checking later using `errors.Is(err, http.XXXError)`
 func errorFromStatusCode(code int) ErrorType {
 	// TODO: use go generate to create errors for all http status and return them here, for now we just manually create them where needed
 	switch true {
 	case code == http.StatusNotFound:
 		return NotFoundError
+	case code == http.StatusConflict:
+		return ConflictError
 
 	case code > http.StatusInternalServerError:
 		return ServerError
