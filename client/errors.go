@@ -5,3 +5,4 @@ import (
 )
 
 var ConflictError = http.ConflictError
+var NotFoundError = http.NotFoundError
