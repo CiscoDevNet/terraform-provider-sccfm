@@ -2,14 +2,15 @@ package tenants_test
 
 import (
 	"context"
+	netHttp "net/http"
+	"testing"
+	"time"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/tenants"
 	"github.com/google/uuid"
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
-	netHttp "net/http"
-	"testing"
-	"time"
 )
 
 func TestRead(t *testing.T) {
@@ -71,8 +72,7 @@ func TestRead(t *testing.T) {
 		}
 
 		httpmock.RegisterResponder(
-			netHttp.MethodGet,
-			"/api/rest/v1/msp/tenants?q=name%3A"+tenantName,
+			netHttp.MethodGet, "/api/rest/v1/msp/tenants?q=name%3A%22"+tenantName+"%22",
 			httpmock.NewJsonResponderOrPanic(200, tenantResponse),
 		)
 		actual, err := tenants.ReadByName(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), tenants.ReadByNameInput{
@@ -96,7 +96,7 @@ func TestRead(t *testing.T) {
 
 		httpmock.RegisterResponder(
 			netHttp.MethodGet,
-			"/api/rest/v1/msp/tenants?q=name%3A"+tenantName,
+			"/api/rest/v1/msp/tenants?q=name%3A%22"+tenantName+"%22",
 			httpmock.NewJsonResponderOrPanic(200, tenantResponse),
 		)
 		actual, err := tenants.ReadByName(context.Background(), *http.MustNewWithConfig(baseUrl, "valid_token", 0, 0, time.Minute), tenants.ReadByNameInput{
