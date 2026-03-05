@@ -60,7 +60,7 @@ func Read(ctx context.Context, resource *Resource, stateData *ResourceModel) err
 	// map return struct to model
 	stateData.ID = types.StringValue(res.Uid)
 	stateData.Name = types.StringValue(res.Name)
-	stateData.AccessPolicyName = types.StringValue(res.Metadata.AccessPolicyName)
+	// access_policy_name is a create-only field; preserve the state value to avoid spurious diffs
 	stateData.AccessPolicyUid = types.StringValue(res.Metadata.AccessPolicyUid)
 	stateData.Virtual = types.BoolValue(res.Metadata.PerformanceTier != nil)
 	stateData.Licenses = util.GoStringSliceToTFStringSet(licenseStrings)

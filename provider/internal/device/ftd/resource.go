@@ -78,12 +78,10 @@ func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp 
 				Required:            true,
 			},
 			"access_policy_name": schema.StringAttribute{
-				MarkdownDescription: "The name of the Cloud-Delivered FMC (cdFMC) access policy that will be used by the FTD.",
-				Required:            true,
+				MarkdownDescription: "The name of the Cloud-Delivered FMC (cdFMC) access policy that will be applied to the FTD during initial onboarding. " +
+					"This is only used when the device is first created. Subsequent changes to the access policy (e.g. via the cdFMC UI or the FMC Terraform provider) will not trigger a re-onboard of the device.",
+				Required: true,
 				// TODO: make this optional, and use default access policy when not given
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 			},
 			"performance_tier": schema.StringAttribute{
 				MarkdownDescription: "The performance tier of the virtual FTD, if virtual is set to false, this field is ignored as performance tiers are not applicable to physical FTD devices. Allowed values are: [\"FTDv5\", \"FTDv10\", \"FTDv20\", \"FTDv30\", \"FTDv50\", \"FTDv100\", \"FTDv\"].",
