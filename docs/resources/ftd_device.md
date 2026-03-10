@@ -17,7 +17,7 @@ Provides a Firewall Threat Defense device resource. Use this to onboard, update,
 
 ### Required
 
-- `access_policy_name` (String) The name of the Cloud-Delivered FMC (cdFMC) access policy that will be used by the FTD.
+- `access_policy_name` (String) The name of the Cloud-Delivered FMC (cdFMC) access policy that will be applied to the FTD during initial onboarding. This is only used when the device is first created. Subsequent changes to the access policy (e.g. via the cdFMC UI or the FMC Terraform provider) will not trigger a re-onboard of the device.
 - `licenses` (Set of String) Comma-separated list of licenses to apply to this FTD. You must enable at least the "BASE" license. Allowed values are: ["BASE", "CARRIER", "THREAT", "MALWARE", "URLFilter",].
 - `name` (String) A human-readable name for the Firewall Threat Defense (FTD). This name must be unique.
 - `virtual` (Boolean) This determines if this FTD is virtual. If false, performance_tier is ignored as performance tiers are not applicable to physical FTD devices.
