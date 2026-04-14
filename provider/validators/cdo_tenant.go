@@ -21,7 +21,11 @@ func (cdoTenantValidator) MarkdownDescription(context.Context) string {
 }
 
 func (c cdoTenantValidator) ValidateString(ctx context.Context, req validator.StringRequest, res *validator.StringResponse) {
-	if req.ConfigValue.IsNull() || req.ConfigValue.IsUnknown() {
+	if req.ConfigValue.IsUnknown() {
+		return
+	}
+
+	if req.ConfigValue.IsNull() {
 		res.Diagnostics.Append(validatordiag.InvalidAttributeValueMatchDiagnostic(
 			req.Path,
 			TenantNotEmptyString,

@@ -28,7 +28,7 @@ func (c performanceTierConfigValidator) ValidateResource(ctx context.Context, re
 	// if configData virtual is set to true
 	if !configData.Virtual.IsUnknown() && !configData.Virtual.IsNull() && configData.Virtual.ValueBool() {
 		// and performance tier is not set
-		if configData.PerformanceTier.IsNull() || configData.PerformanceTier.IsUnknown() {
+		if configData.PerformanceTier.IsNull() {
 			// then we error
 			resp.Diagnostics.AddError(
 				"Performance Tier must be specified for FTDvs",
