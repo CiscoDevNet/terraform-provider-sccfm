@@ -14,7 +14,7 @@ var resourceModel = struct {
 }
 
 const resourceTemplate = `
-resource "sccfwmgr_example" "test" {
+resource "sccfm_example" "test" {
 	name = "{{.Name}}"
 }`
 

@@ -17,7 +17,7 @@ var resourceModel = struct {
 }
 
 const resourceTemplate = `
-resource "sccfwmgr_cdfmc" "test" {
+resource "sccfm_cdfmc" "test" {
 }`
 
 var resourceConfig = acctest.MustParseTemplate(resourceTemplate, resourceModel)

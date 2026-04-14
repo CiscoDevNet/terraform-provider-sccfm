@@ -34,11 +34,11 @@ func (r *Resource) Metadata(ctx context.Context, req resource.MetadataRequest, r
 
 func (r *Resource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		MarkdownDescription: "This resource is meant to be in conjunction with the `sccfwmgr_ftd_device` resource to complete the onboarding process of an FTD to a cdFMC. " +
-			"The `sccfwmgr_ftd_device` creates an FTD device on SCC Firewall Manager and generates a command with the registration key that should be pasted into the FTD device's CLI over SSH (see **step 10** [here](https://docs.manage.security.cisco.com/c_onboard-an-ftd.html#!t-onboard-an-ftd-device-with-regkey.html)). " +
+		MarkdownDescription: "This resource is meant to be in conjunction with the `sccfm_ftd_device` resource to complete the onboarding process of an FTD to a cdFMC. " +
+			"The `sccfm_ftd_device` creates an FTD device on SCC Firewall Manager and generates a command with the registration key that should be pasted into the FTD device's CLI over SSH (see **step 10** [here](https://docs.manage.security.cisco.com/c_onboard-an-ftd.html#!t-onboard-an-ftd-device-with-regkey.html)). " +
 			"This resource waits for you to finish pasting the registration command, and onboards the FTD to SCC Firewall Manager. " +
-			"If you are spinning up an FTDv using Terraform, you can pass the output of the `sccfwmgr_ftd_device` through to the FTDv. " +
-			"If you are using a manually deployed FTDv or a physical FTD, you cannot add this resource to your Terraform code until after you have applied the `sccfwmgr_ftd_device` resource, retrieved the `generated_command` from the resource, and pasted it into the FTD device's CLI. " +
+			"If you are spinning up an FTDv using Terraform, you can pass the output of the `sccfm_ftd_device` through to the FTDv. " +
+			"If you are using a manually deployed FTDv or a physical FTD, you cannot add this resource to your Terraform code until after you have applied the `sccfm_ftd_device` resource, retrieved the `generated_command` from the resource, and pasted it into the FTD device's CLI. " +
 			"This resource will time out if the registration command is not applied on the FTD CLI within 3 minutes of it starting to poll.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
