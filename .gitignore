@@ -1,5 +1,6 @@
 .idea
-provider/.github-action.local.envprovider/terraform-provider-cdo
+provider/.github-action.local.env
+provider/terraform-provider-sccfm
 .claude/settings.local.json
 
 provider/examples/resources/*/provider.tf
