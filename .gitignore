@@ -2,8 +2,6 @@
 provider/.github-action.local.envprovider/terraform-provider-cdo
 .claude/settings.local.json
 
-# Per-example terraform working files (each example dir has a local provider.tf
-# with a developer's bearer token; never commit these).
 provider/examples/resources/*/provider.tf
 provider/examples/data-sources/*/provider.tf
 provider/examples/**/.terraform/
