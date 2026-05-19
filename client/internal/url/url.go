@@ -280,3 +280,27 @@ func GetFtdUpgradePackagesUrl(baseUrl string, deviceUid string) string {
 func GetFtdUpgradeUrl(baseUrl string, deviceUid string) string {
 	return fmt.Sprintf("%s/api/rest/v1/inventory/devices/ftds/%s/upgrades/trigger", baseUrl, deviceUid)
 }
+
+func ReadObjectByName(baseUrl string) string {
+	return fmt.Sprintf("%s/api/rest/v1/objects", baseUrl)
+}
+
+func CreateObject(baseUrl string) string {
+	return fmt.Sprintf("%s/api/rest/v1/objects", baseUrl)
+}
+
+func ReadObject(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/objects/%s", baseUrl, uid)
+}
+
+func UpdateObject(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/objects/%s", baseUrl, uid)
+}
+
+func DeleteObject(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/objects/%s", baseUrl, uid)
+}
+
+func DeleteObjectTargets(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/objects/%s/targets", baseUrl, uid)
+}
