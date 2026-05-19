@@ -25,7 +25,7 @@ func TestAsaConfigUpdate(t *testing.T) {
 	username := "unit-test-username"
 	password := "not a real password"
 
-	rsaKeyBits := 512
+	rsaKeyBits := 2048
 	rsaKey, err := rsa.GenerateKey(rand.Reader, rsaKeyBits)
 	assert.Nil(t, err, "could not generate rsa key")
 
@@ -179,7 +179,7 @@ func TestAsaConfigUpdateCredentials(t *testing.T) {
 	username := "unit-test-username"
 	password := "not a real password"
 
-	rsaKeyBits := 512
+	rsaKeyBits := 2048
 	rsaKey, err := rsa.GenerateKey(rand.Reader, rsaKeyBits)
 	assert.Nil(t, err, "could not generate rsa key")
 
