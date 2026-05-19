@@ -1,2 +1,11 @@
 .idea
-provider/.github-action.local.envprovider/terraform-provider-cdo
+provider/.github-action.local.env
+provider/terraform-provider-sccfm
+.claude/settings.local.json
+
+provider/examples/resources/*/provider.tf
+provider/examples/data-sources/*/provider.tf
+provider/examples/**/.terraform/
+provider/examples/**/.terraform.lock.hcl
+provider/examples/**/terraform.tfstate
+provider/examples/**/terraform.tfstate.backup
