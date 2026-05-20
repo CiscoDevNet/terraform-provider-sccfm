@@ -10,6 +10,10 @@ resource "sccfm_service_object" "https" {
   value    = "443"
 }
 
+data "sccfm_ftd_device" "my_ftd" {
+  name = "siwarrie-ftd-to-upgrade-2025-09-08-1"
+}
+
 resource "sccfm_service_group" "web_services" {
   name        = "web-services-tf-test"
   description = "HTTP and HTTPS services"
@@ -27,7 +31,7 @@ resource "sccfm_service_group" "web_services" {
 
   overrides = [
     {
-      target_id = "6dae078f-65a8-4cfc-8af8-9554976b5aae"
+      target_id = data.sccfm_ftd_device.my_ftd.id
       referenced_object_uids = [
         sccfm_service_object.http.id,
       ]

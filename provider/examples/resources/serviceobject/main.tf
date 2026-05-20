@@ -19,6 +19,10 @@ resource "sccfm_service_object" "high_ports" {
   value       = "8000-9000"
 }
 
+data "sccfm_ftd_device" "my_ftd" {
+  name = "siwarrie-ftd-to-upgrade-2025-09-08-1"
+}
+
 resource "sccfm_service_object" "with_overrides" {
   name        = "app-service-tf-test"
   description = "Application service with per-target overrides"
@@ -27,7 +31,7 @@ resource "sccfm_service_object" "with_overrides" {
 
   overrides = [
     {
-      target_id = "6dae078f-65a8-4cfc-8af8-9554976b5aae"
+      target_id = data.sccfm_ftd_device.my_ftd.id
       protocol  = "TCP"
       value     = "9090"
     }

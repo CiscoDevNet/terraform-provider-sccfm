@@ -22,19 +22,19 @@ resource "sccfm_network_object" "example_ipv6" {
   value       = "2001:db8::1"
 }
 
-# resource "sccfm_network_object" "with_overrides" {
-#   name        = "app-server-tf-test"
-#   description = "Application server with per-target overrides"
-#   value       = "10.0.0.50"
-#
-#   overrides = [
-#     {
-#       target_id = "6dae078f-65a8-4cfc-8af8-9554976b5aae"
-#       value     = "10.1.0.50"
-#     },
-#     {
-#       target_id = "1ba692de-8166-4cee-90b5-6f817c3c2008"
-#       value     = "10.2.0.50"
-#     }
-#   ]
-# }
+data "sccfm_ftd_device" "my_ftd" {
+  name = "siwarrie-ftd-to-upgrade-2025-09-08-1"
+}
+
+resource "sccfm_network_object" "with_overrides" {
+  name        = "app-server-tf-test"
+  description = "Application server with per-target overrides"
+  value       = "10.0.0.50"
+
+  overrides = [
+    {
+      target_id = data.sccfm_ftd_device.my_ftd.id
+      value     = "10.1.0.50"
+    }
+  ]
+}

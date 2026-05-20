@@ -101,10 +101,12 @@ resource "sccfm_url_group" "test_overrides" {
 	description = "with override"
 	values      = ["https://www.example.com"]
 
-	overrides {
-		target_id = %q
-		values    = ["https://override.example.com"]
-	}
+	overrides = [
+		{
+			target_id = %q
+			values    = ["https://override.example.com"]
+		},
+	]
 }`, targetId)
 }
 
@@ -115,10 +117,12 @@ resource "sccfm_url_group" "test_overrides" {
 	description = "override modified"
 	values      = ["https://www.example.com"]
 
-	overrides {
-		target_id = %q
-		values    = ["https://changed-override.example.com", "https://second-override.example.com"]
-	}
+	overrides = [
+		{
+			target_id = %q
+			values    = ["https://changed-override.example.com", "https://second-override.example.com"]
+		},
+	]
 }`, targetId)
 }
 

@@ -106,10 +106,12 @@ resource "sccfm_network_object" "test_overrides" {
 	description = "with one override"
 	value       = "10.0.0.1"
 
-	overrides {
-		target_id = %q
-		value     = "10.0.0.2"
-	}
+	overrides = [
+		{
+			target_id = %q
+			value     = "10.0.0.2"
+		},
+	]
 }`, targetId)
 }
 
@@ -120,10 +122,12 @@ resource "sccfm_network_object" "test_overrides" {
 	description = "override value changed"
 	value       = "10.0.0.1"
 
-	overrides {
-		target_id = %q
-		value     = "192.168.1.1"
-	}
+	overrides = [
+		{
+			target_id = %q
+			value     = "192.168.1.1"
+		},
+	]
 }`, targetId)
 }
 
@@ -134,14 +138,16 @@ resource "sccfm_network_object" "test_overrides" {
 	description = "two overrides"
 	value       = "10.0.0.1"
 
-	overrides {
-		target_id = %q
-		value     = "192.168.1.1"
-	}
-	overrides {
-		target_id = %q
-		value     = "172.16.0.1"
-	}
+	overrides = [
+		{
+			target_id = %q
+			value     = "192.168.1.1"
+		},
+		{
+			target_id = %q
+			value     = "172.16.0.1"
+		},
+	]
 }`, targetId1, targetId2)
 }
 

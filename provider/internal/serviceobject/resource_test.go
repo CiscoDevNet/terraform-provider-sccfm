@@ -151,11 +151,13 @@ resource "sccfm_service_object" "test_overrides" {
 	protocol    = "TCP"
 	value       = "443"
 
-	overrides {
-		target_id = %q
-		protocol  = "TCP"
-		value     = "8443"
-	}
+	overrides = [
+		{
+			target_id = %q
+			protocol  = "TCP"
+			value     = "8443"
+		},
+	]
 }`, targetId)
 }
 
@@ -167,11 +169,13 @@ resource "sccfm_service_object" "test_overrides" {
 	protocol    = "TCP"
 	value       = "443"
 
-	overrides {
-		target_id = %q
-		protocol  = "TCP"
-		value     = "9443"
-	}
+	overrides = [
+		{
+			target_id = %q
+			protocol  = "TCP"
+			value     = "9443"
+		},
+	]
 }`, targetId)
 }
 

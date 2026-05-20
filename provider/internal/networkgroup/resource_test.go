@@ -183,10 +183,12 @@ resource "sccfm_network_group" "test_overrides" {
 	description = "with override"
 	values      = ["10.0.0.0/24"]
 
-	overrides {
-		target_id = %q
-		values    = ["192.168.1.0/24"]
-	}
+	overrides = [
+		{
+			target_id = %q
+			values    = ["192.168.1.0/24"]
+		},
+	]
 }`, targetId)
 }
 
@@ -197,10 +199,12 @@ resource "sccfm_network_group" "test_overrides" {
 	description = "override modified"
 	values      = ["10.0.0.0/24"]
 
-	overrides {
-		target_id = %q
-		values    = ["172.16.0.0/16", "192.168.0.0/16"]
-	}
+	overrides = [
+		{
+			target_id = %q
+			values    = ["172.16.0.0/16", "192.168.0.0/16"]
+		},
+	]
 }`, targetId)
 }
 

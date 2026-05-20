@@ -86,10 +86,12 @@ resource "sccfm_url_object" "test_overrides" {
 	description = "with one override"
 	url         = "https://www.example.com"
 
-	overrides {
-		target_id = %q
-		url       = "https://override.example.com"
-	}
+	overrides = [
+		{
+			target_id = %q
+			url       = "https://override.example.com"
+		},
+	]
 }`, targetId)
 }
 
@@ -100,10 +102,12 @@ resource "sccfm_url_object" "test_overrides" {
 	description = "override changed"
 	url         = "https://www.example.com"
 
-	overrides {
-		target_id = %q
-		url       = "https://changed-override.example.com"
-	}
+	overrides = [
+		{
+			target_id = %q
+			url       = "https://changed-override.example.com"
+		},
+	]
 }`, targetId)
 }
 

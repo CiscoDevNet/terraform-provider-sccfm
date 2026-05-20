@@ -8,6 +8,10 @@ resource "sccfm_network_object" "db_server" {
   value = "10.0.0.2"
 }
 
+data "sccfm_ftd_device" "my_ftd" {
+  name = "siwarrie-ftd-to-upgrade-2025-09-08-1"
+}
+
 resource "sccfm_network_group" "servers" {
   name        = "all-servers-tf-test"
   description = "All server addresses"
@@ -22,7 +26,7 @@ resource "sccfm_network_group" "servers" {
 
   overrides = [
     {
-      target_id = "6dae078f-65a8-4cfc-8af8-9554976b5aae"
+      target_id = data.sccfm_ftd_device.my_ftd.id
       values    = ["10.1.0.100", "10.1.0.101"]
       referenced_object_uids = [
         sccfm_network_object.web_server.id,

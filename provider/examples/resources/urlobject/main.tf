@@ -4,6 +4,10 @@ resource "sccfm_url_object" "example" {
   url         = "https://www.cisco.com"
 }
 
+data "sccfm_ftd_device" "my_ftd" {
+  name = "siwarrie-ftd-to-upgrade-2025-09-08-1"
+}
+
 resource "sccfm_url_object" "with_overrides" {
   name        = "app-portal-tf-test"
   description = "Application portal with per-target overrides"
@@ -11,7 +15,7 @@ resource "sccfm_url_object" "with_overrides" {
 
   overrides = [
     {
-      target_id = "6dae078f-65a8-4cfc-8af8-9554976b5aae"
+      target_id = data.sccfm_ftd_device.my_ftd.id
       url       = "https://portal-staging.example.com"
     }
   ]
