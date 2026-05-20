@@ -106,7 +106,7 @@ func TestGenericSshUpdateWithEncryptedCredentials(t *testing.T) {
 
 	// generate public key for this test
 	keyId := "unit-test-key-id"
-	rsaPrivateKey, err := rsa.GenerateKey(rand.Reader, 512)
+	rsaPrivateKey, err := rsa.GenerateKey(rand.Reader, 2048)
 	assert.Nil(t, err, "failed to generate rsa key")
 	publicKey := model.NewPublicKey(
 		crypto.MustBase64PublicKeyFromRsaKey(rsaPrivateKey),

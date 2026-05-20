@@ -4,16 +4,18 @@ package client
 
 import (
 	"context"
+	"net/http"
+
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/tenants"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/usergroups"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/msp/users"
-	"net/http"
 
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/connectoronboarding"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/sec"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector/sec/seconboarding"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/duoadminpanel"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/model/settings"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/object"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/settings/tenantsettings"
 
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/connector"
@@ -323,4 +325,28 @@ func (c *Client) ReadUserGroupsInMspManagedTenant(ctx context.Context, tenantUid
 
 func (c *Client) DeleteUserGroupsInMspManagedTenant(ctx context.Context, tenantUid string, deleteInput *usergroups.MspManagedUserGroupDeleteInput) (interface{}, error) {
 	return usergroups.Delete(ctx, c.Client, tenantUid, deleteInput)
+}
+
+func (c *Client) CreateObject(ctx context.Context, inp object.CreateInput) (*object.CreateOutput, error) {
+	return object.Create(ctx, c.Client, inp)
+}
+
+func (c *Client) ReadObject(ctx context.Context, inp object.ReadInput) (*object.ReadOutput, error) {
+	return object.Read(ctx, c.Client, inp)
+}
+
+func (c *Client) ReadObjectByName(ctx context.Context, inp object.ReadByNameInput) (*object.ReadOutput, error) {
+	return object.ReadByName(ctx, c.Client, inp)
+}
+
+func (c *Client) UpdateObject(ctx context.Context, inp object.UpdateInput) (*object.UpdateOutput, error) {
+	return object.Update(ctx, c.Client, inp)
+}
+
+func (c *Client) DeleteObject(ctx context.Context, inp object.DeleteInput) error {
+	return object.Delete(ctx, c.Client, inp)
+}
+
+func (c *Client) DeleteObjectTargets(ctx context.Context, inp object.DeleteTargetsInput) error {
+	return object.DeleteTargets(ctx, c.Client, inp)
 }

@@ -51,10 +51,19 @@ func GetMspApiToken() (string, error) {
 func PreCheckFunc(t *testing.T) func() {
 	return func() {
 		_, err := GetApiToken()
-		_, mspErr := GetMspApiToken()
 		if err != nil {
 			t.Fatalf("Precheck failed, cause=%v", err)
 		}
+	}
+}
+
+func PreCheckMspFunc(t *testing.T) func() {
+	return func() {
+		_, err := GetApiToken()
+		if err != nil {
+			t.Fatalf("Precheck failed, cause=%v", err)
+		}
+		_, mspErr := GetMspApiToken()
 		if mspErr != nil {
 			t.Fatalf("Precheck failed, cause=%v", mspErr)
 		}

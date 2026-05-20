@@ -12,6 +12,12 @@ import (
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant_user_api_token"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/msp/msp_tenant_users"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/networkgroup"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/networkobject"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/servicegroup"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/serviceobject"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/urlgroup"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/urlobject"
 
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/internal/connector/connectoronboarding"
@@ -181,6 +187,12 @@ func (p *SccFirewallManagerProvider) Resources(ctx context.Context) []func() res
 		msp_tenant_users.NewMspManagedTenantUsersResource,
 		msp_tenant_user_api_token.NewMspManagedTenantUserApiTokenResource,
 		ftdversion.NewResource,
+		networkobject.NewResource,
+		urlobject.NewResource,
+		serviceobject.NewResource,
+		networkgroup.NewResource,
+		urlgroup.NewResource,
+		servicegroup.NewResource,
 	}
 }
 
@@ -195,6 +207,12 @@ func (p *SccFirewallManagerProvider) DataSources(ctx context.Context) []func() d
 		cdfmc.NewDataSource,
 		tenantsettings.NewTenantSettingsDataSource,
 		msp_tenant.NewTenantDataSource,
+		networkobject.NewDataSource,
+		urlobject.NewDataSource,
+		serviceobject.NewDataSource,
+		networkgroup.NewDataSource,
+		urlgroup.NewDataSource,
+		servicegroup.NewDataSource,
 	}
 }
 
