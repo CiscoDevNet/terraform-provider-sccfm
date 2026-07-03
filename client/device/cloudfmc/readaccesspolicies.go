@@ -22,6 +22,13 @@ func NewReadAccessPoliciesInput(fmcHostname, domainUid string, limit int) ReadAc
 	}
 }
 
+func NewReadAccessPoliciesUsingPublicApiInput(domainUid string, limit int) ReadAccessPoliciesInput {
+	return ReadAccessPoliciesInput{
+		DomainUid: domainUid,
+		Limit:     limit,
+	}
+}
+
 type ReadAccessPoliciesOutput = accesspolicies.AccessPolicies
 
 func ReadAccessPolicies(ctx context.Context, client http.Client, inp ReadAccessPoliciesInput) (*ReadAccessPoliciesOutput, error) {
@@ -32,6 +39,23 @@ func ReadAccessPolicies(ctx context.Context, client http.Client, inp ReadAccessP
 
 	req := client.NewGet(ctx, readUrl)
 	req.Header.Add("Fmc-Hostname", inp.FmcHostname) // required, otherwise 500 internal server error
+	req.QueryParams.Add("limit", strconv.Itoa(inp.Limit))
+
+	var outp ReadAccessPoliciesOutput
+	if err := req.Send(&outp); err != nil {
+		return nil, err
+	}
+
+	return &outp, nil
+}
+
+func ReadAccessPoliciesUsingPublicApi(ctx context.Context, client http.Client, inp ReadAccessPoliciesInput) (*ReadAccessPoliciesOutput, error) {
+
+	client.Logger.Println("reading FMC Access Policies")
+
+	readUrl := url.ReadAccessPoliciesUsingPublicApi(client.BaseUrl(), inp.DomainUid)
+
+	req := client.NewGet(ctx, readUrl)
 	req.QueryParams.Add("limit", strconv.Itoa(inp.Limit))
 
 	var outp ReadAccessPoliciesOutput

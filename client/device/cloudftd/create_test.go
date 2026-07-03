@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudfmc"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/device/cloudftd"
 	internalHttp "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/http"
+	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction/transactionstatus"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/publicapi/transaction/transactiontype"
 	internalTesting "github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/testing"
 	"github.com/CiscoDevnet/terraform-provider-sccfm/go-client/internal/url"
@@ -24,11 +24,13 @@ func TestCreateCloudFtd(t *testing.T) {
 
 	ftdCreateInput := testModel.FtdCreateInput()
 	ftdReadOutput := testModel.FtdReadOutput()
-	fmcReadOutput := testModel.FmcReadOutput()
 	fmcDomainInfo := testModel.FmcDomainInfo()
 	accessPolicy := testModel.ReadAccessPolicies()
 	doneTransaction := testModel.CreateDoneTransaction(ftdReadOutput.Uid, transactiontype.CREATE_FTD)
 	errorTransaction := testModel.CreateErrorTransaction(ftdReadOutput.Uid, transactiontype.CREATE_FTD)
+	inProgressTransaction := doneTransaction
+	inProgressTransaction.Status = transactionstatus.IN_PROGRESS
+	doneDeleteTransaction := testModel.CreateDoneTransaction(ftdReadOutput.Uid, transactiontype.DELETE_CDFMC_MANAGED_FTD)
 	publicApiFtdReadOutput := map[string]any{
 		"uid":                ftdReadOutput.Uid,
 		"name":               ftdReadOutput.Name,
@@ -48,9 +50,8 @@ func TestCreateCloudFtd(t *testing.T) {
 			testName: "successful ftd creation",
 			input:    ftdCreateInput,
 			setupFunc: func(createInp cloudftd.CreateInput) {
-				internalTesting.MockGetOk(url.ReadAllDevicesByType(testModel.BaseUrl), []cloudfmc.ReadOutput{fmcReadOutput})
-				internalTesting.MockGetOk(url.ReadFmcDomainInfo(testModel.FmcHost), fmcDomainInfo)
-				internalTesting.MockGetOk(url.ReadAccessPolicies(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
+				internalTesting.MockGetOk(url.ReadFmcDomainInfoUsingPublicApi(testModel.BaseUrl), fmcDomainInfo)
+				internalTesting.MockGetOk(url.ReadAccessPoliciesUsingPublicApi(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
 				internalTesting.MockPostAccepted(url.CreateFtd(testModel.BaseUrl), doneTransaction)
 				internalTesting.MockGetOk(url.ReadDeviceUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid), publicApiFtdReadOutput)
 			},
@@ -70,15 +71,30 @@ func TestCreateCloudFtd(t *testing.T) {
 			testName: "fails ftd creation when transaction fails",
 			input:    ftdCreateInput,
 			setupFunc: func(createInp cloudftd.CreateInput) {
-				internalTesting.MockGetOk(url.ReadAllDevicesByType(testModel.BaseUrl), []cloudfmc.ReadOutput{fmcReadOutput})
-				internalTesting.MockGetOk(url.ReadFmcDomainInfo(testModel.FmcHost), fmcDomainInfo)
-				internalTesting.MockGetOk(url.ReadAccessPolicies(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
+				internalTesting.MockGetOk(url.ReadFmcDomainInfoUsingPublicApi(testModel.BaseUrl), fmcDomainInfo)
+				internalTesting.MockGetOk(url.ReadAccessPoliciesUsingPublicApi(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
 				internalTesting.MockPostError(url.CreateFtd(testModel.BaseUrl), errorTransaction)
 			},
 			assertFunc: func(output *cloudftd.CreateOutput, err error, t *testing.T) {
 				assert.NotNil(t, err)
 				assert.Nil(t, output)
 				assert.ErrorContains(t, err, errorTransaction.ErrorMessage)
+			},
+		},
+		{
+			testName: "uses public API to clean up failed ftd creation",
+			input:    ftdCreateInput,
+			setupFunc: func(createInp cloudftd.CreateInput) {
+				internalTesting.MockGetOk(url.ReadFmcDomainInfoUsingPublicApi(testModel.BaseUrl), fmcDomainInfo)
+				internalTesting.MockGetOk(url.ReadAccessPoliciesUsingPublicApi(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
+				internalTesting.MockPostAccepted(url.CreateFtd(testModel.BaseUrl), inProgressTransaction)
+				internalTesting.MockGetOk(inProgressTransaction.PollingUrl, errorTransaction)
+				internalTesting.MockPostAccepted(url.DeleteFtdUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid), doneDeleteTransaction)
+			},
+			assertFunc: func(output *cloudftd.CreateOutput, err error, t *testing.T) {
+				assert.NotNil(t, err)
+				assert.Nil(t, output)
+				assert.Equal(t, 1, httpmock.GetCallCountInfo()["POST "+url.DeleteFtdUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid)])
 			},
 		},
 	}

@@ -88,6 +88,10 @@ func ReadAccessPolicies(baseUrl string, domainUid string) string {
 	return fmt.Sprintf("%s/fmc/api/fmc_config/v1/domain/%s/policy/accesspolicies", baseUrl, domainUid)
 }
 
+func ReadAccessPoliciesUsingPublicApi(baseUrl string, domainUid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/cdfmc/api/fmc_config/v1/domain/%s/policy/accesspolicies", baseUrl, domainUid)
+}
+
 func UpdateSpecificCloudFtd(baseUrl string, ftdSpecificUid string) string {
 	return fmt.Sprintf("%s/aegis/rest/v1/services/firepower/ftds/%s", baseUrl, ftdSpecificUid)
 }
@@ -102,6 +106,10 @@ func ReadStateMachineInstance(baseUrl string) string {
 
 func ReadFmcDomainInfo(fmcHost string) string {
 	return fmt.Sprintf("https://%s/api/fmc_platform/v1/info/domain", fmcHost)
+}
+
+func ReadFmcDomainInfoUsingPublicApi(baseUrl string) string {
+	return fmt.Sprintf("%s/api/rest/v1/cdfmc/api/fmc_platform/v1/info/domain", baseUrl)
 }
 
 func ReadFmcDeviceLicenses(baseUrl string) string {
@@ -214,6 +222,10 @@ func CreateFtd(baseUrl string) string {
 
 func RegisterFtd(baseUrl string) string {
 	return fmt.Sprintf("%s/api/rest/v1/inventory/devices/ftds/register", baseUrl)
+}
+
+func DeleteFtdUsingPublicApi(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/inventory/devices/ftds/cdfmcManaged/%s/delete", baseUrl, uid)
 }
 
 func CreateIos(baseUrl string) string {
