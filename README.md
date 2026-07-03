@@ -134,7 +134,7 @@ Examples are provided so that you can do the usual `plan`, `apply`, `destroy` et
 
 If you make any changes to the resources and data sources provided by this provider, you will need to regenerate the docs, otherwise the Github actions triggered by this pull request will fail. To do this, run:
 ```
-go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name sccfm --rendered-provider-name "SCC Firewall Manager Provider" --rendered-website-dir ../docs
+go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs generate --provider-name sccfm --rendered-provider-name "Security Cloud Control Firewall Manager Provider" --rendered-website-dir ../docs
 ```
 
 ## Releasing Manually

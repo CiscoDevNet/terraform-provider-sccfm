@@ -34,3 +34,19 @@ func ReadFmcDomainInfo(ctx context.Context, client http.Client, readInp ReadDoma
 
 	return &outp, nil
 }
+
+func ReadFmcDomainInfoUsingPublicApi(ctx context.Context, client http.Client) (*ReadDomainInfoOutput, error) {
+
+	client.Logger.Println("reading FMC domain info")
+
+	readUrl := url.ReadFmcDomainInfoUsingPublicApi(client.BaseUrl())
+
+	req := client.NewGet(ctx, readUrl)
+
+	var outp ReadDomainInfoOutput
+	if err := req.Send(&outp); err != nil {
+		return nil, err
+	}
+
+	return &outp, nil
+}

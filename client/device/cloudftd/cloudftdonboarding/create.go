@@ -45,5 +45,5 @@ func Create(ctx context.Context, client http.Client, createInp CreateInput) (*Cr
 		return nil, err
 	}
 
-	return cloudftd.ReadByUid(ctx, client, cloudftd.NewReadByUidInput(createInp.FtdUid))
+	return cloudftd.ReadByUidUsingPublicApi(ctx, client, cloudftd.NewReadByUidInput(createInp.FtdUid))
 }

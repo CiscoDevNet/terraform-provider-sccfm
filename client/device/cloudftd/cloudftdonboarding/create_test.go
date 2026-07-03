@@ -23,6 +23,14 @@ func TestCloudFtdOnboardingCreate(t *testing.T) {
 	doneTransaction := testModel.CreateDoneTransaction(ftdOnboardingInput.FtdUid, transactiontype.REGISTER_FTD)
 	errorTransaction := testModel.CreateErrorTransaction(ftdOnboardingInput.FtdUid, transactiontype.REGISTER_FTD)
 	ftdReadOutput := testModel.FtdReadOutput()
+	publicApiFtdReadOutput := map[string]any{
+		"uid":                ftdReadOutput.Uid,
+		"name":               ftdReadOutput.Name,
+		"ftdPerformanceTier": ftdReadOutput.Metadata.PerformanceTier,
+		"fmcAccessPolicy": map[string]string{
+			"uid": ftdReadOutput.Metadata.AccessPolicyUid,
+		},
+	}
 
 	testCases := []struct {
 		testName   string
@@ -35,12 +43,17 @@ func TestCloudFtdOnboardingCreate(t *testing.T) {
 			input:    cloudftdonboarding.NewCreateInput(ftdOnboardingInput.FtdUid),
 			setupFunc: func(createInp cloudftdonboarding.CreateInput) {
 				internalTesting.MockPostAccepted(url.RegisterFtd(testModel.BaseUrl), doneTransaction)
-				internalTesting.MockGetOk(url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid), ftdReadOutput)
+				internalTesting.MockGetOk(url.ReadDeviceUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid), publicApiFtdReadOutput)
 			},
 			assertFunc: func(output *cloudftdonboarding.CreateOutput, err error, t *testing.T) {
 				assert.Nil(t, err)
 				assert.NotNil(t, output)
-				assert.Equal(t, *output, ftdReadOutput)
+				assert.Equal(t, ftdReadOutput.Uid, output.Uid)
+				assert.Equal(t, ftdReadOutput.Name, output.Name)
+				assert.Equal(t, ftdReadOutput.Metadata.AccessPolicyUid, output.Metadata.AccessPolicyUid)
+				assert.Equal(t, ftdReadOutput.Metadata.PerformanceTier, output.Metadata.PerformanceTier)
+				assert.Equal(t, 1, httpmock.GetCallCountInfo()["GET "+url.ReadDeviceUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid)])
+				assert.Zero(t, httpmock.GetCallCountInfo()["GET "+url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid)])
 			},
 		},
 		{
@@ -48,7 +61,6 @@ func TestCloudFtdOnboardingCreate(t *testing.T) {
 			input:    cloudftdonboarding.NewCreateInput(ftdOnboardingInput.FtdUid),
 			setupFunc: func(createInp cloudftdonboarding.CreateInput) {
 				internalTesting.MockPostError(url.RegisterFtd(testModel.BaseUrl), errorTransaction)
-				internalTesting.MockGetOk(url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid), ftdReadOutput)
 			},
 			assertFunc: func(output *cloudftdonboarding.CreateOutput, err error, t *testing.T) {
 				assert.NotNil(t, err)

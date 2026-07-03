@@ -105,9 +105,9 @@ func Create(ctx context.Context, client http.Client, createInp CreateInput) (*Cr
 		},
 	)
 	if err != nil {
-		_, _ = Delete(ctx, client, DeleteInput{Uid: transaction.TransactionUid})
 		return nil, err
 	}
+	createdFtdUid := transaction.EntityUid
 
 	transaction, err = publicapi.WaitForTransactionToFinishWithDefaults(
 		ctx,
@@ -116,27 +116,37 @@ func Create(ctx context.Context, client http.Client, createInp CreateInput) (*Cr
 		"Waiting for Cloud FTD to onboard...",
 	)
 	if err != nil {
-		_, _ = Delete(ctx, client, DeleteInput{Uid: transaction.TransactionUid})
+		_ = deleteUsingPublicApi(ctx, client, createdFtdUid)
 		return nil, err
 	}
 
-	cloudFtdReadOutput, err := ReadByUid(ctx, client, NewReadByUidInput(transaction.EntityUid))
+	cloudFtdReadOutput, err := ReadByUidUsingPublicApi(ctx, client, NewReadByUidInput(transaction.EntityUid))
 	if err != nil {
 		return nil, err
 	}
+	// The public inventory model exposes the access policy UID but not its
+	// display name. Preserve the name supplied by the Terraform configuration.
+	cloudFtdReadOutput.Metadata.AccessPolicyName = createInp.AccessPolicyName
 
 	return FromDeviceReadOutput(cloudFtdReadOutput), nil
 }
 
-func readPolicyUidFromPolicyName(ctx context.Context, client http.Client, accessPolicyName string) (accesspolicies.Item, error) {
-	// 1. read Cloud FMC
-	fmcRes, err := cloudfmc.Read(ctx, client, cloudfmc.NewReadInput())
-	if err != nil {
-		return accesspolicies.Item{}, err
+func deleteUsingPublicApi(ctx context.Context, client http.Client, uid string) error {
+	if uid == "" {
+		return nil
 	}
 
-	// 2. get FMC domain uid by reading Cloud FMC domain info
-	readFmcDomainRes, err := fmcplatform.ReadFmcDomainInfo(ctx, client, fmcplatform.NewReadDomainInfoInput(fmcRes.Host))
+	transaction, err := publicapi.TriggerTransaction(ctx, client, url.DeleteFtdUsingPublicApi(client.BaseUrl(), uid), nil)
+	if err != nil {
+		return err
+	}
+
+	_, err = publicapi.WaitForTransactionToFinishWithDefaults(ctx, client, transaction, "Waiting for Cloud FTD cleanup...")
+	return err
+}
+
+func readPolicyUidFromPolicyName(ctx context.Context, client http.Client, accessPolicyName string) (accesspolicies.Item, error) {
+	readFmcDomainRes, err := fmcplatform.ReadFmcDomainInfoUsingPublicApi(ctx, client)
 	if err != nil {
 		return accesspolicies.Item{}, err
 	}
@@ -144,10 +154,10 @@ func readPolicyUidFromPolicyName(ctx context.Context, client http.Client, access
 		return accesspolicies.Item{}, fmt.Errorf("%w: fmc domain info not found", http.NotFoundError)
 	}
 
-	accessPoliciesRes, err := cloudfmc.ReadAccessPolicies(
+	accessPoliciesRes, err := cloudfmc.ReadAccessPoliciesUsingPublicApi(
 		ctx,
 		client,
-		cloudfmc.NewReadAccessPoliciesInput(fmcRes.Host, readFmcDomainRes.Items[0].Uuid, 1000), // 1000 is what CDO UI uses
+		cloudfmc.NewReadAccessPoliciesUsingPublicApiInput(readFmcDomainRes.Items[0].Uuid, 1000), // 1000 is what CDO UI uses
 	)
 	if err != nil {
 		return accesspolicies.Item{}, err
