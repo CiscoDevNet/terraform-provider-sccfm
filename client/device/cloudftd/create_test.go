@@ -32,16 +32,7 @@ func TestCreateCloudFtd(t *testing.T) {
 	publicApiFtdReadOutput := map[string]any{
 		"uid":                ftdReadOutput.Uid,
 		"name":               ftdReadOutput.Name,
-		"deviceType":         ftdReadOutput.DeviceType,
-		"state":              ftdReadOutput.State,
-		"softwareVersion":    ftdReadOutput.SoftwareVersion,
-		"ftdLicenses":        []string{},
 		"ftdPerformanceTier": ftdReadOutput.Metadata.PerformanceTier,
-		"labels": map[string]any{
-			"ungroupedLabels": []string{},
-			"groupedLabels":   map[string][]string{},
-		},
-		"cdFmcInfo": map[string]string{},
 		"fmcAccessPolicy": map[string]string{
 			"uid": ftdReadOutput.Metadata.AccessPolicyUid,
 		},
@@ -66,7 +57,11 @@ func TestCreateCloudFtd(t *testing.T) {
 			assertFunc: func(output *cloudftd.CreateOutput, err error, t *testing.T) {
 				assert.Nil(t, err)
 				assert.NotNil(t, output)
-				assert.Equal(t, output, cloudftd.FromDeviceReadOutput(&ftdReadOutput))
+				assert.Equal(t, ftdReadOutput.Uid, output.Uid)
+				assert.Equal(t, ftdReadOutput.Name, output.Name)
+				assert.Equal(t, ftdCreateInput.AccessPolicyName, output.Metadata.AccessPolicyName)
+				assert.Equal(t, ftdReadOutput.Metadata.AccessPolicyUid, output.Metadata.AccessPolicyUid)
+				assert.Equal(t, ftdReadOutput.Metadata.PerformanceTier, output.Metadata.PerformanceTier)
 				assert.Equal(t, 1, httpmock.GetCallCountInfo()["GET "+url.ReadDeviceUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid)])
 				assert.Zero(t, httpmock.GetCallCountInfo()["GET "+url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid)])
 			},

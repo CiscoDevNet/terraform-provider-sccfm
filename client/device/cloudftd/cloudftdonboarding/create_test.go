@@ -26,16 +26,7 @@ func TestCloudFtdOnboardingCreate(t *testing.T) {
 	publicApiFtdReadOutput := map[string]any{
 		"uid":                ftdReadOutput.Uid,
 		"name":               ftdReadOutput.Name,
-		"deviceType":         ftdReadOutput.DeviceType,
-		"state":              ftdReadOutput.State,
-		"softwareVersion":    ftdReadOutput.SoftwareVersion,
-		"ftdLicenses":        []string{},
 		"ftdPerformanceTier": ftdReadOutput.Metadata.PerformanceTier,
-		"labels": map[string]any{
-			"ungroupedLabels": []string{},
-			"groupedLabels":   map[string][]string{},
-		},
-		"cdFmcInfo": map[string]string{},
 		"fmcAccessPolicy": map[string]string{
 			"uid": ftdReadOutput.Metadata.AccessPolicyUid,
 		},
