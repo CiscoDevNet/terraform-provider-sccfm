@@ -120,10 +120,13 @@ func Create(ctx context.Context, client http.Client, createInp CreateInput) (*Cr
 		return nil, err
 	}
 
-	cloudFtdReadOutput, err := ReadByUid(ctx, client, NewReadByUidInput(transaction.EntityUid))
+	cloudFtdReadOutput, err := ReadByUidUsingPublicApi(ctx, client, NewReadByUidInput(transaction.EntityUid))
 	if err != nil {
 		return nil, err
 	}
+	// The public inventory model exposes the access policy UID but not its
+	// display name. Preserve the name supplied by the Terraform configuration.
+	cloudFtdReadOutput.Metadata.AccessPolicyName = createInp.AccessPolicyName
 
 	return FromDeviceReadOutput(cloudFtdReadOutput), nil
 }

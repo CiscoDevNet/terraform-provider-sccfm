@@ -12,6 +12,10 @@ func ReadDevice(baseUrl string, uid string) string {
 	return fmt.Sprintf("%s/aegis/rest/v1/services/targets/devices/%s", baseUrl, uid)
 }
 
+func ReadDeviceUsingPublicApi(baseUrl string, uid string) string {
+	return fmt.Sprintf("%s/api/rest/v1/inventory/devices/%s", baseUrl, uid)
+}
+
 func ReadDeviceByNameAndType(baseUrl string, deviceName string, deviceType devicetype.Type) string {
 	query := fmt.Sprintf("name:\"%s\" AND deviceType:%s", deviceName, deviceType)
 	return fmt.Sprintf("%s/aegis/rest/v1/services/targets/devices?q=%s", baseUrl, url.QueryEscape(query))

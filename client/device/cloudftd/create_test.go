@@ -29,6 +29,23 @@ func TestCreateCloudFtd(t *testing.T) {
 	accessPolicy := testModel.ReadAccessPolicies()
 	doneTransaction := testModel.CreateDoneTransaction(ftdReadOutput.Uid, transactiontype.CREATE_FTD)
 	errorTransaction := testModel.CreateErrorTransaction(ftdReadOutput.Uid, transactiontype.CREATE_FTD)
+	publicApiFtdReadOutput := map[string]any{
+		"uid":                ftdReadOutput.Uid,
+		"name":               ftdReadOutput.Name,
+		"deviceType":         ftdReadOutput.DeviceType,
+		"state":              ftdReadOutput.State,
+		"softwareVersion":    ftdReadOutput.SoftwareVersion,
+		"ftdLicenses":        []string{},
+		"ftdPerformanceTier": ftdReadOutput.Metadata.PerformanceTier,
+		"labels": map[string]any{
+			"ungroupedLabels": []string{},
+			"groupedLabels":   map[string][]string{},
+		},
+		"cdFmcInfo": map[string]string{},
+		"fmcAccessPolicy": map[string]string{
+			"uid": ftdReadOutput.Metadata.AccessPolicyUid,
+		},
+	}
 
 	testCases := []struct {
 		testName   string
@@ -44,12 +61,14 @@ func TestCreateCloudFtd(t *testing.T) {
 				internalTesting.MockGetOk(url.ReadFmcDomainInfo(testModel.FmcHost), fmcDomainInfo)
 				internalTesting.MockGetOk(url.ReadAccessPolicies(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
 				internalTesting.MockPostAccepted(url.CreateFtd(testModel.BaseUrl), doneTransaction)
-				internalTesting.MockGetOk(url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid), ftdReadOutput)
+				internalTesting.MockGetOk(url.ReadDeviceUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid), publicApiFtdReadOutput)
 			},
 			assertFunc: func(output *cloudftd.CreateOutput, err error, t *testing.T) {
 				assert.Nil(t, err)
 				assert.NotNil(t, output)
 				assert.Equal(t, output, cloudftd.FromDeviceReadOutput(&ftdReadOutput))
+				assert.Equal(t, 1, httpmock.GetCallCountInfo()["GET "+url.ReadDeviceUsingPublicApi(testModel.BaseUrl, ftdReadOutput.Uid)])
+				assert.Zero(t, httpmock.GetCallCountInfo()["GET "+url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid)])
 			},
 		},
 		{
@@ -60,7 +79,6 @@ func TestCreateCloudFtd(t *testing.T) {
 				internalTesting.MockGetOk(url.ReadFmcDomainInfo(testModel.FmcHost), fmcDomainInfo)
 				internalTesting.MockGetOk(url.ReadAccessPolicies(testModel.BaseUrl, testModel.FmcDomainUuid.String()), accessPolicy)
 				internalTesting.MockPostError(url.CreateFtd(testModel.BaseUrl), errorTransaction)
-				internalTesting.MockGetOk(url.ReadDevice(testModel.BaseUrl, ftdReadOutput.Uid), ftdReadOutput)
 			},
 			assertFunc: func(output *cloudftd.CreateOutput, err error, t *testing.T) {
 				assert.NotNil(t, err)
